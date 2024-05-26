@@ -1,51 +1,69 @@
 <template>
-  <div class="home">
-    <h1>Welcome to the Chocolate Factory</h1>
-    <img alt="Chocolate Factory" src="@/assets/logo.png" class="factory-image">
-    <p class="chocolate-info">
-      Chocolate is a beloved treat enjoyed by people of all ages around the world. It is made from cocoa beans, which are harvested from the cacao tree. The process of making chocolate involves fermenting, drying, roasting, and grinding the cocoa beans to produce cocoa mass, cocoa butter, and cocoa powder. These ingredients are then combined in various proportions to create different types of chocolate, such as dark chocolate, milk chocolate, and white chocolate.
-
-      Chocolate is not only delicious but also has a rich history. It was first cultivated by the ancient civilizations of Mesoamerica, including the Aztecs and Mayans, who used cocoa beans as currency and made a bitter drink called "xocoatl". When chocolate was introduced to Europe in the 16th century, it quickly became a popular delicacy and was transformed into the sweet treat we know today.
-
-      Besides its delightful taste, chocolate also contains several beneficial compounds, such as antioxidants, which can contribute to improved health when consumed in moderation. Whether enjoyed as a simple bar, in desserts, or as a warm beverage, chocolate continues to be a cherished indulgence around the globe.
-    </p>
+  <div class="factories">
+    <h2>All Factories</h2>
+    <ul>
+      <li v-for="factory in factories" :key="factory.id" class="factory-item">
+        <img :src="getFactoryLogoUrl(factory.logoPath)" :alt="factory.name + ' logo'" class="factory-logo" />
+        <div class="factory-details">
+          <h3>{{ factory.name }}</h3>
+          <p>Working Hours: {{ factory.workingHours }}</p>
+          <p>Status: {{ factory.status }}</p>
+          <p>Location: {{ factory.location }}</p>
+          <p>Rating: {{ factory.rating }}</p>
+        </div>
+      </li>
+    </ul>
   </div>
 </template>
 
-<script>
-export default {
-  name: 'HomeView'
+<script setup>
+import { ref, onMounted } from 'vue';
+import axios from 'axios';
+
+const factories = ref([]);
+
+// Funkcija za generisanje URL-a za slike
+function getFactoryLogoUrl(path) {
+  return `http://localhost:3001/images/${path}`;
+}
+
+onMounted(() => {
+  loadFactories();
+});
+
+function loadFactories() {
+  axios.get('http://localhost:3001/api/factories')
+    .then(response => {
+      factories.value = response.data;
+    })
+    .catch(error => {
+      console.error('There was an error fetching the factories!', error);
+    });
 }
 </script>
 
 <style scoped>
-.home {
-  padding: 20px;
-  text-align: center;
-  background-color: #D2B48C; /* svetlija braon boja */
+h2 {
+  margin: 20px 0;
 }
-
-h1 {
-  font-family: 'Arial', sans-serif;
-  color: #4b3832; /* tamno braon boja */
-  font-size: 2.5em; /* veći font */
-  font-weight: bold; /* boldovan tekst */
-  font-style: italic; /* italic stil */
+ul {
+  list-style-type: none;
+  padding: 0;
 }
-
-.factory-image {
-  margin-top: 20px;
-  max-width: 80%; /* smanjena širina slike */
+li.factory-item {
+  display: flex;
+  align-items: center;
+  margin: 20px 0;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
+}
+.factory-logo {
+  max-width: 100px;
   height: auto;
-  width: 30%;
+  margin-right: 20px;
 }
-
-.chocolate-info {
-  margin-top: 20px;
-  font-family: 'Arial', sans-serif;
-  color: #6B4226; 
-  font-size: 1.2em; 
-  text-align: left; 
-
+.factory-details {
+  display: flex;
+  flex-direction: column;
 }
 </style>
