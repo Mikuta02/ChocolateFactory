@@ -1,0 +1,28 @@
+[
+  {
+    "id": 1,
+    "name": "Magnum",
+    "price": 200,
+    "chocolateType": "Normal",
+    "factoryId": 1,
+    "chocolateVariety": "Milk",
+    "grams": 250,
+    "description": "Milky and tasty goodness",
+    "picturePath": "coko1.jpg",
+    "status": "unavailable",
+    "amount": 0
+  },
+  {
+    "id": 2,
+    "name": "Magnum forte",
+    "price": 210,
+    "chocolateType": "Normal",
+    "factoryId": 1,
+    "chocolateVariety": "Raisins",
+    "grams": 255,
+    "description": "Fresh from the Serbian Vineyards, the best of raisins",
+    "picturePath": "coko2.jpg",
+    "status": "available",
+    "amount": 22
+  }
+]

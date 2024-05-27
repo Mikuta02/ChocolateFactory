@@ -1,0 +1,56 @@
+[
+  {
+    "id": 1,
+    "name": "Fabrika Loznica",
+    "workingHours": "9am-5pm",
+    "status": "otvorena",
+    "location": "Loznica",
+    "logoPath": "fabrika1.jpg",
+    "rating": 4.5
+  },
+  {
+    "id": 4,
+    "name": "Fabrika Vladicin Han",
+    "workingHours": "12am-4pm",
+    "status": "otvorena",
+    "location": "Vladicin Han",
+    "logoPath": "fabrika4.jpg",
+    "rating": 3.84
+  },
+  {
+    "id": 5,
+    "name": "Willy Wonka",
+    "workingHours": "12am-4pm",
+    "status": "otvorena",
+    "location": "Bath",
+    "logoPath": "",
+    "rating": 4
+  },
+  {
+    "id": 2,
+    "name": "Fabrika Ostoja",
+    "workingHours": "10am-1pm",
+    "status": "zatvorena",
+    "location": "Sabac",
+    "logoPath": "fabrika2.jpg",
+    "rating": 3.8
+  },
+  {
+    "id": 3,
+    "name": "Fabrika Smederevac",
+    "workingHours": "1am-3pm",
+    "status": "zatvorena",
+    "location": "Sabac",
+    "logoPath": "fabrika3.jpg",
+    "rating": 2.8
+  },
+  {
+    "id": 6,
+    "name": "dsad",
+    "workingHours": "dsada",
+    "status": "dsada",
+    "location": "dasdas",
+    "logoPath": "",
+    "rating": 2
+  }
+]

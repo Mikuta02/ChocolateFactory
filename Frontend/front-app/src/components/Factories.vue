@@ -5,9 +5,9 @@
       <li v-for="factory in factories" :key="factory.id" class="factory-item">
         <img :src="getFactoryLogoUrl(factory.logoPath)" :alt="factory.name + ' logo'" class="factory-logo" />
         <div class="factory-details">
-          <h3>{{ factory.name }}</h3>
-          <p>Working Hours: {{ factory.workingHours }}</p>
-          <p>Status: {{ factory.status }}</p>
+          <h3> <router-link :to="{ name: 'FactoryDetailed', params: { id: factory.id } }">
+                  {{ factory.name }}
+                </router-link></h3>
           <p>Location: {{ factory.location }}</p>
           <p>Rating: {{ factory.rating }}</p>
         </div>
@@ -59,7 +59,7 @@ li.factory-item {
   border-radius: 8px; /* Zaobljeni uglovi */
 }
 .factory-logo {
-  width: 200px; /* Fiksna širina slike */
+  width: 300px; /* Fiksna širina slike */
   height: auto;
   margin-right: 20px;
 }
