@@ -1,69 +1,51 @@
 <template>
-  <div class="factories">
-    <h2>All Factories</h2>
-    <ul>
-      <li v-for="factory in factories" :key="factory.id" class="factory-item">
-        <img :src="getFactoryLogoUrl(factory.logoPath)" :alt="factory.name + ' logo'" class="factory-logo" />
-        <div class="factory-details">
-          <h3>{{ factory.name }}</h3>
-          <p>Working Hours: {{ factory.workingHours }}</p>
-          <p>Status: {{ factory.status }}</p>
-          <p>Location: {{ factory.location }}</p>
-          <p>Rating: {{ factory.rating }}</p>
-        </div>
-      </li>
-    </ul>
+  <div class="home">
+    <h1>Welcome to the Chocolate Factory</h1>
+    <img alt="Chocolate Factory" src="@/assets/logo.png" class="factory-logo" />
+    <p class="chocolate-info">
+      Welcome to the world of chocolate! Here at our Chocolate Factory, we craft the finest chocolates using traditional methods combined with modern technology. Our factory is known for its dedication to quality and innovation, creating delightful treats for chocolate lovers around the globe.
+
+      Every piece of chocolate that comes out of our factory is made with the utmost care and precision. From sourcing the highest quality cocoa beans to the final packaging, we ensure that every step of the process meets our high standards.
+
+      Visit us to explore our wide range of chocolate products, from classic dark chocolate bars to creative new flavors. Our factory tours offer a behind-the-scenes look at how we create our delectable chocolates, with plenty of samples to enjoy along the way.
+
+      Join us in celebrating the joy of chocolate, and experience the passion and craftsmanship that goes into every bite. Whether you're a lifelong chocolate aficionado or a curious newcomer, we have something special for everyone.
+    </p>
   </div>
 </template>
 
-<script setup>
-import { ref, onMounted } from 'vue';
-import axios from 'axios';
-
-const factories = ref([]);
-
-// Funkcija za generisanje URL-a za slike
-function getFactoryLogoUrl(path) {
-  return `http://localhost:3001/images/${path}`;
-}
-
-onMounted(() => {
-  loadFactories();
-});
-
-function loadFactories() {
-  axios.get('http://localhost:3001/api/factories')
-    .then(response => {
-      factories.value = response.data;
-    })
-    .catch(error => {
-      console.error('There was an error fetching the factories!', error);
-    });
+<script>
+export default {
+  name: 'HomeView'
 }
 </script>
 
 <style scoped>
-h2 {
-  margin: 20px 0;
+.home {
+  padding: 20px;
+  text-align: center;
+  background-color: #D2B48C; /* Svetlija braon boja */
 }
-ul {
-  list-style-type: none;
-  padding: 0;
+
+h1 {
+  font-family: 'Arial', sans-serif;
+  color: #4b3832; /* Tamno braon boja */
+  font-size: 2.5em; /* Veći font */
+  font-style: italic; /* Italic stil */
+  font-weight: bold; /* Boldovan tekst */
 }
-li.factory-item {
-  display: flex;
-  align-items: center;
-  margin: 20px 0;
-  border-bottom: 1px solid #ccc;
-  padding-bottom: 10px;
-}
+
 .factory-logo {
-  max-width: 100px;
+  margin-top: 20px;
+  max-width: 80%; /* Maksimalna širina slike */
   height: auto;
-  margin-right: 20px;
 }
-.factory-details {
-  display: flex;
-  flex-direction: column;
+
+.chocolate-info {
+  margin-top: 20px;
+  font-family: 'Arial', sans-serif;
+  color: #6B4226; /* Braon boja */
+  font-size: 1.2em; /* Povećan font */
+  text-align: left; /* Tekst poravnan sa leve strane */
 }
 </style>
