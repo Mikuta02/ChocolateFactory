@@ -1,5 +1,5 @@
 class Factory{
-    constructor(id,name, workingHours, status, location, logoPath='', rating=0, comments=[], chocolates=[]){
+    constructor(id,name, workingHours, status, location, logoPath='', rating=0){
         this.id = id;
         this.name = name;
         this.workingHours = workingHours;
@@ -7,8 +7,6 @@ class Factory{
         this.location = location;
         this.logoPath = logoPath;
         this.rating = rating;
-        this.comments = comments;
-        this.chocolates = chocolates;
     }
 }
 

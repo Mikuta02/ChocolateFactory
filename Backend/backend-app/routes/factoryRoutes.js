@@ -3,6 +3,7 @@ const router = express.Router();
 const factoryController = require('../controllers/factoryController');
 
 router.get('/factories',factoryController.getAllFactories);
+router.get('/factories/:factoryId',factoryController.getFactoryById);
 router.post('/factories',factoryController.addFactory);
 router.delete('/factories/:id',factoryController.deleteFactoryById);
 

@@ -41,3 +41,23 @@ exports.deleteFactoryById = (req, res) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 };
+
+exports.getFactoryById = (req, res) => {
+    const { factoryId } = req.params;
+
+    if (!factoryId) {
+        return res.status(400).json({ error: 'Factory ID is required' });
+    }
+
+    try {
+        const factory = factoryService.getFactoryById(Number(factoryId));
+        if (factory) {
+            res.status(200).json(factory);
+        } else {
+            res.status(404).json({ error: 'Factory not found' });
+        }
+    } catch (error) {
+        console.error('Error finding factory:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+};
