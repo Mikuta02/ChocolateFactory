@@ -17,7 +17,7 @@
         <button @click="confirmDelete(chocolate.id)" class="delete-button">X</button>
         <img :src="getChocolatePictureUrl(chocolate.picturePath)" :alt="chocolate.name + ' picture'" class="chocolate-picture" />
         <div class="chocolate-details">
-          <h3>{{ chocolate.name }}</h3>
+          <h3 class="chocolate-name">{{ chocolate.name }}</h3>
           <p>Type: {{ chocolate.chocolateType }}</p>
           <p>Variety: {{ chocolate.chocolateVariety }}</p>
           <p>Price: {{ chocolate.price }}</p>
@@ -138,7 +138,7 @@ function getChocolatePictureUrl(path) {
 }
 .chocolate-item {
   display: flex;
-  align-items: flex-start;
+  align-items: center; /* Align items center */
   margin: 20px 0;
   border: 1px solid #000;
   padding: 10px;
@@ -148,7 +148,7 @@ function getChocolatePictureUrl(path) {
   position: relative;
 }
 .chocolate-picture {
-  width: 25%; 
+  width: 60%; /* Increased width for better visibility */
   height: auto;
   margin-right: 20px;
 }
@@ -157,20 +157,32 @@ function getChocolatePictureUrl(path) {
   flex-direction: column;
   flex-grow: 1;
 }
+.chocolate-name {
+  font-size: 24px; /* Increased font size */
+  font-weight: bold; /* Bold font */
+  margin-top: 40px; /* Add margin to move it down */
+}
 .chocolate-description {
   white-space: pre-line;
 }
 .delete-button, .edit-button {
   position: absolute;
   top: 10px;
+  width: 30px; /* Increased width for better visibility */
+  height: 30px; /* Increased height for better visibility */
+  border: none;
+  border-radius: 50%; /* Rounded shape */
+  color: white;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  font-weight: bold;
+}
+.delete-button {
   right: 45px;
   background-color: red;
-  color: white;
-  border: none;
-  border-radius: 50%;
-  width: 25px;
-  height: 25px;
-  cursor: pointer;
 }
 .edit-button {
   right: 10px;

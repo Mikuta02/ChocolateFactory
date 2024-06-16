@@ -1,16 +1,7 @@
 [
   {
     "id": 1,
-    "name": "Fabrika Loznica",
-    "workingHours": "9am-5pm",
-    "status": "otvorena",
-    "location": {},
-    "logoPath": "fabrika1.jpg",
-    "rating": 4.5
-  },
-  {
-    "id": 3,
-    "name": "Opel",
+    "name": "Svicarska",
     "workingHours": "10am-3pm",
     "status": "otvorena",
     "location": {
@@ -22,16 +13,20 @@
     "rating": 5
   },
   {
-    "id": 2,
-    "name": "Willy Wonka",
-    "workingHours": "12am-4pm",
-    "status": "otvorena",
-    "location": {},
-    "logoPath": "",
-    "rating": 4
+    "id": 3,
+    "name": "Rafanito",
+    "workingHours": "10am-6pm",
+    "status": "otvoreno",
+    "location": {
+      "latitude": 72.19,
+      "longitude": 55.943,
+      "address": "Wien, Austria"
+    },
+    "logoPath": "fabrika6.jpg",
+    "rating": 4.3
   },
   {
-    "id": 4,
+    "id": 2,
     "name": "Smederevac",
     "workingHours": "7am-5pm",
     "status": "zatvorena",
@@ -42,5 +37,18 @@
     },
     "logoPath": "fabrika3.jpg",
     "rating": 4.3
+  },
+  {
+    "id": 4,
+    "name": "Vozic Krstic",
+    "workingHours": "8am-8pm",
+    "status": "otvoreno",
+    "location": {
+      "latitude": 89.678,
+      "longitude": 54.987,
+      "address": "Novi Sad 21000, Srbija"
+    },
+    "logoPath": "fabrika7.jpg",
+    "rating": 3.4
   }
 ]

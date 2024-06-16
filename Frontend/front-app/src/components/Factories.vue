@@ -6,7 +6,10 @@
         <img :src="getFactoryLogoUrl(factory.logoPath)" :alt="factory.name + ' logo'" class="factory-logo" />
         <div class="factory-details">
           <h3>{{ factory.name }}</h3>
-          <p>Location: {{ factory.location.address }}</p>
+          <div class="location-info">
+            <p>{{ factory.location.address }}</p>
+            <p class="coordinates">{{ factory.location.latitude }}, {{ factory.location.longitude }}</p>
+          </div>
           <p>Rating: {{ factory.rating }}</p>
         </div>
       </li>
@@ -63,19 +66,41 @@ li.factory-item {
   align-items: center;
   margin: 20px 0;
   border: 1px solid #000;
-  padding: 10px;
+  padding: 20px;
   border-radius: 8px;
   cursor: pointer;
+  width: 95%; /* Increased width for better layout */
+  max-width: 1400px; /* Increased max-width for better control */
 }
 
 .factory-logo {
-  width: 300px;
+  width: 350px; /* Increased width for better visibility */
   height: auto;
-  margin-right: 20px;
+  margin-right: 40px; /* Increased margin for better separation */
 }
 
 .factory-details {
   display: flex;
   flex-direction: column;
+}
+
+.factory-details h3 {
+  font-weight: bold; /* Bold factory name */
+}
+
+.location-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center align items */
+  margin-bottom: 10px; /* Added margin-bottom for spacing */
+}
+
+.location-info p {
+  margin: 0;
+}
+
+.coordinates {
+  margin-top: 5px; /* Added margin-top for spacing */
+  color: gray;
 }
 </style>
