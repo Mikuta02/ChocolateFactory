@@ -51,3 +51,35 @@ exports.getChocolatesByFactoryId = (req, res) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 };
+
+exports.updateChocolate = (req, res) => {
+    const { id } = req.params;
+    const { name, price, chocolateType, factoryId, chocolateVariety, grams, description, picturePath, status, amount } = req.body;
+
+    const updatedChocolate = {
+        id: Number(id),  
+        name,
+        price,
+        chocolateType,
+        factoryId: Number(factoryId), 
+        chocolateVariety,
+        grams,
+        description,
+        picturePath,
+        status,
+        amount
+    };
+
+    try {
+        const result = chocolateService.updateChocolate(Number(id), updatedChocolate);
+        if (result) {
+            res.status(200).json(result);
+        } else {
+            res.status(404).json({ error: 'Chocolate not found' });
+        }
+    } catch (error) {
+        console.error('Error updating chocolate:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+};
+

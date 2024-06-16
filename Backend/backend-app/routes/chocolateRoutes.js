@@ -5,5 +5,6 @@ const chocolateController = require('../controllers/chocolateController');
 router.get('/chocolates', chocolateController.getChocolatesByFactoryId);
 router.post('/chocolates', chocolateController.addChocolate);
 router.delete('/chocolates/:id', chocolateController.deleteChocolateById);
+router.put('/chocolates/:id',chocolateController.updateChocolate);
 
 module.exports = router;

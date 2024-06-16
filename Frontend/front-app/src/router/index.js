@@ -4,6 +4,7 @@ import Factories from '../components/Factories.vue';
 import AddFactory from '../components/AddFactory.vue';
 import FactoryDetails from '../components/FactoryDetails.vue';
 import AddChocolate from '../components/AddChocolate.vue';
+import EditChocolate from '../components/EditChocolate.vue';
 
 const routes = [
   {
@@ -32,6 +33,12 @@ const routes = [
     name: 'AddChocolate',
     component: AddChocolate,
     props: route => ({ factoryId: route.query.factoryId }) 
+  },
+  {
+    path: '/edit-chocolate/:id/:factoryId',
+    name: 'EditChocolate',
+    component: EditChocolate,
+    props: true
   }
 ];
 
