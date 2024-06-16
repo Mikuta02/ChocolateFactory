@@ -14,8 +14,16 @@
       <input type="text" v-model="status" />
     </div>
     <div>
-      <label>Location:</label>
-      <input type="text" v-model="location" />
+      <label>Latitude:</label>
+      <input type="number" v-model="latitude" step="any" />
+    </div>
+    <div>
+      <label>Longitude:</label>
+      <input type="number" v-model="longitude" step="any" />
+    </div>
+    <div>
+      <label>Address:</label>
+      <input type="text" v-model="address" placeholder="Address"/>
     </div>
     <div>
       <label>Logo URL:</label>
@@ -23,7 +31,7 @@
     </div>
     <div>
       <label>Rating:</label>
-      <input type="number" v-model="rating" />
+      <input type="number" v-model="rating" step="any" />
     </div>
     <button type="submit">Add Factory</button>
   </form>
@@ -32,11 +40,15 @@
 <script setup>
 import { ref } from 'vue';
 import axios from 'axios';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 const name = ref('');
 const workingHours = ref('');
 const status = ref('');
-const location = ref('');
+const latitude = ref('');
+const longitude = ref('');
+const address = ref('');
 const logoPath = ref('');
 const rating = ref(0);
 
@@ -45,7 +57,9 @@ function handleSubmit() {
     name: name.value,
     workingHours: workingHours.value,
     status: status.value,
-    location: location.value,
+    latitude: latitude.value,
+    longitude: longitude.value,
+    address: address.value,
     logoPath: logoPath.value,
     rating: rating.value
   };
@@ -53,7 +67,7 @@ function handleSubmit() {
   axios.post('http://localhost:3001/api/factories', newFactory)
     .then(response => {
       console.log('Factory successfully added:', response.data);
-      // Emit event or update factory list
+      router.push('/factories');
     })
     .catch(error => {
       console.error('There was an error adding the factory!', error);
@@ -79,7 +93,7 @@ function handleSubmit() {
   font-weight: bold;
   margin-bottom: 20px;
   text-transform: uppercase; 
-  font-style:italic
+  font-style: italic;
 }
 
 .add-factory-form div {

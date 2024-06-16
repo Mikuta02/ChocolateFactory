@@ -1,20 +1,28 @@
 const factoryService = require('../services/factoryService');
 
-exports.getAllFactories = (req,res) => {
+exports.getAllFactories = (req, res) => {
     const factories = factoryService.getAllFactories();
     res.json(factories);
 };
 
-exports.addFactory = (req, res) => {
-    const { name, workingHours, status, location, logoPath, rating } = req.body;
+exports.addFactory = async (req, res) => {
+    const { name, workingHours, status, latitude, longitude, address, logoPath, rating } = req.body;
 
-    
-    if (!name || !location || !status) {
-        return res.status(400).json({ error: 'Name, location, and status are required' });
+    if (!name || !address || !status || !latitude || !longitude) {
+        return res.status(400).json({ error: 'Name, address, status, latitude, and longitude are required' });
     }
 
     try {
-        const newFactory = factoryService.addFactory(name, workingHours, status, location, logoPath, rating);
+        const newFactory = factoryService.addFactory(
+            name, 
+            workingHours, 
+            status, 
+            latitude, 
+            longitude, 
+            address,
+            logoPath, 
+            rating
+        );
         res.status(201).json(newFactory);
     } catch (error) {
         console.error('Error adding factory:', error);
@@ -43,14 +51,14 @@ exports.deleteFactoryById = (req, res) => {
 };
 
 exports.getFactoryById = (req, res) => {
-    const { factoryId } = req.params;
+    const { id } = req.params;
 
-    if (!factoryId) {
+    if (!id) {
         return res.status(400).json({ error: 'Factory ID is required' });
     }
 
     try {
-        const factory = factoryService.getFactoryById(Number(factoryId));
+        const factory = factoryService.getFactoryById(Number(id));
         if (factory) {
             res.status(200).json(factory);
         } else {
