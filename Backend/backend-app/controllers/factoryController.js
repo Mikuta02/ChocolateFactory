@@ -8,8 +8,18 @@ exports.getAllFactories = (req, res) => {
 exports.addFactory = async (req, res) => {
     const { name, workingHours, status, latitude, longitude, address, logoPath, rating } = req.body;
 
-    if (!name || !address || !status || !latitude || !longitude) {
+    if (!name || !address || !status || latitude === undefined || longitude === undefined) {
         return res.status(400).json({ error: 'Name, address, status, latitude, and longitude are required' });
+    }
+
+    const addressRegex = /^[a-zA-Z0-9\s,.'-]+, [a-zA-Z\s]+,?\s*\d{5}$/;
+    console.log('Address:', address); // Dodan ispis za debug
+    if (!addressRegex.test(address)) {
+        return res.status(400).json({ error: 'Invalid address format (e.g., Ulica 123, Grad, 11000 or Ulica 123, Grad 11000)' });
+    }
+
+    if (isNaN(latitude) || isNaN(longitude)) {
+        return res.status(400).json({ error: 'Latitude and longitude must be numbers' });
     }
 
     try {
@@ -17,8 +27,8 @@ exports.addFactory = async (req, res) => {
             name, 
             workingHours, 
             status, 
-            latitude, 
-            longitude, 
+            parseFloat(latitude), 
+            parseFloat(longitude), 
             address,
             logoPath, 
             rating

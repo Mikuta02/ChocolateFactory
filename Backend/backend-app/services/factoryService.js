@@ -26,6 +26,7 @@ class FactoryService {
             }
         } catch (err) {
             console.error('Error reading factories from file:', err);
+            return [];
         }
     }
 
@@ -49,7 +50,20 @@ class FactoryService {
         });
     }
 
+    validateAddress(address) {
+        const regex = /^[a-zA-Z0-9\s,.'-]+, [a-zA-Z\s]+[ ,]?\d{5}$/;
+        return regex.test(address);
+    }
+
     addFactory(name, workingHours, status, latitude, longitude, address, logoPath = '', rating = 0) {
+        if (!this.validateAddress(address)) {
+            throw new Error('Invalid address format');
+        }
+
+        if (isNaN(latitude) || isNaN(longitude)) {
+            throw new Error('Latitude and longitude must be numbers');
+        }
+
         const maxId = this.factories.reduce((max, factory) => (factory.id > max ? factory.id : max), 0);
         const newId = maxId + 1;
         const newLocation = new Location(latitude, longitude, address);

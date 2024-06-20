@@ -3,35 +3,38 @@
     <h2>Add New Factory</h2>
     <div>
       <label>Name:</label>
-      <input type="text" v-model="name" />
+      <input type="text" v-model="name" placeholder="Factory Name"/>
     </div>
     <div>
       <label>Working Hours:</label>
-      <input type="text" v-model="workingHours" />
+      <input type="text" v-model="workingHours" placeholder="e.g., 9am-5pm"/>
     </div>
     <div>
       <label>Status:</label>
-      <input type="text" v-model="status" />
+      <input type="text" v-model="status" placeholder="e.g., open/closed"/>
     </div>
     <div>
       <label>Latitude:</label>
-      <input type="number" v-model="latitude" step="any" />
+      <input type="number" v-model="latitude" step="any" placeholder="e.g., 44.7866"/>
+      <span v-if="latitudeError" class="error">{{ latitudeError }}</span>
     </div>
     <div>
       <label>Longitude:</label>
-      <input type="number" v-model="longitude" step="any" />
+      <input type="number" v-model="longitude" step="any" placeholder="e.g., 20.4489"/>
+      <span v-if="longitudeError" class="error">{{ longitudeError }}</span>
     </div>
     <div>
       <label>Address:</label>
-      <input type="text" v-model="address" placeholder="Address"/>
+      <input type="text" v-model="address" placeholder="e.g., Ulica 123, Grad, 11000 or Ulica 123, Grad 11000"/>
+      <span v-if="addressError" class="error">{{ addressError }}</span>
     </div>
     <div>
       <label>Logo URL:</label>
-      <input type="text" v-model="logoPath" />
+      <input type="text" v-model="logoPath" placeholder="e.g., http://example.com/logo.jpg"/>
     </div>
     <div>
       <label>Rating:</label>
-      <input type="number" v-model="rating" step="any" />
+      <input type="number" v-model="rating" step="any" placeholder="e.g., 4.5"/>
     </div>
     <button type="submit">Add Factory</button>
   </form>
@@ -52,13 +55,41 @@ const address = ref('');
 const logoPath = ref('');
 const rating = ref(0);
 
+const latitudeError = ref('');
+const longitudeError = ref('');
+const addressError = ref('');
+
+function validateAddress(address) {
+  const regex = /^[a-zA-Z0-9\s,.'-]+, [a-zA-Z\s]+ ?\d{5}$/;
+  return regex.test(address);
+}
+
 function handleSubmit() {
+  latitudeError.value = '';
+  longitudeError.value = '';
+  addressError.value = '';
+
+  if (isNaN(latitude.value) || latitude.value === '') {
+    latitudeError.value = 'Latitude must be a number';
+    return;
+  }
+
+  if (isNaN(longitude.value) || longitude.value === '') {
+    longitudeError.value = 'Longitude must be a number';
+    return;
+  }
+
+  if (!validateAddress(address.value)) {
+    addressError.value = 'Invalid address format (e.g., Ulica 123, Grad, 11000 or Ulica 123, Grad 11000)';
+    return;
+  }
+
   const newFactory = {
     name: name.value,
     workingHours: workingHours.value,
     status: status.value,
-    latitude: latitude.value,
-    longitude: longitude.value,
+    latitude: parseFloat(latitude.value),
+    longitude: parseFloat(longitude.value),
     address: address.value,
     logoPath: logoPath.value,
     rating: rating.value
@@ -128,5 +159,10 @@ function handleSubmit() {
 
 .add-factory-form button:hover {
   background-color: #3a9d70;
+}
+
+.error {
+  color: red;
+  font-size: 0.8em;
 }
 </style>

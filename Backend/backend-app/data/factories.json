@@ -50,5 +50,18 @@
     },
     "logoPath": "fabrika7.jpg",
     "rating": 3.4
+  },
+  {
+    "id": 5,
+    "name": "Cokolada",
+    "workingHours": "9-8",
+    "status": "open",
+    "location": {
+      "latitude": 412.4124,
+      "longitude": 12.34123,
+      "address": "Ulica 123, Grad 11000"
+    },
+    "logoPath": "fabrika1.jpg",
+    "rating": 3.82
   }
 ]
