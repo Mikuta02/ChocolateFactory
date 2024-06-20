@@ -1,56 +1,67 @@
 [
   {
     "id": 1,
-    "name": "Fabrika Loznica",
-    "workingHours": "9am-5pm",
+    "name": "Svicarska",
+    "workingHours": "10am-3pm",
     "status": "otvorena",
-    "location": "Loznica",
+    "location": {
+      "latitude": 44.7866,
+      "longitude": 20.4489,
+      "address": "Beograd, Serbia"
+    },
     "logoPath": "fabrika1.jpg",
-    "rating": 4.5
-  },
-  {
-    "id": 4,
-    "name": "Fabrika Vladicin Han",
-    "workingHours": "12am-4pm",
-    "status": "otvorena",
-    "location": "Vladicin Han",
-    "logoPath": "fabrika4.jpg",
-    "rating": 3.84
-  },
-  {
-    "id": 5,
-    "name": "Willy Wonka",
-    "workingHours": "12am-4pm",
-    "status": "otvorena",
-    "location": "Bath",
-    "logoPath": "",
-    "rating": 4
-  },
-  {
-    "id": 2,
-    "name": "Fabrika Ostoja",
-    "workingHours": "10am-1pm",
-    "status": "zatvorena",
-    "location": "Sabac",
-    "logoPath": "fabrika2.jpg",
-    "rating": 3.8
+    "rating": 5
   },
   {
     "id": 3,
-    "name": "Fabrika Smederevac",
-    "workingHours": "1am-3pm",
-    "status": "zatvorena",
-    "location": "Sabac",
-    "logoPath": "fabrika3.jpg",
-    "rating": 2.8
+    "name": "Rafanito",
+    "workingHours": "10am-6pm",
+    "status": "otvoreno",
+    "location": {
+      "latitude": 72.19,
+      "longitude": 55.943,
+      "address": "Wien, Austria"
+    },
+    "logoPath": "fabrika6.jpg",
+    "rating": 4.3
   },
   {
-    "id": 6,
-    "name": "dsad",
-    "workingHours": "dsada",
-    "status": "dsada",
-    "location": "dasdas",
-    "logoPath": "",
-    "rating": 2
+    "id": 2,
+    "name": "Smederevac",
+    "workingHours": "7am-5pm",
+    "status": "zatvorena",
+    "location": {
+      "latitude": 23.543,
+      "longitude": 10.156,
+      "address": "Smederevo, Srbija"
+    },
+    "logoPath": "fabrika3.jpg",
+    "rating": 4.3
+  },
+  {
+    "id": 4,
+    "name": "Vozic Krstic",
+    "workingHours": "8am-8pm",
+    "status": "otvoreno",
+    "location": {
+      "latitude": 89.678,
+      "longitude": 54.987,
+      "address": "Novi Sad 21000, Srbija"
+    },
+    "logoPath": "fabrika7.jpg",
+    "rating": 3.4
+  },
+  {
+    "id": 5,
+    "name": "Cokolada",
+    "workingHours": "9-8",
+    "status": "open",
+    "location": {
+      "latitude": 412.4124,
+      "longitude": 12.34123,
+      "address": "Ulica 123, Grad 11000"
+    },
+    "logoPath": "fabrika1.jpg",
+    "rating": 3.82
   }
 ]

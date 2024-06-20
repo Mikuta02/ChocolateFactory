@@ -1,3 +1,5 @@
+const Location = require('./locationModel');
+
 class Factory{
     constructor(id,name, workingHours, status, location, logoPath='', rating=0){
         this.id = id;

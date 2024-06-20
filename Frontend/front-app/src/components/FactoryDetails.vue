@@ -5,17 +5,19 @@
     <img :src="getFactoryLogoUrl(factory.logoPath)" :alt="factory.name + ' logo'" class="factory-logo" />
     <p>Working Hours: {{ factory.workingHours }}</p>
     <p>Status: {{ factory.status }}</p>
-    <p>Location: {{ factory.location }}</p>
+    <p>Location: {{ factory.location.address }}</p>
+    <p>Latitude: {{ factory.location.latitude }}</p>
+    <p>Longitude: {{ factory.location.longitude }}</p>
     <p>Rating: {{ factory.rating }}</p>
-
+  
     <h2>Chocolates</h2>
     <ul v-if="chocolates.length">
       <li v-for="chocolate in chocolates" :key="chocolate.id" class="chocolate-item">
-        <button @click="confirmDelete(chocolate.id)" class="delete-button">X</button>
         <button @click="editChocolate(chocolate.id)" class="edit-button">Edit</button>
+        <button @click="confirmDelete(chocolate.id)" class="delete-button">X</button>
         <img :src="getChocolatePictureUrl(chocolate.picturePath)" :alt="chocolate.name + ' picture'" class="chocolate-picture" />
         <div class="chocolate-details">
-          <h3>{{ chocolate.name }}</h3>
+          <h3 class="chocolate-name">{{ chocolate.name }}</h3>
           <p>Type: {{ chocolate.chocolateType }}</p>
           <p>Variety: {{ chocolate.chocolateVariety }}</p>
           <p>Price: {{ chocolate.price }}</p>
@@ -27,7 +29,7 @@
       </li>
     </ul>
     <p v-else>No chocolates available for this factory.</p>
-
+      
     <button @click="addNewChocolate" class="add-button">Add New Chocolate</button>
 
     <div v-if="showModal" class="modal-overlay">
@@ -82,6 +84,15 @@ function loadChocolates(factoryId) {
     });
 }
 
+function addNewChocolate() {
+  const factoryId = route.params.id;
+  router.push({ name: 'AddChocolate', query: { factoryId } });
+}
+
+function editChocolate(chocolateId) {
+  router.push({ name: 'EditChocolate', params: { factoryId: factory.value.id, chocolateId } });
+}
+
 function confirmDelete(id) {
   chocolateToDelete.value = id;
   showModal.value = true;
@@ -102,16 +113,6 @@ function deleteChocolate() {
 function cancelDelete() {
   showModal.value = false;
   chocolateToDelete.value = null;
-}
-
-function addNewChocolate() {
-  const factoryId = route.params.id;
-  router.push({ path: '/add-chocolate', query: { factoryId } });
-}
-
-function editChocolate(chocolateId) {
-  const factoryId = route.params.id;
-  router.push({ name: 'EditChocolate', params: { id: chocolateId, factoryId } });
 }
 
 function getFactoryLogoUrl(path) {
@@ -137,7 +138,7 @@ function getChocolatePictureUrl(path) {
 }
 .chocolate-item {
   display: flex;
-  align-items: flex-start;
+  align-items: center; /* Align items center */
   margin: 20px 0;
   border: 1px solid #000;
   padding: 10px;
@@ -147,7 +148,7 @@ function getChocolatePictureUrl(path) {
   position: relative;
 }
 .chocolate-picture {
-  width: 25%; 
+  width: 60%; /* Increased width for better visibility */
   height: auto;
   margin-right: 20px;
 }
@@ -156,32 +157,36 @@ function getChocolatePictureUrl(path) {
   flex-direction: column;
   flex-grow: 1;
 }
+.chocolate-name {
+  font-size: 24px; /* Increased font size */
+  font-weight: bold; /* Bold font */
+  margin-top: 40px; /* Add margin to move it down */
+}
 .chocolate-description {
   white-space: pre-line;
 }
-.delete-button {
+.delete-button, .edit-button {
   position: absolute;
   top: 10px;
-  right: 10px;
-  background-color: red;
-  color: white;
+  width: 30px; /* Increased width for better visibility */
+  height: 30px; /* Increased height for better visibility */
   border: none;
-  border-radius: 50%;
-  width: 25px;
-  height: 25px;
+  border-radius: 50%; /* Rounded shape */
+  color: white;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  font-weight: bold;
+}
+.delete-button {
+  right: 45px;
+  background-color: red;
 }
 .edit-button {
-  position: absolute;
-  top: 10px;
-  right: 50px;
+  right: 10px;
   background-color: blue;
-  color: white;
-  border: none;
-  border-radius: 50%;
-  width: 25px;
-  height: 25px;
-  cursor: pointer;
 }
 .add-button {
   background-color: green;

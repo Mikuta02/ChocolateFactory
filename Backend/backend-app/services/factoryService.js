@@ -1,14 +1,15 @@
 const Factory = require('../models/factoryModel');
+const Location = require('../models/locationModel');
 const path = require('path');
 const fs = require('fs');
 
-class FactoryService{
-    constructor(){
+class FactoryService {
+    constructor() {
         this.filePath = path.join(__dirname, '../data/factories.json');
         this.factories = this.loadFactories();
     }
 
-    loadFactories(){
+    loadFactories() {
         try {
             if (fs.existsSync(this.filePath)) {
                 const data = fs.readFileSync(this.filePath, 'utf8');
@@ -18,20 +19,15 @@ class FactoryService{
                     factory.name,
                     factory.workingHours,
                     factory.status,
-                    factory.location,
+                    new Location(factory.location.latitude, factory.location.longitude, factory.location.address),
                     factory.logoPath,
                     factory.rating
                 ));
             }
         } catch (err) {
             console.error('Error reading factories from file:', err);
+            return [];
         }
-        return [
-            new Factory(1, 'Fabrika Loznica', '9am-5pm', 'otvorena', 'Loznica', 'fabrika1.jpg', 4.5),
-            new Factory(2, 'Fabrika Ostoja', '10am-1pm', 'zatvorena', 'Sabac', 'fabrika2.jpg', 3.8),
-            new Factory(3, 'Fabrika Smederevac', '1am-3pm', 'zatvorena', 'Sabac', 'fabrika3.jpg', 2.8),
-            new Factory(4, 'Fabrika Beograd', '12am-4pm', 'otvorena', 'Beograd', 'fabrika4.jpg', 3.84),
-        ];
     }
 
     saveFactories() {
@@ -54,10 +50,24 @@ class FactoryService{
         });
     }
 
-    addFactory(name, workingHours, status, location, logoPath = '', rating = 0) {
+    validateAddress(address) {
+        const regex = /^[a-zA-Z0-9\s,.'-]+, [a-zA-Z\s]+[ ,]?\d{5}$/;
+        return regex.test(address);
+    }
+
+    addFactory(name, workingHours, status, latitude, longitude, address, logoPath = '', rating = 0) {
+        if (!this.validateAddress(address)) {
+            throw new Error('Invalid address format');
+        }
+
+        if (isNaN(latitude) || isNaN(longitude)) {
+            throw new Error('Latitude and longitude must be numbers');
+        }
+
         const maxId = this.factories.reduce((max, factory) => (factory.id > max ? factory.id : max), 0);
         const newId = maxId + 1;
-        const newFactory = new Factory(newId, name, workingHours, status, location, logoPath, rating);
+        const newLocation = new Location(latitude, longitude, address);
+        const newFactory = new Factory(newId, name, workingHours, status, newLocation, logoPath, rating);
         this.factories.push(newFactory);
         this.saveFactories();
         return newFactory;
@@ -73,7 +83,7 @@ class FactoryService{
         return factoryDeleted;
     }
 
-    getFactoryById(id){
+    getFactoryById(id) {
         return this.factories.find(factory => factory.id === id);
     }
 }

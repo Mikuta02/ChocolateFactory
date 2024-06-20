@@ -57,11 +57,11 @@ exports.updateChocolate = (req, res) => {
     const { name, price, chocolateType, factoryId, chocolateVariety, grams, description, picturePath, status, amount } = req.body;
 
     const updatedChocolate = {
-        id: Number(id),  
+        id: Number(id),
         name,
         price,
         chocolateType,
-        factoryId: Number(factoryId), 
+        factoryId: Number(factoryId),
         chocolateVariety,
         grams,
         description,
