@@ -25,6 +25,7 @@
           <p class="chocolate-description">Description: {{ chocolate.description }}</p>
           <p>Status: {{ chocolate.status }}</p>
           <p>Amount: {{ chocolate.amount }}</p>
+          <button @click="addToCart(chocolate.id, 1)" class="add-to-cart-button">Add to Cart</button> <!-- Dodato dugme za dodavanje u korpu -->
         </div>
       </li>
     </ul>
@@ -115,6 +116,16 @@ function cancelDelete() {
   chocolateToDelete.value = null;
 }
 
+function addToCart(chocolateId, quantity) {
+  axios.post('http://localhost:3001/api/cart/add', { chocolateId, quantity })
+    .then(response => {
+      console.log('Added to cart:', response.data);
+    })
+    .catch(error => {
+      console.error('Error adding to cart:', error);
+    });
+}
+
 function getFactoryLogoUrl(path) {
   return `http://localhost:3001/images/${path}`;
 }
@@ -148,7 +159,7 @@ function getChocolatePictureUrl(path) {
   position: relative;
 }
 .chocolate-picture {
-  width: 60%; /* Increased width for better visibility */
+  width: 100px; /* Adjusted width */
   height: auto;
   margin-right: 20px;
 }
@@ -160,7 +171,6 @@ function getChocolatePictureUrl(path) {
 .chocolate-name {
   font-size: 24px; /* Increased font size */
   font-weight: bold; /* Bold font */
-  margin-top: 40px; /* Add margin to move it down */
 }
 .chocolate-description {
   white-space: pre-line;
@@ -196,6 +206,15 @@ function getChocolatePictureUrl(path) {
   padding: 10px 20px;
   cursor: pointer;
   margin-top: 20px;
+}
+.add-to-cart-button {
+  background-color: orange;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin-top: 10px;
 }
 .modal-overlay {
   position: fixed;
