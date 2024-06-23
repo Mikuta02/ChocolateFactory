@@ -1,0 +1,60 @@
+[
+  {
+    "id": 1,
+    "user": {
+      "id": 1,
+      "username": "Boris"
+    },
+    "chocolates": [
+      {
+        "chocolate": {
+          "id": 1,
+          "name": "Uleti ti kita",
+          "price": 999,
+          "chocolateType": "Cooking",
+          "factoryId": 1,
+          "chocolateVariety": "Dark",
+          "grams": 999,
+          "description": "ulcece kita",
+          "picturePath": "coko4.jpg",
+          "status": "unavailable",
+          "amount": 0
+        },
+        "quantity": 1
+      },
+      {
+        "chocolate": {
+          "id": 5,
+          "name": "kita",
+          "price": 120,
+          "chocolateType": "Normal",
+          "factoryId": 5,
+          "chocolateVariety": "Dark",
+          "grams": 120,
+          "description": "nista",
+          "picturePath": "coko7.jpg",
+          "status": "unavailable",
+          "amount": 0
+        },
+        "quantity": 1
+      },
+      {
+        "chocolate": {
+          "id": 6,
+          "name": "cokoladica",
+          "price": 123,
+          "chocolateType": "Normal",
+          "factoryId": 5,
+          "chocolateVariety": "Dark",
+          "grams": 123,
+          "description": "mala",
+          "picturePath": "coko1.jpg",
+          "status": "unavailable",
+          "amount": 0
+        },
+        "quantity": 1
+      }
+    ],
+    "totalPrice": 1242
+  }
+]

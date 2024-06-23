@@ -4,13 +4,13 @@ const ChocolateTypeEnum = require('../models/chocolateTypeEnum');
 const path = require('path');
 const fs = require('fs');
 
-class ChocolateService{
-    constructor(){
+class ChocolateService {
+    constructor() {
         this.filePath = path.join(__dirname, '../data/chocolates.json');
         this.chocolates = this.loadChocolates();
     }
 
-    loadChocolates(){
+    loadChocolates() {
         try {
             if (fs.existsSync(this.filePath)) {
                 const data = fs.readFileSync(this.filePath, 'utf8');
@@ -37,24 +37,27 @@ class ChocolateService{
         ];
     }
 
-    saveChocolates(){
-        try{
+    saveChocolates() {
+        try {
             fs.writeFileSync(this.filePath, JSON.stringify(this.chocolates, null, 2));
-        } catch(err){
+        } catch (err) {
             console.error('Error writing chocolates to file:', err);
         }
     }
 
-    getAllChocolates(){
+    getAllChocolates() {
         return this.chocolates;
     }
 
-    getChocolateByFactoryId(factoryId){
-        var factoryChocolates = this.chocolates.filter(chocolate => chocolate.factoryId === factoryId);
-        return factoryChocolates;
+    getChocolateByFactoryId(factoryId) {
+        return this.chocolates.filter(chocolate => chocolate.factoryId === factoryId);
     }
 
-    deleteChocolateById(id){
+    getChocolateById(id) {
+        return this.chocolates.find(chocolate => chocolate.id === id);
+    }
+
+    deleteChocolateById(id) {
         const initialLength = this.chocolates.length;
         this.chocolates = this.chocolates.filter(chocolate => chocolate.id !== id);
         const chocolateDeleted = this.chocolates.length < initialLength;
@@ -64,7 +67,7 @@ class ChocolateService{
         return chocolateDeleted;
     }
 
-    addChocolate(name, price, chocolateType, factoryId, chocolateVariety, grams, description, picturePath='', status='unavailable', amount=0){
+    addChocolate(name, price, chocolateType, factoryId, chocolateVariety, grams, description, picturePath = '', status = 'unavailable', amount = 0) {
         const maxId = this.chocolates.reduce((max, chocolate) => (chocolate.id > max ? chocolate.id : max), 0);
         const newId = maxId + 1;
         const newChocolate = new Chocolate(newId, name, price, chocolateType, factoryId, chocolateVariety, grams, description, picturePath, status, amount);
@@ -72,7 +75,7 @@ class ChocolateService{
         this.saveChocolates();
         return newChocolate;
     }
-    
+
     updateChocolate(id, updatedChocolate) {
         const chocolate = this.chocolates.find(choc => choc.id === id);
         if (chocolate) {

@@ -3,7 +3,8 @@
     <nav>
       <router-link to="/">Home</router-link> |
       <router-link to="/factories">Factories</router-link> |
-      <router-link to="/add-factory">Add Factory</router-link>
+      <router-link to="/add-factory">Add Factory</router-link>|
+      <router-link to="/cart">Cart</router-link>
     </nav>
     <router-view/>
   </div>

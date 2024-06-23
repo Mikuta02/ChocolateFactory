@@ -5,6 +5,7 @@ import AddFactory from '../components/AddFactory.vue';
 import FactoryDetails from '../components/FactoryDetails.vue';
 import AddChocolate from '../components/AddChocolate.vue';
 import EditChocolate from '../components/EditChocolate.vue';
+import Cart from '../components/Cart.vue';
 
 const routes = [
   {
@@ -39,6 +40,11 @@ const routes = [
     name: 'EditChocolate',
     component: EditChocolate,
     props: true
+  },
+  {
+    path: '/cart',
+    name: 'Cart',
+    component: Cart 
   }
 ];
 
