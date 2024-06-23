@@ -25,13 +25,17 @@
           <p class="chocolate-description">Description: {{ chocolate.description }}</p>
           <p>Status: {{ chocolate.status }}</p>
           <p>Amount: {{ chocolate.amount }}</p>
-          <button @click="addToCart(chocolate.id, 1)" class="add-to-cart-button">Add to Cart</button> <!-- Dodato dugme za dodavanje u korpu -->
+          <button @click="addToCart(chocolate.id, 1)" class="add-to-cart-button">Add to Cart</button>
         </div>
       </li>
     </ul>
     <p v-else>No chocolates available for this factory.</p>
       
     <button @click="addNewChocolate" class="add-button">Add New Chocolate</button>
+
+    <button @click="goToAddComment" class="add-comment-button">Add Comment</button> <!-- Dodato dugme za dodavanje komentara -->
+
+    <Comments :factoryId="factory.id" /> <!-- Dodato prikazivanje komentara -->
 
     <div v-if="showModal" class="modal-overlay">
       <div class="modal">
@@ -47,6 +51,7 @@
 import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import axios from 'axios';
+import Comments from './Comments.vue'; // Dodato: import za Comments
 
 const route = useRoute();
 const router = useRouter();
@@ -133,6 +138,11 @@ function getFactoryLogoUrl(path) {
 function getChocolatePictureUrl(path) {
   return `http://localhost:3001/images/${path}`;
 }
+
+function goToAddComment() {
+  const factoryId = route.params.id;
+  router.push({ name: 'AddComment', params: { factoryId } });
+}
 </script>
 
 <style scoped>
@@ -149,7 +159,7 @@ function getChocolatePictureUrl(path) {
 }
 .chocolate-item {
   display: flex;
-  align-items: center; /* Align items center */
+  align-items: center;
   margin: 20px 0;
   border: 1px solid #000;
   padding: 10px;
@@ -159,7 +169,7 @@ function getChocolatePictureUrl(path) {
   position: relative;
 }
 .chocolate-picture {
-  width: 100px; /* Adjusted width */
+  width: 100px;
   height: auto;
   margin-right: 20px;
 }
@@ -169,8 +179,8 @@ function getChocolatePictureUrl(path) {
   flex-grow: 1;
 }
 .chocolate-name {
-  font-size: 24px; /* Increased font size */
-  font-weight: bold; /* Bold font */
+  font-size: 24px;
+  font-weight: bold;
 }
 .chocolate-description {
   white-space: pre-line;
@@ -178,10 +188,10 @@ function getChocolatePictureUrl(path) {
 .delete-button, .edit-button {
   position: absolute;
   top: 10px;
-  width: 30px; /* Increased width for better visibility */
-  height: 30px; /* Increased height for better visibility */
+  width: 30px;
+  height: 30px;
   border: none;
-  border-radius: 50%; /* Rounded shape */
+  border-radius: 50%;
   color: white;
   cursor: pointer;
   display: flex;
@@ -215,6 +225,15 @@ function getChocolatePictureUrl(path) {
   padding: 5px 10px;
   cursor: pointer;
   margin-top: 10px;
+}
+.add-comment-button {
+  background-color: blue;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin-top: 20px;
 }
 .modal-overlay {
   position: fixed;

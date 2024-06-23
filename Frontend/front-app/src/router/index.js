@@ -6,6 +6,7 @@ import FactoryDetails from '../components/FactoryDetails.vue';
 import AddChocolate from '../components/AddChocolate.vue';
 import EditChocolate from '../components/EditChocolate.vue';
 import Cart from '../components/Cart.vue';
+import AddComment from '../components/AddComment.vue'; 
 
 const routes = [
   {
@@ -45,6 +46,12 @@ const routes = [
     path: '/cart',
     name: 'Cart',
     component: Cart 
+  },
+  {
+    path: '/add-comment/:factoryId',
+    name: 'AddComment',
+    component: AddComment,
+    props: true
   }
 ];
 
