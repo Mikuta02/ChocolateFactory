@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "user": {
+      "id": 1,
+      "username": "User1"
+    },
+    "factory": "1",
+    "text": "Mnogo dobra fabrike i cokolade mjau",
+    "rating": "3"
+  },
+  {
+    "id": 2,
+    "user": {
+      "id": 1,
+      "username": "User1"
+    },
+    "factory": "1",
+    "text": "nesto nesto mjau mjau",
+    "rating": "4"
+  }
+]
