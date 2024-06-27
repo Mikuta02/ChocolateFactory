@@ -79,3 +79,31 @@ exports.getFactoryById = (req, res) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 };
+
+exports.searchFactories = (req, res) => {
+    const { name, chocolateName, location, rating, sortBy, order, chocolateType, chocolateVariety, openOnly } = req.query;
+
+    try {
+        console.log('Search parameters:', { name, chocolateName, location, rating, sortBy, order, chocolateType, chocolateVariety, openOnly });
+
+        let factories = factoryService.searchFactories({ name, chocolateName, location, rating });
+        console.log('Filtered factories:', factories);
+
+        if (sortBy) {
+            factories = factoryService.sortFactories(factories, sortBy, order || 'asc');
+            console.log('Sorted factories:', factories);
+        }
+
+        if (chocolateType || chocolateVariety || openOnly) {
+            factories = factoryService.filterFactories(factories, { chocolateType, chocolateVariety, openOnly });
+            console.log('Filtered factories (after additional filters):', factories);
+        }
+
+        res.json(factories);
+    } catch (error) {
+        console.error('Error searching factories:', error);
+        res.status(500).send(error.message);
+    }
+};
+
+
