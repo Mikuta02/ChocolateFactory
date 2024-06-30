@@ -7,6 +7,9 @@ import AddChocolate from '../components/AddChocolate.vue';
 import EditChocolate from '../components/EditChocolate.vue';
 import Cart from '../components/Cart.vue';
 import AddComment from '../components/AddComment.vue'; 
+import Login from '../components/Login.vue';
+import Register from '../components/Register.vue';
+import store from '../store';
 
 const routes = [
   {
@@ -52,12 +55,43 @@ const routes = [
     name: 'AddComment',
     component: AddComment,
     props: true
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login,
+    props: true
+  },
+  {
+    path: '/register',
+    name: 'Register',
+    component: Register,
+    props: true
   }
 ];
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
+});
+
+// Route guard
+router.beforeEach((to, from, next) => {
+  if (to.name === 'AddFactory') {
+    const token = store.state.token; // Get token from the store
+    if (token) {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      if (payload.role === 'Administrator') {
+        next();
+      } else {
+        next('/login'); // Redirect to login if not an Administrator
+      }
+    } else {
+      next('/login'); // Redirect to login if not logged in
+    }
+  } else {
+    next();
+  }
 });
 
 export default router;
