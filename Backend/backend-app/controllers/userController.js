@@ -70,6 +70,7 @@ exports.login = async (req, res) => {
                 "secret", {
                     expiresIn: "1h"
                 });
+                res.cookie('jwt', token, {httpOnly: true, maxAge: 3 * 60 * 1000});
                 return res.status(200).json({ message: 'Login successful', token: token });
             } else {
                 return res.status(401).json({ error: 'Incorrect password' });

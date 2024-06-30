@@ -50,5 +50,19 @@
     "accumulatedPoints": 0,
     "customerType": "Bronze",
     "isBanned": false
+  },
+  {
+    "id": 5,
+    "username": "bogdan",
+    "password": "$2b$10$R.XPUK8ut6lVwe8YMbVepOXRWnvI8RZQlTGbPaMOmlFV9mYfyWENS",
+    "name": "Bogdan",
+    "lastName": "Djukic",
+    "gender": "Male",
+    "birthDate": "2001-01-01",
+    "role": "Customer",
+    "cartId": 0,
+    "accumulatedPoints": 0,
+    "customerType": "Bronze",
+    "isBanned": false
   }
 ]

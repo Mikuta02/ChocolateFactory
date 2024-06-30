@@ -11,7 +11,10 @@ const userRoutes = require('./routes/userRoutes');
 const app = express();
 const port = 3001;
 
-app.use(cors());
+app.use(cors({
+  credentials: true,
+  origin: ['http://localhost:3000']
+}));
 app.use(bodyParser.json());
 
 const imagesPath = path.join(__dirname, 'images');

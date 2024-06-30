@@ -4,11 +4,38 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/factories">Factories</router-link> |
       <router-link to="/add-factory">Add Factory</router-link>|
-      <router-link to="/cart">Cart</router-link>
+      <router-link to="/cart">Cart</router-link>|
+      <router-link v-if="!isAuthenticated" to="/login">Login</router-link> |
+      <router-link v-if="!isAuthenticated" to="/register">Register</router-link> |
+      <button v-if="isAuthenticated" @click="logout">Logout</button>
     </nav>
     <router-view/>
   </div>
 </template>
+
+<script>
+import { computed } from 'vue';
+import { useStore } from 'vuex';
+import { useRouter } from 'vue-router';
+
+export default {
+  setup() {
+    const store = useStore();
+    const router = useRouter();
+    const isAuthenticated = computed(() => store.getters.isAuthenticated);
+
+    const logout = () => {
+      store.dispatch('logout');
+      router.push('/login');
+    };
+
+    return {
+      isAuthenticated,
+      logout
+    };
+  }
+};
+</script>
 
 <style>
 #app {
