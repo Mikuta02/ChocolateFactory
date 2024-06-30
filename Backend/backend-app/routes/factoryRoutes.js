@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const factoryController = require('../controllers/factoryController');
+const checkAuth = require('../middleware/check-auth');
 
 router.get('/factories', factoryController.getAllFactories);
 router.get('/factories/:id', factoryController.getFactoryById);

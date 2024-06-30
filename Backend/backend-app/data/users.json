@@ -1,0 +1,29 @@
+[
+  {
+    "id": 1,
+    "username": "eskobar01",
+    "password": "$2b$10$RbBog7YyYgSC0tx9v6ZdguUxXSMQMwdDOCE0K0B6I.Z4IbG9G6QlO",
+    "name": "Pablo",
+    "lastName": "Eskobar",
+    "gender": "Attack Helicopter",
+    "birthDate": "Customer",
+    "role": 0,
+    "cartId": 0,
+    "accumulatedPoints": "Bronze",
+    "customerType": false,
+    "isBanned": false
+  },
+  {
+    "id": 2,
+    "username": "mitar",
+    "password": "$2b$10$n2Nm25OiOInxyS6I7omDCOM1SXX/g2sDa680ucuAVJrtV5AVu84mu",
+    "name": "Pablo",
+    "lastName": "Eskobar",
+    "gender": "Attack Helicopter",
+    "role": "Customer",
+    "cartId": 0,
+    "accumulatedPoints": 0,
+    "customerType": "Bronze",
+    "isBanned": false
+  }
+]

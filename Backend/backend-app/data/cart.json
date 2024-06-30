@@ -20,7 +20,7 @@
           "status": "unavailable",
           "amount": 0
         },
-        "quantity": 1
+        "quantity": 3
       },
       {
         "chocolate": {
@@ -53,8 +53,24 @@
           "amount": 0
         },
         "quantity": 1
+      },
+      {
+        "chocolate": {
+          "id": 3,
+          "name": "Malina Pralina",
+          "price": 400,
+          "chocolateType": "Normal",
+          "factoryId": 3,
+          "chocolateVariety": "Dark",
+          "grams": 450,
+          "description": "Losa verzija praline",
+          "picturePath": "coko1.jpg",
+          "status": "unavailable",
+          "amount": 0
+        },
+        "quantity": 4
       }
     ],
-    "totalPrice": 1242
+    "totalPrice": 4840
   }
 ]

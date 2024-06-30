@@ -6,6 +6,7 @@ const factoryRoutes = require('./routes/factoryRoutes');
 const chocolateRoutes = require('./routes/chocolateRoutes');
 const cartRoutes = require('./routes/cartRoutes');
 const commentRoutes = require('./routes/commentRoutes');
+const userRoutes = require('./routes/userRoutes');
 
 const app = express();
 const port = 3001;
@@ -21,6 +22,7 @@ app.use('/api', factoryRoutes);
 app.use('/api', chocolateRoutes);
 app.use('/api', cartRoutes);
 app.use('/api', commentRoutes); 
+app.use('/api', userRoutes); 
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
