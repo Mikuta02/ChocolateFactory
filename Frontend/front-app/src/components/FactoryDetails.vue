@@ -14,6 +14,7 @@
     <ul v-if="chocolates.length">
       <li v-for="chocolate in chocolates" :key="chocolate.id" class="chocolate-item">
         <button @click="editChocolate(chocolate.id)" class="edit-button">Edit</button>
+        <button @click="editAmount(chocolate.id)" v-if="canEditAmount(chocolate)" class="edit-amount-button">Edit Amount</button>
         <button @click="confirmDelete(chocolate.id)" class="delete-button">X</button>
         <img :src="getChocolatePictureUrl(chocolate.picturePath)" :alt="chocolate.name + ' picture'" class="chocolate-picture" />
         <div class="chocolate-details">
@@ -51,8 +52,10 @@
 import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import axios from 'axios';
-import Comments from './Comments.vue'; // Dodato: import za Comments
+import Comments from './Comments.vue'; 
+import { useStore } from 'vuex';
 
+const store = useStore();
 const route = useRoute();
 const router = useRouter();
 const factory = ref(null);
@@ -99,6 +102,11 @@ function editChocolate(chocolateId) {
   router.push({ name: 'EditChocolate', params: { factoryId: factory.value.id, chocolateId } });
 }
 
+function editAmount(chocolateId) {
+  router.push({ name: 'EditAmount', params: { id: chocolateId, factoryId: factory.value.id } });
+}
+
+
 function confirmDelete(id) {
   chocolateToDelete.value = id;
   showModal.value = true;
@@ -142,6 +150,11 @@ function getChocolatePictureUrl(path) {
 function goToAddComment() {
   const factoryId = route.params.id;
   router.push({ name: 'AddComment', params: { factoryId } });
+}
+
+function canEditAmount(chocolate) {
+  const role = store.getters.userRole;
+  return role === 'Worker';
 }
 </script>
 

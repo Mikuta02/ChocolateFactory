@@ -85,6 +85,16 @@ class ChocolateService {
         }
         return null;
     }
+
+    updateChocolateAmount(id, amount) {
+        const chocolate = this.chocolates.find(choc => choc.id === id);
+        if (chocolate) {
+            chocolate.amount = amount;
+            this.saveChocolates();
+            return chocolate;
+        }
+        return null;
+    }
 }
 
 module.exports = new ChocolateService();
