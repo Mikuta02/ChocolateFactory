@@ -8,7 +8,7 @@
     "gender": "Attack Helicopter",
     "role": "Customer",
     "cartId": 0,
-    "accumulatedPoints": 1657,
+    "accumulatedPoints": 1909,
     "customerType": "Bronze",
     "isBanned": false
   },
@@ -34,7 +34,7 @@
     "gender": "Attack Helicopter",
     "role": "Worker",
     "cartId": 0,
-    "accumulatedPoints": 12188,
+    "accumulatedPoints": 15304,
     "customerType": "Bronze",
     "isBanned": false
   },

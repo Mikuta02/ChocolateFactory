@@ -1,9 +1,11 @@
 const path = require('path');
 const fs = require('fs');
 const Purchase = require('../models/purchaseModel');
+const Factory = require('../models/factoryModel');
 const PurchaseStatusEnum = require('../models/purchaseStatusEnum');
 const userService = require('./userService');
 const cartService = require('./cartService');
+const factoryService = require('./factoryService')
 
 class PurchaseService {
     constructor() {
@@ -38,9 +40,19 @@ class PurchaseService {
 
     createPurchaseFromCart(cart, user) {
         const totalPrice = cart.totalPrice;
+        
+        const chocolatesWithFactory = cart.chocolates.map(item => {
+            const factory = factoryService.getFactoryById(item.chocolate.factoryId);
+            return {
+                ...item,
+                factoryName: factory ? factory.name : 'Unknown Factory'
+            };
+        });
+
         const purchase = {
             id: this.purchases.length + 1,
             chocolates: cart.chocolates,
+            factory: chocolatesWithFactory,
             date: new Date().toISOString(),
             totalPrice: totalPrice,
             customerName: `${user.name} ${user.lastName}`,
@@ -62,6 +74,22 @@ class PurchaseService {
     return this.purchases.filter(purchase => purchase.customerId === userId);
     }
 
+    cancelPurchase(purchaseId, userId) {
+        const purchase = this.purchases.find(p => p.id === purchaseId && p.customerId === userId);
+        if (!purchase) {
+            throw new Error('Purchase not found or does not belong to the user');
+        }
+
+        if (purchase.status === PurchaseStatusEnum.PROCESSING) {
+            purchase.status = PurchaseStatusEnum.CANCELED;
+            const lostPoints = Math.floor(purchase.totalPrice / 1000 * 133 * 4);
+            userService.deductPoints(userId, lostPoints);
+            this.savePurchases();
+            return purchase;
+        } else {
+            throw new Error('Purchase cannot be canceled');
+        }
+    }
     
 }
 

@@ -75,6 +75,15 @@ class UserService {
     }
     throw new Error('User not found');
   }
+
+  deductPoints(userId, points) {
+    const user = this.getUserById(userId);
+    if (user) {
+        user.accumulatedPoints = Math.max(0, user.accumulatedPoints - points);
+        this.saveUsers();
+        console.log(`Deducted points for user ${user.username}. New total: ${user.accumulatedPoints}`);
+    }
+}
 }
 
 module.exports = new UserService();

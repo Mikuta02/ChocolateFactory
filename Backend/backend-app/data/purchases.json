@@ -39,7 +39,7 @@
     "totalPrice": 366,
     "customerName": "Pablo Eskobar",
     "customerId": 3,
-    "status": "Obrada"
+    "status": "Otkazano"
   },
   {
     "id": 2,
@@ -123,6 +123,446 @@
     "totalPrice": 849,
     "customerName": "Pablo Eskobar",
     "customerId": 1,
+    "status": "Obrada"
+  },
+  {
+    "id": 4,
+    "chocolates": [
+      {
+        "chocolate": {
+          "id": 2,
+          "name": "Proteinska mala",
+          "price": 550,
+          "chocolateType": "Cooking",
+          "factoryId": 1,
+          "chocolateVariety": "Nuts",
+          "grams": 40,
+          "description": "lesnik protein",
+          "picturePath": "coko4.jpg",
+          "status": "unavailable",
+          "amount": 2
+        },
+        "quantity": 1
+      },
+      {
+        "chocolate": {
+          "id": 6,
+          "name": "cokoladica",
+          "price": 123,
+          "chocolateType": "Normal",
+          "factoryId": 3,
+          "chocolateVariety": "Dark",
+          "grams": 123,
+          "description": "mala",
+          "picturePath": "coko1.jpg",
+          "status": "unavailable",
+          "amount": 10
+        },
+        "quantity": 1
+      }
+    ],
+    "factory": [
+      {
+        "factoryName": "Svicarska"
+      },
+      {
+        "factoryName": "Rafanito"
+      }
+    ],
+    "date": "2024-07-01T16:39:49.908Z",
+    "totalPrice": 673,
+    "customerName": "Pablo Eskobar",
+    "customerId": 3,
+    "status": "Obrada"
+  },
+  {
+    "id": 5,
+    "chocolates": [
+      {
+        "chocolate": {
+          "id": 2,
+          "name": "Proteinska mala",
+          "price": 550,
+          "chocolateType": "Cooking",
+          "factoryId": 1,
+          "chocolateVariety": "Nuts",
+          "grams": 40,
+          "description": "lesnik protein",
+          "picturePath": "coko4.jpg",
+          "status": "unavailable",
+          "amount": 2
+        },
+        "quantity": 2
+      }
+    ],
+    "factory": [
+      {
+        "chocolate": {
+          "id": 2,
+          "name": "Proteinska mala",
+          "price": 550,
+          "chocolateType": "Cooking",
+          "factoryId": 1,
+          "chocolateVariety": "Nuts",
+          "grams": 40,
+          "description": "lesnik protein",
+          "picturePath": "coko4.jpg",
+          "status": "unavailable",
+          "amount": 2
+        },
+        "quantity": 2,
+        "factoryName": "Svicarska"
+      }
+    ],
+    "date": "2024-07-01T16:51:20.526Z",
+    "totalPrice": 1100,
+    "customerName": "Pablo Eskobar",
+    "customerId": 3,
+    "status": "Obrada"
+  },
+  {
+    "id": 6,
+    "chocolates": [
+      {
+        "chocolate": {
+          "id": 5,
+          "name": "kita",
+          "price": 120,
+          "chocolateType": "Normal",
+          "factoryId": 4,
+          "chocolateVariety": "Dark",
+          "grams": 120,
+          "description": "nista",
+          "picturePath": "coko7.jpg",
+          "status": "unavailable",
+          "amount": 10
+        },
+        "quantity": 1
+      },
+      {
+        "chocolate": {
+          "id": 4,
+          "name": "picka",
+          "price": 100,
+          "chocolateType": "Drink",
+          "factoryId": 4,
+          "chocolateVariety": "Nuts",
+          "grams": 100,
+          "description": "jeftino",
+          "picturePath": "coko6.jpg",
+          "status": "unavailable",
+          "amount": 15
+        },
+        "quantity": 1
+      }
+    ],
+    "factory": [
+      {
+        "chocolate": {
+          "id": 5,
+          "name": "kita",
+          "price": 120,
+          "chocolateType": "Normal",
+          "factoryId": 4,
+          "chocolateVariety": "Dark",
+          "grams": 120,
+          "description": "nista",
+          "picturePath": "coko7.jpg",
+          "status": "unavailable",
+          "amount": 10
+        },
+        "quantity": 1,
+        "factoryName": "Vozic Krstic"
+      },
+      {
+        "chocolate": {
+          "id": 4,
+          "name": "picka",
+          "price": 100,
+          "chocolateType": "Drink",
+          "factoryId": 4,
+          "chocolateVariety": "Nuts",
+          "grams": 100,
+          "description": "jeftino",
+          "picturePath": "coko6.jpg",
+          "status": "unavailable",
+          "amount": 15
+        },
+        "quantity": 1,
+        "factoryName": "Vozic Krstic"
+      }
+    ],
+    "date": "2024-07-01T16:58:57.114Z",
+    "totalPrice": 220,
+    "customerName": "Pablo Eskobar",
+    "customerId": 3,
+    "status": "Otkazano"
+  },
+  {
+    "id": 7,
+    "chocolates": [
+      {
+        "chocolate": {
+          "id": 2,
+          "name": "Proteinska mala",
+          "price": 550,
+          "chocolateType": "Cooking",
+          "factoryId": 1,
+          "chocolateVariety": "Nuts",
+          "grams": 40,
+          "description": "lesnik protein",
+          "picturePath": "coko4.jpg",
+          "status": "unavailable",
+          "amount": 2
+        },
+        "quantity": 1
+      },
+      {
+        "chocolate": {
+          "id": 7,
+          "name": "mala plava",
+          "price": 120,
+          "chocolateType": "Normal",
+          "factoryId": 2,
+          "chocolateVariety": "Dark",
+          "grams": 120,
+          "description": "mala",
+          "picturePath": "coko1.jpg",
+          "status": "unavailable",
+          "amount": 4
+        },
+        "quantity": 1
+      }
+    ],
+    "factory": [
+      {
+        "chocolate": {
+          "id": 2,
+          "name": "Proteinska mala",
+          "price": 550,
+          "chocolateType": "Cooking",
+          "factoryId": 1,
+          "chocolateVariety": "Nuts",
+          "grams": 40,
+          "description": "lesnik protein",
+          "picturePath": "coko4.jpg",
+          "status": "unavailable",
+          "amount": 2
+        },
+        "quantity": 1,
+        "factoryName": "Svicarska"
+      },
+      {
+        "chocolate": {
+          "id": 7,
+          "name": "mala plava",
+          "price": 120,
+          "chocolateType": "Normal",
+          "factoryId": 2,
+          "chocolateVariety": "Dark",
+          "grams": 120,
+          "description": "mala",
+          "picturePath": "coko1.jpg",
+          "status": "unavailable",
+          "amount": 4
+        },
+        "quantity": 1,
+        "factoryName": "Smederevac"
+      }
+    ],
+    "date": "2024-07-01T16:59:25.299Z",
+    "totalPrice": 670,
+    "customerName": "Pablo Eskobar",
+    "customerId": 3,
+    "status": "Obrada"
+  },
+  {
+    "id": 8,
+    "chocolates": [
+      {
+        "chocolate": {
+          "id": 6,
+          "name": "cokoladica",
+          "price": 123,
+          "chocolateType": "Normal",
+          "factoryId": 3,
+          "chocolateVariety": "Dark",
+          "grams": 123,
+          "description": "mala",
+          "picturePath": "coko1.jpg",
+          "status": "unavailable",
+          "amount": 10
+        },
+        "quantity": 1
+      },
+      {
+        "chocolate": {
+          "id": 4,
+          "name": "picka",
+          "price": 100,
+          "chocolateType": "Drink",
+          "factoryId": 4,
+          "chocolateVariety": "Nuts",
+          "grams": 100,
+          "description": "jeftino",
+          "picturePath": "coko6.jpg",
+          "status": "unavailable",
+          "amount": 15
+        },
+        "quantity": 1
+      }
+    ],
+    "factory": [
+      {
+        "chocolate": {
+          "id": 6,
+          "name": "cokoladica",
+          "price": 123,
+          "chocolateType": "Normal",
+          "factoryId": 3,
+          "chocolateVariety": "Dark",
+          "grams": 123,
+          "description": "mala",
+          "picturePath": "coko1.jpg",
+          "status": "unavailable",
+          "amount": 10
+        },
+        "quantity": 1,
+        "factoryName": "Rafanito"
+      },
+      {
+        "chocolate": {
+          "id": 4,
+          "name": "picka",
+          "price": 100,
+          "chocolateType": "Drink",
+          "factoryId": 4,
+          "chocolateVariety": "Nuts",
+          "grams": 100,
+          "description": "jeftino",
+          "picturePath": "coko6.jpg",
+          "status": "unavailable",
+          "amount": 15
+        },
+        "quantity": 1,
+        "factoryName": "Vozic Krstic"
+      }
+    ],
+    "date": "2024-07-01T17:04:04.591Z",
+    "totalPrice": 223,
+    "customerName": "Pablo Eskobar",
+    "customerId": 1,
+    "status": "Obrada"
+  },
+  {
+    "id": 9,
+    "chocolates": [
+      {
+        "chocolate": {
+          "id": 7,
+          "name": "mala plava",
+          "price": 120,
+          "chocolateType": "Normal",
+          "factoryId": 2,
+          "chocolateVariety": "Dark",
+          "grams": 120,
+          "description": "mala",
+          "picturePath": "coko1.jpg",
+          "status": "unavailable",
+          "amount": 4
+        },
+        "quantity": 1
+      },
+      {
+        "chocolate": {
+          "id": 5,
+          "name": "kita",
+          "price": 120,
+          "chocolateType": "Normal",
+          "factoryId": 4,
+          "chocolateVariety": "Dark",
+          "grams": 120,
+          "description": "nista",
+          "picturePath": "coko7.jpg",
+          "status": "unavailable",
+          "amount": 10
+        },
+        "quantity": 1
+      },
+      {
+        "chocolate": {
+          "id": 6,
+          "name": "cokoladica",
+          "price": 123,
+          "chocolateType": "Normal",
+          "factoryId": 3,
+          "chocolateVariety": "Dark",
+          "grams": 123,
+          "description": "mala",
+          "picturePath": "coko1.jpg",
+          "status": "unavailable",
+          "amount": 10
+        },
+        "quantity": 1
+      }
+    ],
+    "factory": [
+      {
+        "chocolate": {
+          "id": 7,
+          "name": "mala plava",
+          "price": 120,
+          "chocolateType": "Normal",
+          "factoryId": 2,
+          "chocolateVariety": "Dark",
+          "grams": 120,
+          "description": "mala",
+          "picturePath": "coko1.jpg",
+          "status": "unavailable",
+          "amount": 4
+        },
+        "quantity": 1,
+        "factoryName": "Smederevac"
+      },
+      {
+        "chocolate": {
+          "id": 5,
+          "name": "kita",
+          "price": 120,
+          "chocolateType": "Normal",
+          "factoryId": 4,
+          "chocolateVariety": "Dark",
+          "grams": 120,
+          "description": "nista",
+          "picturePath": "coko7.jpg",
+          "status": "unavailable",
+          "amount": 10
+        },
+        "quantity": 1,
+        "factoryName": "Vozic Krstic"
+      },
+      {
+        "chocolate": {
+          "id": 6,
+          "name": "cokoladica",
+          "price": 123,
+          "chocolateType": "Normal",
+          "factoryId": 3,
+          "chocolateVariety": "Dark",
+          "grams": 123,
+          "description": "mala",
+          "picturePath": "coko1.jpg",
+          "status": "unavailable",
+          "amount": 10
+        },
+        "quantity": 1,
+        "factoryName": "Rafanito"
+      }
+    ],
+    "date": "2024-07-01T17:19:08.594Z",
+    "totalPrice": 363,
+    "customerName": "Pablo Eskobar",
+    "customerId": 3,
     "status": "Obrada"
   }
 ]

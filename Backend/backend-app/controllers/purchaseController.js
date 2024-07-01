@@ -37,3 +37,14 @@ exports.getUserPurchases = (req, res) => {
         res.status(500).send(error.message);
     }
 };
+
+exports.cancelPurchase = (req, res) => {
+    try {
+        const { purchaseId, userId } = req.body;
+        const canceledPurchase = purchaseService.cancelPurchase(purchaseId, userId);
+        res.status(200).json(canceledPurchase);
+    } catch (error) {
+        console.error('Error canceling purchase:', error.message);
+        res.status(500).send(error.message);
+    }
+};
