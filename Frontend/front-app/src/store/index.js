@@ -33,12 +33,12 @@ const store = createStore({
       }
       return null;
     },
-    userID(state){
-        if(state.token){
-            const payload = JSON.parse(atoi(state.token.split('.')[1]));
-            return payload.userId
-        }
-        return null;
+    userId(state) {
+      if (state.token) {
+        const payload = JSON.parse(atob(state.token.split('.')[1]));
+        return payload.userId;
+      }
+      return null;
     }
   }
 });

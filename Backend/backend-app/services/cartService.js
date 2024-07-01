@@ -5,90 +5,137 @@ const User = require('../models/userModel');
 const Chocolate = require('../models/chocolateModel');
 
 class CartService {
-  constructor() {
-    this.filePath = path.join(__dirname, '../data/cart.json');
-    this.user = new User(1, 'Boris');
-    this.cart = this.loadCart();
-  }
+    constructor() {
+        this.filePath = path.join(__dirname, '../data/cart.json');
+        this.carts = this.loadCarts();
+    }
 
-  loadCart() {
-    try {
-      if (fs.existsSync(this.filePath)) {
-        const data = fs.readFileSync(this.filePath, 'utf8');
-        const cartData = JSON.parse(data);
-        console.log('Loaded cart data:', cartData);
-
-        if (Array.isArray(cartData) && cartData.length > 0) {
-          const cartItem = cartData[0];
-          const user = new User(cartItem.user.id, cartItem.user.username);
-          const chocolates = cartItem.chocolates.map(item => ({
-            chocolate: new Chocolate(
-              item.chocolate.id,
-              item.chocolate.name,
-              item.chocolate.price,
-              item.chocolate.chocolateType,
-              item.chocolate.factoryId,
-              item.chocolate.chocolateVariety,
-              item.chocolate.grams,
-              item.chocolate.description,
-              item.chocolate.picturePath,
-              item.chocolate.status,
-              item.chocolate.amount
-            ),
-            quantity: item.quantity
-          }));
-          return new Cart(cartItem.id, user, chocolates, cartItem.totalPrice);
+    loadCarts() {
+        try {
+            if (fs.existsSync(this.filePath)) {
+                const data = fs.readFileSync(this.filePath, 'utf8');
+                const cartData = JSON.parse(data);
+                return cartData.map(cartItem => {
+                    const user = new User(
+                        cartItem.user.id,
+                        cartItem.user.username,
+                        cartItem.user.password,
+                        cartItem.user.name,
+                        cartItem.user.lastName,
+                        cartItem.user.gender,
+                        cartItem.user.birthDate,
+                        cartItem.user.role,
+                        cartItem.user.cartId,
+                        cartItem.user.accumulatedPoints,
+                        cartItem.user.customerType,
+                        cartItem.user.isBanned
+                    );
+                    const chocolates = cartItem.chocolates.map(item => ({
+                        chocolate: new Chocolate(
+                            item.chocolate.id,
+                            item.chocolate.name,
+                            item.chocolate.price,
+                            item.chocolate.chocolateType,
+                            item.chocolate.factoryId,
+                            item.chocolate.chocolateVariety,
+                            item.chocolate.grams,
+                            item.chocolate.description,
+                            item.chocolate.picturePath,
+                            item.chocolate.status,
+                            item.chocolate.amount
+                        ),
+                        quantity: item.quantity
+                    }));
+                    return new Cart(cartItem.id, user, chocolates, cartItem.totalPrice);
+                });
+            }
+        } catch (err) {
+            console.error('Error reading cart from file:', err);
         }
-      }
-    } catch (err) {
-      console.error('Error reading cart from file:', err);
+        return [];
     }
-    console.log('Creating new cart');
-    return new Cart(1, this.user);
-  }
 
-  saveCart() {
-    try {
-      fs.writeFileSync(this.filePath, JSON.stringify([this.cart], null, 2));
-      console.log('Saved cart data:', this.cart);
-    } catch (err) {
-      console.error('Error writing cart to file:', err);
+    saveCarts() {
+        try {
+            fs.writeFileSync(this.filePath, JSON.stringify(this.carts, null, 2));
+        } catch (err) {
+            console.error('Error writing cart to file:', err);
+        }
     }
-  }
 
-  getCart() {
-    return this.cart;
-  }
-
-  addChocolateToCart(chocolate, quantity) {
-    console.log('Adding chocolate to cart:', chocolate, quantity);
-    const existingChocolate = this.cart.chocolates.find(item => item.chocolate.id === chocolate.id);
-    if (existingChocolate) {
-      existingChocolate.quantity += quantity;
-    } else {
-      this.cart.chocolates.push({ chocolate, quantity });
+    getCartByUserId(userId) {
+        let cart = this.carts.find(cart => cart.user.id === userId);
+        if (!cart) {
+            const user = new User(userId, '');
+            cart = new Cart(this.carts.length + 1, user);
+            this.carts.push(cart);
+            this.saveCarts();
+        }
+        console.log(`Cart for user ${userId}:`, cart);
+        return cart;
     }
-    this.updateTotalPrice();
-    this.saveCart();
-  }
 
-  removeChocolateFromCart(chocolateId) {
-    console.log('Removing chocolate from cart:', chocolateId);
-    this.cart.chocolates = this.cart.chocolates.filter(item => item.chocolate.id !== chocolateId);
-    this.updateTotalPrice();
-    this.saveCart();
-  }
+    addChocolateToCart(userId, chocolate, quantity, username) {
+        let cart = this.getCartByUserId(userId);
+        if (!cart) {
+            console.log(`No cart found for user ${userId}, creating a new one.`);
+            const user = new User(userId, username);
+            cart = new Cart(this.carts.length + 1, user);
+            this.carts.push(cart);
+        } else if (!cart.user.username) {
+            // Ako korisničko ime nije postavljeno, postavite ga
+            cart.user.username = username;
+        }
+        const existingChocolate = cart.chocolates.find(item => item.chocolate.id === chocolate.id);
+        if (existingChocolate) {
+            existingChocolate.quantity += quantity;
+        } else {
+            cart.chocolates.push({ chocolate, quantity });
+        }
+        this.updateTotalPrice(cart);
+        this.saveCarts();
+    }
 
-  clearCart() {
-    console.log('Clearing cart');
-    this.cart.chocolates = [];
-    this.cart.totalPrice = 0;
-    this.saveCart();
-  }
+    removeChocolateFromCart(userId, chocolateId) {
+        const cart = this.getCartByUserId(userId);
+        if (cart) {
+            cart.chocolates = cart.chocolates.filter(item => item.chocolate.id !== chocolateId);
+            this.updateTotalPrice(cart);
+            this.saveCarts();
+        }
+    }
 
-  updateTotalPrice() {
-    this.cart.totalPrice = this.cart.chocolates.reduce((total, item) => total + item.chocolate.price * item.quantity, 0);
-  }
+    clearCart(userId) {
+        const cart = this.getCartByUserId(userId);
+        if (cart) {
+            cart.chocolates = [];
+            cart.totalPrice = 0;
+            this.saveCarts();
+        }
+    }
+
+    updateTotalPrice(cart) {
+        cart.totalPrice = cart.chocolates.reduce((total, item) => total + item.chocolate.price * item.quantity, 0);
+    }
+
+    updateChocolateQuantity(userId, chocolateId, quantity) {
+        const cart = this.getCartByUserId(userId);
+        const chocolateItem = cart.chocolates.find(item => item.chocolate.id === chocolateId);
+        if (chocolateItem) {
+            const availableQuantity = chocolateItem.chocolate.amount;
+            if (quantity < 1) {
+                quantity = 1;
+            }
+            if (quantity > availableQuantity) {
+                return { success: false, message: `Quantity exceeds available stock. Maximum available: ${availableQuantity}` };
+            }
+            chocolateItem.quantity = quantity;
+            this.updateTotalPrice(cart);
+            this.saveCarts();
+            return { success: true };
+        }
+        return { success: false, message: 'Chocolate not found in cart' };
+    }
 }
 
 module.exports = new CartService();

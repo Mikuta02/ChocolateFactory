@@ -3,74 +3,76 @@
     "id": 1,
     "user": {
       "id": 1,
-      "username": "Boris"
+      "username": "boris",
+      "role": "Customer",
+      "cartId": 0,
+      "accumulatedPoints": 0,
+      "customerType": "Bronze",
+      "isBanned": false
     },
     "chocolates": [
-      {
-        "chocolate": {
-          "id": 1,
-          "name": "Uleti ti kita",
-          "price": 999,
-          "chocolateType": "Cooking",
-          "factoryId": 1,
-          "chocolateVariety": "Dark",
-          "grams": 999,
-          "description": "ulcece kita",
-          "picturePath": "coko4.jpg",
-          "status": "unavailable",
-          "amount": 0
-        },
-        "quantity": 3
-      },
-      {
-        "chocolate": {
-          "id": 5,
-          "name": "kita",
-          "price": 120,
-          "chocolateType": "Normal",
-          "factoryId": 5,
-          "chocolateVariety": "Dark",
-          "grams": 120,
-          "description": "nista",
-          "picturePath": "coko7.jpg",
-          "status": "unavailable",
-          "amount": 0
-        },
-        "quantity": 1
-      },
       {
         "chocolate": {
           "id": 6,
           "name": "cokoladica",
           "price": 123,
           "chocolateType": "Normal",
-          "factoryId": 5,
+          "factoryId": 3,
           "chocolateVariety": "Dark",
           "grams": 123,
           "description": "mala",
           "picturePath": "coko1.jpg",
           "status": "unavailable",
-          "amount": 0
+          "amount": 10
         },
-        "quantity": 1
-      },
+        "quantity": 2
+      }
+    ],
+    "totalPrice": 246
+  },
+  {
+    "id": 2,
+    "user": {
+      "id": 3,
+      "username": "dragan",
+      "role": "Customer",
+      "cartId": 0,
+      "accumulatedPoints": 0,
+      "customerType": "Bronze",
+      "isBanned": false
+    },
+    "chocolates": [
       {
         "chocolate": {
-          "id": 3,
-          "name": "Malina Pralina",
-          "price": 400,
+          "id": 7,
+          "name": "mala plava",
+          "price": 120,
           "chocolateType": "Normal",
-          "factoryId": 3,
+          "factoryId": 2,
           "chocolateVariety": "Dark",
-          "grams": 450,
-          "description": "Losa verzija praline",
+          "grams": 120,
+          "description": "mala",
           "picturePath": "coko1.jpg",
           "status": "unavailable",
-          "amount": 0
+          "amount": 4
         },
         "quantity": 4
       }
     ],
-    "totalPrice": 4840
+    "totalPrice": 480
+  },
+  {
+    "id": 3,
+    "user": {
+      "id": null,
+      "username": "",
+      "role": "Customer",
+      "cartId": 0,
+      "accumulatedPoints": 0,
+      "customerType": "Bronze",
+      "isBanned": false
+    },
+    "chocolates": [],
+    "totalPrice": 0
   }
 ]
