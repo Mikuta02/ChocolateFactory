@@ -1,7 +1,7 @@
 <template>
   <div class="cart">
     <h1>Your Cart</h1>
-    <div v-if="cart && cart.chocolates && cart.chocolates.length > 0">
+    <div v-if="cart.chocolates.length > 0">
       <ul>
         <li v-for="item in cart.chocolates" :key="item.chocolate.id" class="cart-item">
           <img :src="getChocolatePictureUrl(item.chocolate.picturePath)" :alt="item.chocolate.name" class="chocolate-picture" />
@@ -10,7 +10,10 @@
             <p>Type: {{ item.chocolate.chocolateType }}</p>
             <p>Variety: {{ item.chocolate.chocolateVariety }}</p>
             <p>Price: {{ item.chocolate.price }}</p>
-            <p>Quantity: {{ item.quantity }}</p>
+            <div>
+              <label for="quantity">Quantity:</label>
+              <input type="number" v-model.number="item.quantity" @change="updateQuantity(item)" min="1" :max="item.chocolate.amount" />
+            </div>
             <button @click="removeFromCart(item.chocolate.id)">Remove</button>
           </div>
         </li>
@@ -39,27 +42,18 @@ onMounted(() => {
 
 function loadCart() {
   const userId = store.getters.userId;
-  axios.get(`http://localhost:3001/api/cart/${userId}`, {
-    headers: {
-      'Authorization': `Bearer ${store.state.token}`
-    }
-  })
+  axios.get(`http://localhost:3001/api/cart/${userId}`)
     .then(response => {
-      cart.value = response.data || { chocolates: [], totalPrice: 0 };
+      cart.value = response.data;
     })
     .catch(error => {
       console.error('Error fetching cart:', error);
-      cart.value = { chocolates: [], totalPrice: 0 };
     });
 }
 
 function removeFromCart(chocolateId) {
   const userId = store.getters.userId;
-  axios.post('http://localhost:3001/api/cart/remove', { chocolateId, userId }, {
-    headers: {
-      'Authorization': `Bearer ${store.state.token}`
-    }
-  })
+  axios.post('http://localhost:3001/api/cart/remove', { userId, chocolateId })
     .then(response => {
       cart.value = response.data;
     })
@@ -70,16 +64,35 @@ function removeFromCart(chocolateId) {
 
 function clearCart() {
   const userId = store.getters.userId;
-  axios.post(`http://localhost:3001/api/cart/clear/${userId}`, {}, {
-    headers: {
-      'Authorization': `Bearer ${store.state.token}`
-    }
-  })
+  axios.post(`http://localhost:3001/api/cart/clear/${userId}`)
     .then(response => {
       cart.value = response.data;
     })
     .catch(error => {
       console.error('Error clearing cart:', error);
+    });
+}
+
+function updateQuantity(item) {
+  const userId = store.getters.userId;
+  const quantity = item.quantity;
+  if (quantity > item.chocolate.amount) {
+    item.quantity = item.chocolate.amount;
+    alert(`Quantity exceeds available stock. Maximum available: ${item.chocolate.amount}`);
+    return;
+  }
+  axios.post('http://localhost:3001/api/cart/update-quantity', { userId, chocolateId: item.chocolate.id, quantity })
+    .then(response => {
+      cart.value = response.data;
+      alert('Quantity updated successfully');
+    })
+    .catch(error => {
+      console.error('Error updating quantity:', error);
+      if (error.response && error.response.data && error.response.data.error) {
+        alert(error.response.data.error);
+      } else {
+        alert('Failed to update quantity');
+      }
     });
 }
 

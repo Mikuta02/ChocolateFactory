@@ -117,6 +117,25 @@ class CartService {
     updateTotalPrice(cart) {
         cart.totalPrice = cart.chocolates.reduce((total, item) => total + item.chocolate.price * item.quantity, 0);
     }
+
+    updateChocolateQuantity(userId, chocolateId, quantity) {
+        const cart = this.getCartByUserId(userId);
+        const chocolateItem = cart.chocolates.find(item => item.chocolate.id === chocolateId);
+        if (chocolateItem) {
+            const availableQuantity = chocolateItem.chocolate.amount;
+            if (quantity < 1) {
+                quantity = 1;
+            }
+            if (quantity > availableQuantity) {
+                return { success: false, message: `Quantity exceeds available stock. Maximum available: ${availableQuantity}` };
+            }
+            chocolateItem.quantity = quantity;
+            this.updateTotalPrice(cart);
+            this.saveCarts();
+            return { success: true };
+        }
+        return { success: false, message: 'Chocolate not found in cart' };
+    }
 }
 
 module.exports = new CartService();

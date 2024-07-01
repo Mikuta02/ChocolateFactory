@@ -65,3 +65,18 @@ exports.clearCart = (req, res) => {
         res.status(500).send(error.message);
     }
 };
+
+exports.updateChocolateQuantity = (req, res) => {
+    try {
+        const { userId, chocolateId, quantity } = req.body;
+        const result = cartService.updateChocolateQuantity(Number(userId), Number(chocolateId), Number(quantity));
+        if (result.success) {
+            res.json(cartService.getCartByUserId(Number(userId)));
+        } else {
+            res.status(400).json({ error: result.message });
+        }
+    } catch (error) {
+        console.error('Error in updateChocolateQuantity:', error.message);
+        res.status(500).send(error.message);
+    }
+};

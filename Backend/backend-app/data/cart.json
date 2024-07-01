@@ -72,7 +72,7 @@
           "status": "unavailable",
           "amount": 4
         },
-        "quantity": 1
+        "quantity": 4
       },
       {
         "chocolate": {
@@ -88,9 +88,23 @@
           "status": "unavailable",
           "amount": 10
         },
-        "quantity": 2
+        "quantity": 5
       }
     ],
-    "totalPrice": 729
+    "totalPrice": 1449
+  },
+  {
+    "id": 3,
+    "user": {
+      "id": null,
+      "username": "",
+      "role": "Customer",
+      "cartId": 0,
+      "accumulatedPoints": 0,
+      "customerType": "Bronze",
+      "isBanned": false
+    },
+    "chocolates": [],
+    "totalPrice": 0
   }
 ]
