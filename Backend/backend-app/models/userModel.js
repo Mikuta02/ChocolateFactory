@@ -1,5 +1,5 @@
 class User{
-    constructor(id,username, password, name, lastName, gender, birthDate, role="Customer", cartId=0, accumulatedPoints=0, customerType="Bronze"){
+    constructor(id,username, password, name, lastName, gender, birthDate, role="Customer", cartId=0, accumulatedPoints=0, customerType="Bronze", isBanned=false, cancelationNumber=0){
         this.id = id;
         this.username = username;
         this.password = password;
@@ -11,8 +11,8 @@ class User{
         this.cartId = cartId;
         this.accumulatedPoints = accumulatedPoints;
         this.customerType = customerType;
-        this.isBanned = false;
-        this.cancelationNumber = 0;
+        this.isBanned = isBanned;
+        this.cancelationNumber = cancelationNumber;
     }
 }
 

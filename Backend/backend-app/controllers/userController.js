@@ -81,45 +81,51 @@ exports.signUpWithRole = async (req, res) => {
 
 exports.login = async (req, res) => {
     const { username, password } = req.body;
-
+  
     if (!username || !password) {
-        return res.status(400).json({ error: 'Username and password are required' });
+      return res.status(400).json({ error: 'Username and password are required' });
     }
-
+  
     try {
-        const user = await userService.findUserByUsername(username); 
-        if (!user) {
-            return res.status(404).json({ error: 'User not found', userUsername: user.username });
+      const user = await userService.findUserByUsername(username);
+      if (!user) {
+        return res.status(404).json({ error: 'User not found' });
+      }
+  
+      if (user.isBanned) {
+        return res.status(403).json({ error: 'User is banned' });
+      }
+  
+      bcrypt.compare(password, user.password, (err, result) => {
+        if (err) {
+          return res.status(500).json({ error: 'Auth failed' });
         }
-
-        if (!user.password) {
-            return res.status(404).json({ error: 'Auth failed >(', userUsername: user.username });
+        if (result) {
+          const token = jwt.sign(
+            {
+              role: user.role,
+              username: user.username,
+              userId: user.id,
+              isBanned: user.isBanned
+            },
+            "secret",
+            {
+              expiresIn: "1h"
+            }
+          );
+          res.cookie('jwt', token, { httpOnly: true, maxAge: 3 * 60 * 1000 });
+          return res.status(200).json({ message: 'Login successful', token: token });
+        } else {
+          return res.status(401).json({ error: 'Incorrect password' });
         }
-
-        bcrypt.compare(password, user.password, (err, result) => {
-            if (err) {
-                return res.status(500).json({ error: 'Auth failed' });
-            }
-            if (result) {
-                const token = jwt.sign({
-                    role: user.role,
-                    username: user.username,
-                    userId: user.id
-                }, 
-                "secret", {
-                    expiresIn: "1h"
-                });
-                res.cookie('jwt', token, {httpOnly: true, maxAge: 3 * 60 * 1000});
-                return res.status(200).json({ message: 'Login successful', token: token });
-            } else {
-                return res.status(401).json({ error: 'Incorrect password' });
-            }
-        });
+      });
     } catch (error) {
-        console.error('Error logging in user:', error);
-        res.status(500).json({ error: 'Internal server error' });
+      console.error('Error logging in user:', error);
+      res.status(500).json({ error: 'Internal server error' });
     }
-}
+  };
+  
+
 
 
 exports.delete = async (req, res) => {
