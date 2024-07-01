@@ -32,6 +32,13 @@ const store = createStore({
         return payload.role;
       }
       return null;
+    },
+    userID(state){
+        if(state.token){
+            const payload = JSON.parse(atoi(state.token.split('.')[1]));
+            return payload.userId
+        }
+        return null;
     }
   }
 });

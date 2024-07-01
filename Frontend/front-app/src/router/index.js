@@ -9,6 +9,7 @@ import Cart from '../components/Cart.vue';
 import AddComment from '../components/AddComment.vue'; 
 import Login from '../components/Login.vue';
 import Register from '../components/Register.vue';
+import Profile from '../components/Profile.vue';
 import store from '../store';
 
 const routes = [
@@ -66,6 +67,12 @@ const routes = [
     path: '/register',
     name: 'Register',
     component: Register,
+    props: true
+  },
+  {
+    path: '/profile',
+    name: 'Profile',
+    component: Profile,
     props: true
   }
 ];

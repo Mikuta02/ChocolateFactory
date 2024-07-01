@@ -14,7 +14,8 @@ class UserService {
       if (fs.existsSync(this.filePath)) {
         const data = fs.readFileSync(this.filePath, 'utf8');
         const users = JSON.parse(data);
-        return users.map(user => new User(user.id, user.username, user.password, user.name, user.lastName, user.gender, user.birthDate, user.role, user.cartId, user.accumulatedPoints, user.customerType, user.isBanned));
+        return users.map(user => new User(user.id, user.username, user.password, user.name, user.lastName, user.gender, 
+          user.birthDate, user.role, user.cartId, user.accumulatedPoints, user.customerType, user.isBanned, user.cancelationNumber));
       }
     } catch (err) {
       console.error('Error reading users from file:', err);
@@ -62,6 +63,21 @@ class UserService {
     this.saveUsers();
     return newUser;
   }
+
+  getAllUsers(){
+    return this.users;
+  }
+
+
+  updateUser(id, updatedUser) {
+    const user = this.users.find(u => u.id === id);
+    if (user) {
+        Object.assign(user, updatedUser);
+        this.saveUsers();
+        return user;
+    }
+    return null;
+}
 }
 
 module.exports = new UserService();

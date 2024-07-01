@@ -101,4 +101,56 @@ exports.delete = async (req, res) => {
         console.error('Error deleting User:', error);
         res.status(500).json({ error: 'Internal server error' });
     }
-}
+};
+
+exports.updateUser = (req, res) => {
+    const { id } = req.params;
+    const { username, name, lastName, gender, birthDate} = req.body;
+
+    const updatedUser = {
+        id: Number(id),
+        username,
+        name,
+        lastName,
+        gender,
+        birthDate
+    };
+
+    try {
+        const result = userService.updateUser(Number(id), updatedUser);
+        if (result) {
+            res.status(200).json(result);
+        } else {
+            res.status(404).json({ error: 'User not found' });
+        }
+    } catch (error) {
+        console.error('Error updating user:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+};
+
+
+exports.getUserById = (req, res) => {
+    const { id } = req.params;
+
+    if (!id) {
+        return res.status(400).json({ error: 'User ID is required' });
+    }
+
+    try {
+        const user = userService.getUserById(Number(id));
+        if (user) {
+            res.status(200).json(user);
+        } else {
+            res.status(404).json({ error: 'User not found' });
+        }
+    } catch (error) {
+        console.error('Error finding User:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+};
+
+exports.getAllUsers = (req, res) => {
+    const users = userService.getAllUsers();
+    res.json(users);
+};
