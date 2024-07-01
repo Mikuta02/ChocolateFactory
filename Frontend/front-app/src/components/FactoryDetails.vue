@@ -13,9 +13,9 @@
     <h2>Chocolates</h2>
     <ul v-if="chocolates.length">
       <li v-for="chocolate in chocolates" :key="chocolate.id" class="chocolate-item">
-        <button @click="editChocolate(chocolate.id)" class="edit-button">Edit</button>
+        <button @click="editChocolate(chocolate.id)" v-if="canEditChocolate(chocolate)" class="edit-button">Edit</button>
         <button @click="editAmount(chocolate.id)" v-if="canEditAmount(chocolate)" class="edit-amount-button">Edit Amount</button>
-        <button @click="confirmDelete(chocolate.id)" class="delete-button">X</button>
+        <button @click="confirmDelete(chocolate.id)" v-if="canEditChocolate(chocolate)" class="delete-button">X</button>
         <img :src="getChocolatePictureUrl(chocolate.picturePath)" :alt="chocolate.name + ' picture'" class="chocolate-picture" />
         <div class="chocolate-details">
           <h3 class="chocolate-name">{{ chocolate.name }}</h3>
@@ -36,7 +36,39 @@
     </ul>
     <p v-else>No chocolates available for this factory.</p>
       
-    <button @click="addNewChocolate" class="add-button">Add New Chocolate</button>
+    <button @click.prevent="showRegisterForm = true" v-if="canEditChocolate()" class="add-button">Register New Worker</button>
+
+    <div v-if="showRegisterForm" class="register-worker-form">
+      <h3>Register New Worker</h3>
+      <div>
+        <label>Username:</label>
+        <input type="text" v-model="workerUsername" placeholder="Username" />
+      </div>
+      <div>
+        <label>Password:</label>
+        <input type="password" v-model="workerPassword" placeholder="Password" />
+      </div>
+      <div>
+        <label>First Name:</label>
+        <input type="text" v-model="workerName" placeholder="First Name" />
+      </div>
+      <div>
+        <label>Last Name:</label>
+        <input type="text" v-model="workerLastName" placeholder="Last Name" />
+      </div>
+      <div>
+        <label>Gender:</label>
+        <input type="text" v-model="workerGender" placeholder="Gender" />
+      </div>
+      <div>
+        <label>Birth Date:</label>
+        <input type="date" v-model="workerBirthDate" />
+      </div>
+      <button @click.prevent="registerWorker" class="register-button">Register Worker</button>
+    </div>
+
+
+    <button @click="addNewChocolate" v-if="canEditChocolate()" class="add-button">Add New Chocolate</button>
 
     <button @click="goToAddComment" class="add-comment-button">Add Comment</button>
 
@@ -64,13 +96,42 @@ const route = useRoute();
 const router = useRouter();
 const factory = ref(null);
 const chocolates = ref([]);
+const managerId = ref('');
 const loadingChocolates = ref(false);
 const showModal = ref(false);
 const chocolateToDelete = ref(null);
+const role = "Worker";
+
+const showRegisterForm = ref(false);
+const workerUsername = ref('');
+const workerPassword = ref('');
+const workerName = ref('');
+const workerLastName = ref('');
+const workerGender = ref('');
+const workerBirthDate = ref('');
 
 onMounted(() => {
   loadFactory();
 });
+
+function registerWorker() {
+  const userToRegister = {
+    username: workerUsername.value,
+    password: workerPassword.value,
+    name: workerName.value,
+    lastName: workerLastName.value,
+    gender: workerGender.value,
+    birthDate: workerBirthDate.value
+  };
+
+  axios.post(`http://localhost:3001/api/signup/${role}`, userToRegister)
+    .then(response => {
+      showRegisterForm.value = false;  
+    })
+    .catch(error => {
+      console.error('There was an error registering the worker!', error);
+    });
+}
 
 function loadFactory() {
   const factoryId = route.params.id;
@@ -81,6 +142,17 @@ function loadFactory() {
     })
     .catch(error => {
       console.error('Error fetching factory details:', error);
+    });
+}
+
+function loadManager(){
+  const factoryId = route.params.id;
+  axios.get(`http://localhost:3001/api/users/managers/${factoryId}`)
+  .then(response => {
+    managerId.value = response.data.id;
+    })
+    .catch(error => {
+      console.error('Error fetching manager details:', error);
     });
 }
 
@@ -173,8 +245,16 @@ function goToAddComment() {
 }
 
 function canEditAmount(chocolate) {
+  const loggedInUserId = store.getters.userId;
   const role = store.getters.userRole;
   return role === 'Worker';
+}
+
+function canEditChocolate(chocolate) {
+  loadManager();
+  const loggedInUserId = store.getters.userId;
+  const role = store.getters.userRole;
+  return role === 'Manager' && managerId.value === loggedInUserId;
 }
 </script>
 
@@ -299,5 +379,25 @@ function canEditAmount(chocolate) {
 .cancel-button {
   background-color: gray;
   color: white;
+}
+
+.register-worker-form {
+  margin-top: 20px;
+  background-color: #e9ecef;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.register-button {
+  background-color: #007bff;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.register-button:hover {
+  background-color: #0056b3;
 }
 </style>

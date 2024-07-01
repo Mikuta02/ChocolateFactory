@@ -250,3 +250,9 @@ exports.getFreeManagers = (req, res) => {
     const users = userService.getAllFreeManagers();
     res.json(users);
 };
+
+exports.getManagerByFactoryId = (req, res) => {
+    const { factoryId } = req.params;
+    const manager = userService.getManagerByFactoryId(Number(factoryId));
+    res.json(manager);
+};

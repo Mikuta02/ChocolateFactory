@@ -191,5 +191,20 @@
     "customerType": "Bronze",
     "isBanned": false,
     "cancelationNumber": 0
+  },
+  {
+    "id": 16,
+    "username": "jarintamirintam",
+    "password": "$2b$10$uCjh1gm6Z2Go7VWJX8xLi.kaX0lvklxC4PBoChFzBCDbOq.178C.q",
+    "name": "Milos",
+    "lastName": "Milosevic",
+    "gender": "Female",
+    "birthDate": "0002-02-02",
+    "role": "Worker",
+    "cartId": 0,
+    "accumulatedPoints": 0,
+    "customerType": "Bronze",
+    "isBanned": false,
+    "cancelationNumber": 0
   }
 ]

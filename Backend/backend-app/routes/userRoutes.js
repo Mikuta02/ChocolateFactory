@@ -9,6 +9,7 @@ router.delete('/users/:id', userController.delete);
 router.put('/users/:id', userController.updateUser);
 router.get('/user/:id', userController.getUserById);
 router.get('/users/freeManagers', userController.getFreeManagers);
+router.get('/users/managers/:factoryId', userController.getManagerByFactoryId);
 router.get('/users', userController.getAllUsers);
 router.get('/search/users', userController.searchUsers); 
 router.patch('/ban/:username', userController.banUser);
