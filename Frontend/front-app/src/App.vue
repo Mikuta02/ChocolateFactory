@@ -9,6 +9,8 @@
       <router-link v-if="!isAuthenticated" to="/register">Register</router-link> |
       <button v-if="isAuthenticated" @click="logout">Logout</button>
       <router-link v-if="isAuthenticated" to="/profile">Profile</router-link> |
+      <router-link v-if="isAuthenticated && isAdministrator" to="/registerManager">Register Manager</router-link>
+      <router-link v-if="isAuthenticated && isManager" to="/registerWorker">Register Worker</router-link>
     </nav>
     <router-view/>
   </div>
@@ -24,6 +26,8 @@ export default {
     const store = useStore();
     const router = useRouter();
     const isAuthenticated = computed(() => store.getters.isAuthenticated);
+    const isManager = computed(() => store.getters.isManager);
+    const isAdministrator = computed(() => store.getters.isAdministrator);
 
     const logout = () => {
       store.dispatch('logout');
@@ -32,6 +36,8 @@ export default {
 
     return {
       isAuthenticated,
+      isAdministrator,
+      isManager,
       logout
     };
   }

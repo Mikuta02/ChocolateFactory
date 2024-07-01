@@ -11,6 +11,8 @@ import AddComment from '../components/AddComment.vue';
 import Login from '../components/Login.vue';
 import Register from '../components/Register.vue';
 import Profile from '../components/Profile.vue';
+import RegisterManager from '../components/RegisterManager.vue';
+import RegisterWorker from '../components/RegisterWorker.vue';
 import store from '../store';
 
 const routes = [
@@ -74,6 +76,18 @@ const routes = [
     path: '/register',
     name: 'Register',
     component: Register,
+    props: true
+  },
+  {
+    path: '/registerManager',
+    name: 'RegisterManager',
+    component: RegisterManager,
+    props: true
+  },
+  {
+    path: '/registerWorker',
+    name: 'RegisterWorker',
+    component: RegisterWorker,
     props: true
   },
   {

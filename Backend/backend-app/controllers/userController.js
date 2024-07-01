@@ -40,6 +40,45 @@ exports.signUp = async (req, res) => {
     }
 };
 
+exports.signUpWithRole = async (req, res) => {
+    const { username, password, name, lastName, gender, birthDate } = req.body;
+    const { role } = req.params;
+
+    try {
+        const existingUser = await userService.findUserByUsername(username);
+        if (existingUser) {
+            return res.status(422).json({ error: 'Username already exists' });
+        }
+
+        bcrypt.hash(password, 10, async (err, hash) => {
+            if (err) {
+                return res.status(500).json({
+                    error: err
+                });
+            } else {
+                try {
+                    const newUser = await userService.registerUserWithRole(
+                        username,
+                        hash,
+                        name,
+                        lastName,
+                        gender,
+                        birthDate,
+                        role
+                    );
+                    res.status(201).json(newUser);
+                } catch (error) {
+                    console.error('Error adding user:', error);
+                    res.status(500).json({ error: 'Internal server error' });
+                }
+            }
+        });
+    } catch (error) {
+        console.error('Error checking username uniqueness:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+};
+
 exports.login = async (req, res) => {
     const { username, password } = req.body;
 

@@ -64,6 +64,22 @@ class UserService {
     return newUser;
   }
 
+  registerUserWithRole( username, 
+    password, 
+    name, 
+    lastName, 
+    gender, 
+    birthDate,
+    role) {
+    const maxId = this.users.reduce((max, user) => (user.id > max ? user.id : max), 0);
+    const newId = maxId + 1;
+    const newUser = new User(newId, username, password, name, lastName, gender, birthDate);
+    newUser.role = role;
+    this.users.push(newUser);
+    this.saveUsers();
+    return newUser;
+  }
+
   getAllUsers(){
     return this.users;
   }
