@@ -244,3 +244,9 @@ exports.banUser = (req, res) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 }
+
+
+exports.getFreeManagers = (req, res) => {
+    const users = userService.getAllFreeManagers();
+    res.json(users);
+};

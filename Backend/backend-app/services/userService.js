@@ -2,6 +2,7 @@ const User = require('../models/userModel');
 const path = require('path');
 const fs = require('fs');
 const { user } = require('./cartService');
+const factoryService = require('./factoryService');
 
 class UserService {
   constructor() {
@@ -181,7 +182,15 @@ filterUsers(users, filters) {
   });
 }
 
-
+getAllFreeManagers(){
+  const factories = factoryService.getAllFactories();
+  const managers = this.users.filter(user => user.role === "Manager");
+  
+  const managerIds = factories.map(factory => factory.managerId);
+  const freeManagers = managers.filter(manager => !managerIds.includes(manager.id));
+  
+  return freeManagers;
+}
 
 
 }
