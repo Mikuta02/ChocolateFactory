@@ -4,6 +4,90 @@
     "chocolates": [
       {
         "chocolate": {
+          "id": 6,
+          "name": "cokoladica",
+          "price": 123,
+          "chocolateType": "Normal",
+          "factoryId": 3,
+          "chocolateVariety": "Dark",
+          "grams": 123,
+          "description": "mala",
+          "picturePath": "coko1.jpg",
+          "status": "unavailable",
+          "amount": 10
+        },
+        "quantity": 2
+      },
+      {
+        "chocolate": {
+          "id": 7,
+          "name": "mala plava",
+          "price": 120,
+          "chocolateType": "Normal",
+          "factoryId": 2,
+          "chocolateVariety": "Dark",
+          "grams": 120,
+          "description": "mala",
+          "picturePath": "coko1.jpg",
+          "status": "unavailable",
+          "amount": 4
+        },
+        "quantity": 1
+      }
+    ],
+    "date": "2024-07-01T15:15:32.008Z",
+    "totalPrice": 366,
+    "customerName": "Pablo Eskobar",
+    "customerId": 3,
+    "status": "Obrada"
+  },
+  {
+    "id": 2,
+    "chocolates": [
+      {
+        "chocolate": {
+          "id": 4,
+          "name": "picka",
+          "price": 100,
+          "chocolateType": "Drink",
+          "factoryId": 4,
+          "chocolateVariety": "Nuts",
+          "grams": 100,
+          "description": "jeftino",
+          "picturePath": "coko6.jpg",
+          "status": "unavailable",
+          "amount": 15
+        },
+        "quantity": 6
+      },
+      {
+        "chocolate": {
+          "id": 5,
+          "name": "kita",
+          "price": 120,
+          "chocolateType": "Normal",
+          "factoryId": 4,
+          "chocolateVariety": "Dark",
+          "grams": 120,
+          "description": "nista",
+          "picturePath": "coko7.jpg",
+          "status": "unavailable",
+          "amount": 10
+        },
+        "quantity": 4
+      }
+    ],
+    "date": "2024-07-01T15:16:01.711Z",
+    "totalPrice": 1080,
+    "customerName": "Pablo Eskobar",
+    "customerId": 3,
+    "status": "Obrada"
+  },
+  {
+    "id": 3,
+    "chocolates": [
+      {
+        "chocolate": {
           "id": 7,
           "name": "mala plava",
           "price": 120,
@@ -17,10 +101,28 @@
           "amount": 4
         },
         "quantity": 4
+      },
+      {
+        "chocolate": {
+          "id": 6,
+          "name": "cokoladica",
+          "price": 123,
+          "chocolateType": "Normal",
+          "factoryId": 3,
+          "chocolateVariety": "Dark",
+          "grams": 123,
+          "description": "mala",
+          "picturePath": "coko1.jpg",
+          "status": "unavailable",
+          "amount": 10
+        },
+        "quantity": 3
       }
     ],
-    "date": "2024-07-01T12:12:17.631Z",
-    "totalPrice": 480,
-    "customerName": "Pablo Eskobar"
+    "date": "2024-07-01T15:16:30.212Z",
+    "totalPrice": 849,
+    "customerName": "Pablo Eskobar",
+    "customerId": 1,
+    "status": "Obrada"
   }
 ]

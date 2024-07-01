@@ -157,6 +157,7 @@ class CartService {
             date: new Date().toISOString(),
             price: totalPrice,
             customerName: `${cart.user.name} ${cart.user.lastName}`,
+            customerId: cart.user.id,
             status: PurchaseStatusEnum.PROCESSING
         };
 

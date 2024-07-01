@@ -1,8 +1,8 @@
 const PurchaseStatusEnum = {
-    OBRADA: 'Obrada',
-    ODOBRENO: 'Odobreno',
-    ODBIJENO: 'Odbijeno',
-    OTKAZANO: 'Otkazano'
+    PROCESSING: "Obrada",
+    APPROVED: "Odobreno",
+    REJECTED: "Odbijeno",
+    CANCELED: "Otkazano"
 };
 
 Object.freeze(PurchaseStatusEnum);

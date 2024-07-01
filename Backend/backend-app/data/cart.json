@@ -12,5 +12,19 @@
     },
     "chocolates": [],
     "totalPrice": 0
+  },
+  {
+    "id": 2,
+    "user": {
+      "id": 1,
+      "username": "",
+      "role": "Customer",
+      "cartId": 0,
+      "accumulatedPoints": 0,
+      "customerType": "Bronze",
+      "isBanned": false
+    },
+    "chocolates": [],
+    "totalPrice": 0
   }
 ]

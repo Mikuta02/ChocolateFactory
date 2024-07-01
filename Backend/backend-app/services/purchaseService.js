@@ -44,6 +44,7 @@ class PurchaseService {
             date: new Date().toISOString(),
             totalPrice: totalPrice,
             customerName: `${user.name} ${user.lastName}`,
+            customerId: cart.user.id,
             status: PurchaseStatusEnum.PROCESSING
         };
 
@@ -55,6 +56,10 @@ class PurchaseService {
         cartService.clearCart(user.id);
         cartService.deleteCart(user.id);
         return purchase;
+    }
+
+    getPurchasesByUserId(userId) {
+    return this.purchases.filter(purchase => purchase.customerId === userId);
     }
 
     
