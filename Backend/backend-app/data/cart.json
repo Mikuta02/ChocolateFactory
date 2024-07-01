@@ -57,9 +57,25 @@
           "amount": 4
         },
         "quantity": 4
+      },
+      {
+        "chocolate": {
+          "id": 6,
+          "name": "cokoladica",
+          "price": 123,
+          "chocolateType": "Normal",
+          "factoryId": 3,
+          "chocolateVariety": "Dark",
+          "grams": 123,
+          "description": "mala",
+          "picturePath": "coko1.jpg",
+          "status": "unavailable",
+          "amount": 10
+        },
+        "quantity": 5
       }
     ],
-    "totalPrice": 480
+    "totalPrice": 1095
   },
   {
     "id": 3,

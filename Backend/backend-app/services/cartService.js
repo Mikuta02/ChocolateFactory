@@ -4,6 +4,7 @@ const Cart = require('../models/cartModel');
 const User = require('../models/userModel');
 const Chocolate = require('../models/chocolateModel');
 
+
 class CartService {
     constructor() {
         this.filePath = path.join(__dirname, '../data/cart.json');
@@ -135,6 +136,38 @@ class CartService {
             return { success: true };
         }
         return { success: false, message: 'Chocolate not found in cart' };
+    }
+
+    createPurchaseFromCart(userId) {
+        const cart = this.getCartByUserId(userId);
+        if (!cart || cart.chocolates.length === 0) {
+            throw new Error('Cart is empty');
+        }
+
+        // Use userService dynamically
+        const userService = require('./userService');
+        const user = userService.getUserById(userId); // Ovde se koristi userService
+        if (!user) {
+            throw new Error('User not found');
+        }
+
+        const newPurchase = new Purchase(
+            this.purchases.length + 1,
+            cart.chocolates,
+            cart.chocolates[0].chocolate.factoryId,
+            new Date(),
+            cart.totalPrice,
+            `${user.name} ${user.lastName}`,
+            PurchaseStatusEnum.OBRADA
+        );
+
+        this.purchases.push(newPurchase);
+        this.savePurchases();
+
+        // Clear the cart after purchase
+        this.clearCart(userId);
+
+        return newPurchase;
     }
 }
 
