@@ -132,6 +132,14 @@ function addToCart(chocolateId, quantity) {
   const userId = store.getters.userId;
   const tokenPayload = store.state.token ? JSON.parse(atob(store.state.token.split('.')[1])) : {};
   const username = tokenPayload.username || '';
+
+  // Find the chocolate by its ID to check the amount
+  const chocolate = chocolates.value.find(choc => choc.id === chocolateId);
+  if (!chocolate || chocolate.amount === 0) {
+    alert('This chocolate is not available to be added to the cart.');
+    return;
+  }
+
   axios.post('http://localhost:3001/api/cart/add', { userId, username, chocolateId, quantity }, {
     headers: {
       'Authorization': `Bearer ${store.state.token}`
@@ -139,9 +147,11 @@ function addToCart(chocolateId, quantity) {
   })
     .then(response => {
       console.log('Added to cart:', response.data);
+      alert('Chocolate successfully added to the cart.');
     })
     .catch(error => {
       console.error('Error adding to cart:', error);
+      alert('Failed to add chocolate to the cart.');
     });
 }
 

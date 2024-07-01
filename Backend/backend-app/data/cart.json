@@ -2,8 +2,8 @@
   {
     "id": 1,
     "user": {
-      "id": 3,
-      "username": "dragan",
+      "id": 1,
+      "username": "boris",
       "role": "Customer",
       "cartId": 0,
       "accumulatedPoints": 0,
@@ -11,22 +11,6 @@
       "isBanned": false
     },
     "chocolates": [
-      {
-        "chocolate": {
-          "id": 3,
-          "name": "Malina Pralina",
-          "price": 400,
-          "chocolateType": "Normal",
-          "factoryId": 3,
-          "chocolateVariety": "Dark",
-          "grams": 450,
-          "description": "Losa verzija praline",
-          "picturePath": "coko1.jpg",
-          "status": "unavailable",
-          "amount": 3
-        },
-        "quantity": 1
-      },
       {
         "chocolate": {
           "id": 6,
@@ -39,46 +23,18 @@
           "description": "mala",
           "picturePath": "coko1.jpg",
           "status": "unavailable",
-          "amount": 0
+          "amount": 10
         },
-        "quantity": 1
+        "quantity": 2
       }
     ],
-    "totalPrice": 523
+    "totalPrice": 246
   },
   {
     "id": 2,
     "user": {
-      "id": null,
-      "username": "",
-      "role": "Customer",
-      "cartId": 0,
-      "accumulatedPoints": 0,
-      "customerType": "Bronze",
-      "isBanned": false
-    },
-    "chocolates": [],
-    "totalPrice": 0
-  },
-  {
-    "id": 3,
-    "user": {
-      "id": null,
-      "username": "",
-      "role": "Customer",
-      "cartId": 0,
-      "accumulatedPoints": 0,
-      "customerType": "Bronze",
-      "isBanned": false
-    },
-    "chocolates": [],
-    "totalPrice": 0
-  },
-  {
-    "id": 4,
-    "user": {
-      "id": 4,
-      "username": "mihajlo",
+      "id": 3,
+      "username": "dragan",
       "role": "Customer",
       "cartId": 0,
       "accumulatedPoints": 0,
@@ -86,6 +42,22 @@
       "isBanned": false
     },
     "chocolates": [
+      {
+        "chocolate": {
+          "id": 6,
+          "name": "cokoladica",
+          "price": 123,
+          "chocolateType": "Normal",
+          "factoryId": 3,
+          "chocolateVariety": "Dark",
+          "grams": 123,
+          "description": "mala",
+          "picturePath": "coko1.jpg",
+          "status": "unavailable",
+          "amount": 10
+        },
+        "quantity": 3
+      },
       {
         "chocolate": {
           "id": 7,
@@ -98,43 +70,27 @@
           "description": "mala",
           "picturePath": "coko1.jpg",
           "status": "unavailable",
-          "amount": 0
-        },
-        "quantity": 3
-      },
-      {
-        "chocolate": {
-          "id": 3,
-          "name": "Malina Pralina",
-          "price": 400,
-          "chocolateType": "Normal",
-          "factoryId": 3,
-          "chocolateVariety": "Dark",
-          "grams": 450,
-          "description": "Losa verzija praline",
-          "picturePath": "coko1.jpg",
-          "status": "unavailable",
-          "amount": 3
-        },
-        "quantity": 2
-      },
-      {
-        "chocolate": {
-          "id": 6,
-          "name": "cokoladica",
-          "price": 123,
-          "chocolateType": "Normal",
-          "factoryId": 3,
-          "chocolateVariety": "Dark",
-          "grams": 123,
-          "description": "mala",
-          "picturePath": "coko1.jpg",
-          "status": "unavailable",
-          "amount": 0
+          "amount": 4
         },
         "quantity": 1
+      },
+      {
+        "chocolate": {
+          "id": 5,
+          "name": "kita",
+          "price": 120,
+          "chocolateType": "Normal",
+          "factoryId": 4,
+          "chocolateVariety": "Dark",
+          "grams": 120,
+          "description": "nista",
+          "picturePath": "coko7.jpg",
+          "status": "unavailable",
+          "amount": 10
+        },
+        "quantity": 2
       }
     ],
-    "totalPrice": 1283
+    "totalPrice": 729
   }
 ]

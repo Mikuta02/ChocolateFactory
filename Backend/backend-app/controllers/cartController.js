@@ -30,8 +30,12 @@ exports.addChocolate = (req, res) => {
             return res.status(404).send('Chocolate not found');
         }
 
+        if (chocolate.amount === 0) {
+            return res.status(400).send('This chocolate is not available to be added to the cart.');
+        }
+
         cartService.addChocolateToCart(Number(userId), chocolate, quantity, username);
-        res.json(cartService.getCartByUserId(Number(userId)));
+        res.status(200).send('Chocolate successfully added to the cart.');
     } catch (error) {
         console.error('Error in addChocolate:', error.message);
         res.status(500).send(error.message);
