@@ -3,45 +3,83 @@
     <h2>Add New Factory</h2>
     <div>
       <label>Name:</label>
-      <input type="text" v-model="name" placeholder="Factory Name"/>
+      <input type="text" v-model="name" placeholder="Factory Name" />
     </div>
     <div>
       <label>Working Hours:</label>
-      <input type="text" v-model="workingHours" placeholder="e.g., 9am-5pm"/>
+      <input type="text" v-model="workingHours" placeholder="e.g., 9am-5pm" />
     </div>
     <div>
       <label>Status:</label>
-      <input type="text" v-model="status" placeholder="e.g., open/closed"/>
+      <input type="text" v-model="status" placeholder="e.g., open/closed" />
     </div>
     <div>
       <label>Latitude:</label>
-      <input type="number" v-model="latitude" step="any" placeholder="e.g., 44.7866"/>
+      <input type="number" v-model="latitude" step="any" placeholder="e.g., 44.7866" />
       <span v-if="latitudeError" class="error">{{ latitudeError }}</span>
     </div>
     <div>
       <label>Longitude:</label>
-      <input type="number" v-model="longitude" step="any" placeholder="e.g., 20.4489"/>
+      <input type="number" v-model="longitude" step="any" placeholder="e.g., 20.4489" />
       <span v-if="longitudeError" class="error">{{ longitudeError }}</span>
     </div>
     <div>
       <label>Address:</label>
-      <input type="text" v-model="address" placeholder="e.g., Ulica 123, Grad, 11000 or Ulica 123, Grad 11000"/>
+      <input type="text" v-model="address" placeholder="e.g., Ulica 123, Grad, 11000 or Ulica 123, Grad 11000" />
       <span v-if="addressError" class="error">{{ addressError }}</span>
     </div>
     <div>
       <label>Logo URL:</label>
-      <input type="text" v-model="logoPath" placeholder="e.g., http://example.com/logo.jpg"/>
+      <input type="text" v-model="logoPath" placeholder="e.g., http://example.com/logo.jpg" />
     </div>
     <div>
       <label>Rating:</label>
-      <input type="number" v-model="rating" step="any" placeholder="e.g., 4.5"/>
+      <input type="number" v-model="rating" step="any" placeholder="e.g., 4.5" />
+    </div>
+    <div>
+      <label>Manager:</label>
+      <select v-model="managerId">
+        <option value="" disabled>Select a manager</option>
+        <option v-for="manager in freeManagers" :key="manager.id" :value="manager.id">
+          {{ manager.name }} {{ manager.lastName }}
+        </option>
+      </select>
+      <button v-if="freeManagers.length === 0" @click.prevent="showRegisterForm = true" class="register-button">Register New Manager</button>
+    </div>
+    <div v-if="showRegisterForm" class="register-manager-form">
+      <h3>Register New Manager</h3>
+      <div>
+        <label>Username:</label>
+        <input type="text" v-model="managerUsername" placeholder="Username" />
+      </div>
+      <div>
+        <label>Password:</label>
+        <input type="password" v-model="managerPassword" placeholder="Password" />
+      </div>
+      <div>
+        <label>First Name:</label>
+        <input type="text" v-model="managerName" placeholder="First Name" />
+      </div>
+      <div>
+        <label>Last Name:</label>
+        <input type="text" v-model="managerLastName" placeholder="Last Name" />
+      </div>
+      <div>
+        <label>Gender:</label>
+        <input type="text" v-model="managerGender" placeholder="Gender" />
+      </div>
+      <div>
+        <label>Birth Date:</label>
+        <input type="date" v-model="managerBirthDate" />
+      </div>
+      <button @click.prevent="registerManager" class="register-button">Register Manager</button>
     </div>
     <button type="submit">Add Factory</button>
   </form>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
 
@@ -53,7 +91,19 @@ const latitude = ref('');
 const longitude = ref('');
 const address = ref('');
 const logoPath = ref('');
+const managerId = ref('');
 const rating = ref(0);
+const freeManagers = ref([]);
+
+const role = "Manager";
+
+const showRegisterForm = ref(false);
+const managerUsername = ref('');
+const managerPassword = ref('');
+const managerName = ref('');
+const managerLastName = ref('');
+const managerGender = ref('');
+const managerBirthDate = ref('');
 
 const latitudeError = ref('');
 const longitudeError = ref('');
@@ -61,8 +111,44 @@ const addressError = ref('');
 
 function validateAddress(address) {
   const regex = /^[a-zA-Z0-9\s,.'-]+, [a-zA-Z\s]+ ?\d{5}$/;
-  return regex.test(address);
+  //return regex.test(address);
+  return true;
 }
+
+function registerManager() {
+  const userToRegister = {
+    username: managerUsername.value,
+    password: managerPassword.value,
+    name: managerName.value,
+    lastName: managerLastName.value,
+    gender: managerGender.value,
+    birthDate: managerBirthDate.value
+  };
+
+  axios.post(`http://localhost:3001/api/signup/${role}`, userToRegister)
+    .then(response => {
+      managerId.value = response.data.id;  
+      showRegisterForm.value = false;  
+      loadManagers();  
+    })
+    .catch(error => {
+      console.error('There was an error registering the manager!', error);
+    });
+}
+
+function loadManagers() {
+  axios.get('http://localhost:3001/api/users/freeManagers')
+    .then(response => {
+      freeManagers.value = response.data;
+    })
+    .catch(error => {
+      console.error('There was an error fetching the managers!', error);
+    });
+}
+
+onMounted(() => {
+  loadManagers();
+});
 
 function handleSubmit() {
   latitudeError.value = '';
@@ -92,7 +178,8 @@ function handleSubmit() {
     longitude: parseFloat(longitude.value),
     address: address.value,
     logoPath: logoPath.value,
-    rating: rating.value
+    rating: rating.value,
+    managerId: managerId.value
   };
 
   axios.post('http://localhost:3001/api/factories', newFactory)
@@ -123,7 +210,7 @@ function handleSubmit() {
   font-size: 2em;
   font-weight: bold;
   margin-bottom: 20px;
-  text-transform: uppercase; 
+  text-transform: uppercase;
   font-style: italic;
 }
 
@@ -137,7 +224,8 @@ function handleSubmit() {
   font-weight: bold;
 }
 
-.add-factory-form input {
+.add-factory-form input,
+.add-factory-form select {
   width: 100%;
   padding: 8px;
   box-sizing: border-box;
@@ -159,6 +247,26 @@ function handleSubmit() {
 
 .add-factory-form button:hover {
   background-color: #3a9d70;
+}
+
+.register-manager-form {
+  margin-top: 20px;
+  background-color: #e9ecef;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.register-button {
+  background-color: #007bff;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.register-button:hover {
+  background-color: #0056b3;
 }
 
 .error {

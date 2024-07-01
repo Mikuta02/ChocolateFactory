@@ -2,6 +2,7 @@ const User = require('../models/userModel');
 const path = require('path');
 const fs = require('fs');
 const { user } = require('./cartService');
+const factoryService = require('./factoryService');
 
 class UserService {
   constructor() {
@@ -59,6 +60,22 @@ class UserService {
     const maxId = this.users.reduce((max, user) => (user.id > max ? user.id : max), 0);
     const newId = maxId + 1;
     const newUser = new User(newId, username, password, name, lastName, gender, birthDate);
+    this.users.push(newUser);
+    this.saveUsers();
+    return newUser;
+  }
+
+  registerUserWithRole( username, 
+    password, 
+    name, 
+    lastName, 
+    gender, 
+    birthDate,
+    role) {
+    const maxId = this.users.reduce((max, user) => (user.id > max ? user.id : max), 0);
+    const newId = maxId + 1;
+    const newUser = new User(newId, username, password, name, lastName, gender, birthDate);
+    newUser.role = role;
     this.users.push(newUser);
     this.saveUsers();
     return newUser;
@@ -165,7 +182,15 @@ filterUsers(users, filters) {
   });
 }
 
-
+getAllFreeManagers(){
+  const factories = factoryService.getAllFactories();
+  const managers = this.users.filter(user => user.role === "Manager");
+  
+  const managerIds = factories.map(factory => factory.managerId);
+  const freeManagers = managers.filter(manager => !managerIds.includes(manager.id));
+  
+  return freeManagers;
+}
 
 
 }

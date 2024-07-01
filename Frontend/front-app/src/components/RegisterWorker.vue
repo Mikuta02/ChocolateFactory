@@ -1,6 +1,6 @@
 <template>
     <form @submit.prevent="register" class="register-form">
-      <h2>Please enter your credentials to register</h2>
+      <h2>Please register a Worker</h2>
       <div>
         <label>Username:</label>
         <input type="text" v-model="username" placeholder="Username"/>
@@ -39,8 +39,6 @@
   import { useStore } from 'vuex';
   import { useRouter } from 'vue-router';
   
-
-
   const router = useRouter();
   const username = ref('');
   const password = ref('');
@@ -48,6 +46,7 @@
   const lastName = ref('');
   const gender = ref('');
   const birthDate = ref('');
+  const role = "Worker";
 
   function register() {
     const userToRegister = {
@@ -59,7 +58,7 @@
     birthDate: birthDate.value
     };
 
-    axios.post('http://localhost:3001/api/signup', userToRegister)
+    axios.post(`http://localhost:3001/api/signup/${role}`, userToRegister)
       .then(response => {
         router.push('/login');
       })
