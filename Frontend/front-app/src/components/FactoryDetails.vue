@@ -34,9 +34,9 @@
       
     <button @click="addNewChocolate" class="add-button">Add New Chocolate</button>
 
-    <button @click="goToAddComment" class="add-comment-button">Add Comment</button> <!-- Dodato dugme za dodavanje komentara -->
+    <button @click="goToAddComment" class="add-comment-button">Add Comment</button>
 
-    <Comments :factoryId="factory.id" /> <!-- Dodato prikazivanje komentara -->
+    <Comments :factoryId="factory.id" />
 
     <div v-if="showModal" class="modal-overlay">
       <div class="modal">
@@ -106,7 +106,6 @@ function editAmount(chocolateId) {
   router.push({ name: 'EditAmount', params: { id: chocolateId, factoryId: factory.value.id } });
 }
 
-
 function confirmDelete(id) {
   chocolateToDelete.value = id;
   showModal.value = true;
@@ -130,7 +129,14 @@ function cancelDelete() {
 }
 
 function addToCart(chocolateId, quantity) {
-  axios.post('http://localhost:3001/api/cart/add', { chocolateId, quantity })
+  const userId = store.getters.userId;
+  const tokenPayload = store.state.token ? JSON.parse(atob(store.state.token.split('.')[1])) : {};
+  const username = tokenPayload.username || '';
+  axios.post('http://localhost:3001/api/cart/add', { userId, username, chocolateId, quantity }, {
+    headers: {
+      'Authorization': `Bearer ${store.state.token}`
+    }
+  })
     .then(response => {
       console.log('Added to cart:', response.data);
     })

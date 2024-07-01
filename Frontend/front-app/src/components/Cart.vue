@@ -1,7 +1,7 @@
 <template>
   <div class="cart">
     <h1>Your Cart</h1>
-    <div v-if="cart.chocolates.length > 0">
+    <div v-if="cart && cart.chocolates && cart.chocolates.length > 0">
       <ul>
         <li v-for="item in cart.chocolates" :key="item.chocolate.id" class="cart-item">
           <img :src="getChocolatePictureUrl(item.chocolate.picturePath)" :alt="item.chocolate.name" class="chocolate-picture" />
@@ -25,7 +25,9 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
+import { useStore } from 'vuex';
 
+const store = useStore();
 const cart = ref({
   chocolates: [],
   totalPrice: 0
@@ -36,17 +38,28 @@ onMounted(() => {
 });
 
 function loadCart() {
-  axios.get('http://localhost:3001/api/cart')
+  const userId = store.getters.userId;
+  axios.get(`http://localhost:3001/api/cart/${userId}`, {
+    headers: {
+      'Authorization': `Bearer ${store.state.token}`
+    }
+  })
     .then(response => {
-      cart.value = response.data;
+      cart.value = response.data || { chocolates: [], totalPrice: 0 };
     })
     .catch(error => {
       console.error('Error fetching cart:', error);
+      cart.value = { chocolates: [], totalPrice: 0 };
     });
 }
 
 function removeFromCart(chocolateId) {
-  axios.post('http://localhost:3001/api/cart/remove', { chocolateId })
+  const userId = store.getters.userId;
+  axios.post('http://localhost:3001/api/cart/remove', { chocolateId, userId }, {
+    headers: {
+      'Authorization': `Bearer ${store.state.token}`
+    }
+  })
     .then(response => {
       cart.value = response.data;
     })
@@ -56,7 +69,12 @@ function removeFromCart(chocolateId) {
 }
 
 function clearCart() {
-  axios.post('http://localhost:3001/api/cart/clear')
+  const userId = store.getters.userId;
+  axios.post(`http://localhost:3001/api/cart/clear/${userId}`, {}, {
+    headers: {
+      'Authorization': `Bearer ${store.state.token}`
+    }
+  })
     .then(response => {
       cart.value = response.data;
     })
