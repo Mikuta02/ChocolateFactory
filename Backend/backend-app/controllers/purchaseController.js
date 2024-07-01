@@ -13,6 +13,11 @@ exports.createPurchase = (req, res) => {
         }
 
         const purchase = purchaseService.createPurchaseFromCart(cart, user);
+        console.log(`Purchase created: ${JSON.stringify(purchase)}`);
+        
+        userService.updateUserPoints(userId, purchase.totalPrice);
+        console.log(`User points updated for userId ${userId} with totalPrice ${purchase.totalPrice}`);
+        
         res.status(201).json(purchase);
     } catch (error) {
         console.error('Error creating purchase:', error.message);

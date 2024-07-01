@@ -11,6 +11,11 @@ class CartService {
         this.carts = this.loadCarts();
     }
 
+    deleteCart(userId) {
+        this.carts = this.carts.filter(cart => cart.user.id !== userId);
+        this.saveCarts();
+    }
+    
     loadCarts() {
         try {
             if (fs.existsSync(this.filePath)) {
@@ -141,33 +146,30 @@ class CartService {
     createPurchaseFromCart(userId) {
         const cart = this.getCartByUserId(userId);
         if (!cart || cart.chocolates.length === 0) {
-            throw new Error('Cart is empty');
+            throw new Error('Cart is empty or not found');
         }
 
-        // Use userService dynamically
-        const userService = require('./userService');
-        const user = userService.getUserById(userId); // Ovde se koristi userService
-        if (!user) {
-            throw new Error('User not found');
-        }
+        const totalPrice = cart.totalPrice;
+        const purchase = {
+            id: generateUniqueId(),  // Implement this function to generate a unique ID
+            chocolates: cart.chocolates,
+            factoryId: cart.chocolates[0].chocolate.factoryId,  // Assuming all chocolates are from the same factory
+            date: new Date().toISOString(),
+            price: totalPrice,
+            customerName: `${cart.user.name} ${cart.user.lastName}`,
+            status: PurchaseStatusEnum.PROCESSING
+        };
 
-        const newPurchase = new Purchase(
-            this.purchases.length + 1,
-            cart.chocolates,
-            cart.chocolates[0].chocolate.factoryId,
-            new Date(),
-            cart.totalPrice,
-            `${user.name} ${user.lastName}`,
-            PurchaseStatusEnum.OBRADA
-        );
+        const points = Math.floor(totalPrice / 1000 * 133);
+        userService.addPoints(userId, points);
 
-        this.purchases.push(newPurchase);
-        this.savePurchases();
+        // Save the purchase
+        purchaseService.addPurchase(purchase);
 
-        // Clear the cart after purchase
+        // Clear the cart
         this.clearCart(userId);
 
-        return newPurchase;
+        return purchase;
     }
 }
 

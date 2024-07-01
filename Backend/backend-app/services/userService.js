@@ -23,6 +23,8 @@ class UserService {
     return [new User(1, 'Boris')];
   }
 
+ 
+
   saveUsers() {
     try {
       fs.writeFileSync(this.filePath, JSON.stringify(this.users, null, 2));
@@ -61,6 +63,17 @@ class UserService {
     this.users.push(newUser);
     this.saveUsers();
     return newUser;
+  }
+
+  updateUserPoints(userId, points) {
+    const user = this.getUserById(userId);
+    if (user) {
+      user.accumulatedPoints += points;
+      this.saveUsers();
+      console.log(`Updated points for user ${user.username}. New total: ${user.accumulatedPoints}`);
+      return user;
+    }
+    throw new Error('User not found');
   }
 }
 

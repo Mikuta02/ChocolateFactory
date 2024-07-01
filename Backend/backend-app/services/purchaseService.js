@@ -2,11 +2,18 @@ const path = require('path');
 const fs = require('fs');
 const Purchase = require('../models/purchaseModel');
 const PurchaseStatusEnum = require('../models/purchaseStatusEnum');
+const userService = require('./userService');
+const cartService = require('./cartService');
 
 class PurchaseService {
     constructor() {
         this.filePath = path.join(__dirname, '../data/purchases.json');
         this.purchases = this.loadPurchases();
+    }
+
+    addPurchase(purchase) {
+        this.purchases.push(purchase);
+        this.savePurchases();
     }
 
     loadPurchases() {
@@ -30,23 +37,24 @@ class PurchaseService {
     }
 
     createPurchaseFromCart(cart, user) {
-        const newPurchase = new Purchase(
-            this.purchases.length + 1,
-            cart.chocolates,
-            cart.factory,
-            new Date().toISOString(),
-            cart.totalPrice,
-            `${user.name} ${user.lastName}`,
-            PurchaseStatusEnum.Processing
-        );
-        this.purchases.push(newPurchase);
-        this.savePurchases();
+        const totalPrice = cart.totalPrice;
+        const purchase = {
+            id: this.purchases.length + 1,
+            chocolates: cart.chocolates,
+            date: new Date().toISOString(),
+            totalPrice: totalPrice,
+            customerName: `${user.name} ${user.lastName}`,
+            status: PurchaseStatusEnum.PROCESSING
+        };
 
-        // Očisti korpu nakon kreiranja porudžbine
-        cart.chocolates = [];
-        cart.totalPrice = 0;
-
-        return newPurchase;
+        const points = Math.floor(totalPrice / 1000 * 133);
+        userService.updateUserPoints(user.id, points);
+        console.log(`Updated points for user ${user.username}. New total: ${user.accumulatedPoints + points}`);
+        this.addPurchase(purchase);
+        
+        cartService.clearCart(user.id);
+        cartService.deleteCart(user.id);
+        return purchase;
     }
 
     
