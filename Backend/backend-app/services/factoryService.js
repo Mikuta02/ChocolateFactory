@@ -41,6 +41,10 @@ class FactoryService {
         }
     }
 
+    getAll(){
+        return this.factories;
+    }
+
     getAllFactories() {
         return this.factories.sort((a, b) => {
             if (a.status === 'otvorena' && b.status !== 'otvorena') {

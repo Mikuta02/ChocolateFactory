@@ -68,5 +68,19 @@
     "logoPath": "fabrika7.jpg",
     "rating": 3.4,
     "managerId": 10
+  },
+  {
+    "id": 6,
+    "name": "aa",
+    "workingHours": "aaaa",
+    "status": "aaa",
+    "location": {
+      "latitude": 3423,
+      "longitude": 222,
+      "address": "Ulica 123, Grad 21000"
+    },
+    "logoPath": "factory1.jpg",
+    "rating": 2,
+    "managerId": 11
   }
 ]
