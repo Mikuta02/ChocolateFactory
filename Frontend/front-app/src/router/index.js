@@ -10,6 +10,7 @@ import Cart from '../components/Cart.vue';
 import AddComment from '../components/AddComment.vue'; 
 import Login from '../components/Login.vue';
 import Register from '../components/Register.vue';
+import UserPurchases from '../components/UserPurchases.vue';
 import Profile from '../components/Profile.vue';
 import RegisterManager from '../components/RegisterManager.vue';
 import RegisterWorker from '../components/RegisterWorker.vue';
@@ -59,6 +60,11 @@ const routes = [
     path: '/cart',
     name: 'Cart',
     component: Cart 
+  },
+  {
+    path: '/purchases',
+    name: 'UserPurchases',
+    component: UserPurchases
   },
   {
     path: '/add-comment/:factoryId',

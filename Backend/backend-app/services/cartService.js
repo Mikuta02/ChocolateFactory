@@ -4,12 +4,18 @@ const Cart = require('../models/cartModel');
 const User = require('../models/userModel');
 const Chocolate = require('../models/chocolateModel');
 
+
 class CartService {
     constructor() {
         this.filePath = path.join(__dirname, '../data/cart.json');
         this.carts = this.loadCarts();
     }
 
+    deleteCart(userId) {
+        this.carts = this.carts.filter(cart => cart.user.id !== userId);
+        this.saveCarts();
+    }
+    
     loadCarts() {
         try {
             if (fs.existsSync(this.filePath)) {
@@ -135,6 +141,36 @@ class CartService {
             return { success: true };
         }
         return { success: false, message: 'Chocolate not found in cart' };
+    }
+
+    createPurchaseFromCart(userId) {
+        const cart = this.getCartByUserId(userId);
+        if (!cart || cart.chocolates.length === 0) {
+            throw new Error('Cart is empty or not found');
+        }
+
+        const totalPrice = cart.totalPrice;
+        const purchase = {
+            id: generateUniqueId(),  // Implement this function to generate a unique ID
+            chocolates: cart.chocolates,
+            factoryId: cart.chocolates[0].chocolate.factoryId,  // Assuming all chocolates are from the same factory
+            date: new Date().toISOString(),
+            price: totalPrice,
+            customerName: `${cart.user.name} ${cart.user.lastName}`,
+            customerId: cart.user.id,
+            status: PurchaseStatusEnum.PROCESSING
+        };
+
+        const points = Math.floor(totalPrice / 1000 * 133);
+        userService.addPoints(userId, points);
+
+        // Save the purchase
+        purchaseService.addPurchase(purchase);
+
+        // Clear the cart
+        this.clearCart(userId);
+
+        return purchase;
     }
 }
 

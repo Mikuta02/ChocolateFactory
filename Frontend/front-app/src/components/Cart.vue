@@ -10,16 +10,14 @@
             <p>Type: {{ item.chocolate.chocolateType }}</p>
             <p>Variety: {{ item.chocolate.chocolateVariety }}</p>
             <p>Price: {{ item.chocolate.price }}</p>
-            <div>
-              <label for="quantity">Quantity:</label>
-              <input type="number" v-model.number="item.quantity" @change="updateQuantity(item)" min="1" :max="item.chocolate.amount" />
-            </div>
+            <p>Quantity: {{ item.quantity }}</p>
             <button @click="removeFromCart(item.chocolate.id)">Remove</button>
           </div>
         </li>
       </ul>
       <p>Total Price: {{ cart.totalPrice }}</p>
       <button @click="clearCart">Clear Cart</button>
+      <button @click="createPurchase">Purchase</button>
     </div>
     <p v-else>Your cart is empty.</p>
   </div>
@@ -73,26 +71,21 @@ function clearCart() {
     });
 }
 
-function updateQuantity(item) {
+function createPurchase() {
   const userId = store.getters.userId;
-  const quantity = item.quantity;
-  if (quantity > item.chocolate.amount) {
-    item.quantity = item.chocolate.amount;
-    alert(`Quantity exceeds available stock. Maximum available: ${item.chocolate.amount}`);
-    return;
-  }
-  axios.post('http://localhost:3001/api/cart/update-quantity', { userId, chocolateId: item.chocolate.id, quantity })
+  axios.post('http://localhost:3001/api/purchases', { userId }, {
+    headers: {
+      'Authorization': `Bearer ${store.state.token}`
+    }
+  })
     .then(response => {
-      cart.value = response.data;
-      alert('Quantity updated successfully');
+      console.log('Purchase created:', response.data);
+      alert('Purchase successfully created.');
+      loadCart();  // Reload cart to show it's empty
     })
     .catch(error => {
-      console.error('Error updating quantity:', error);
-      if (error.response && error.response.data && error.response.data.error) {
-        alert(error.response.data.error);
-      } else {
-        alert('Failed to update quantity');
-      }
+      console.error('Error creating purchase:', error);
+      alert('Failed to create purchase.');
     });
 }
 

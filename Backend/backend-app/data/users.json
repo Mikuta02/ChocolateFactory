@@ -9,7 +9,7 @@
     "birthDate": "2001-02-22",
     "role": "Customer",
     "cartId": 0,
-    "accumulatedPoints": 0,
+    "accumulatedPoints": 1909,
     "customerType": "Bronze",
     "isBanned": false,
     "cancelationNumber": 0
@@ -39,7 +39,7 @@
     "birthDate": "2001-01-01",
     "role": "Worker",
     "cartId": 0,
-    "accumulatedPoints": 0,
+    "accumulatedPoints": 15304,
     "customerType": "Bronze",
     "isBanned": false,
     "cancelationNumber": 0
