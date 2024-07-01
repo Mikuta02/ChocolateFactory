@@ -78,6 +78,96 @@ class UserService {
     }
     return null;
 }
+
+banUser(username, updatedUser) {
+  const user = this.users.find(u => u.username === username);
+  if (user) {
+      Object.assign(user, updatedUser);
+      this.saveUsers();
+      return user;
+  }
+  return null;
+}
+
+
+searchUsers({ name, lastName, username}) {
+  console.log('Search parameters in service:', { name, lastName, username });
+
+  return this.users.filter(user => {
+      let matches = true;
+
+      if (name) {
+          matches = matches && user.name.toLowerCase().includes(name.toLowerCase());
+      }
+      console.log(`Matching user ${user.name} with name ${name}: ${matches}`);
+
+      if (lastName) {
+          matches = matches && user.lastName.toLowerCase().includes(lastName.toLowerCase());
+      }
+      console.log(`Matching User ${user.lastName} with lastName ${lastName}: ${matches}`);
+
+      if (username) {
+          matches = matches && user.username.toLowerCase().includes(username.toLowerCase());
+      }
+      console.log(`Matching user ${user.username} with location ${username}: ${matches}`);
+      return matches;
+  });
+}
+
+
+sortUsers(users, sortBy, order) {
+  console.log('Sorting parameters:', { sortBy, order }); // Log za sortiranje
+
+  const sorted = users.sort((a, b) => {
+      let result = 0;
+
+      if (sortBy === 'name') {
+          result = a.name.localeCompare(b.name);
+      } else if (sortBy === 'lastName') {
+          result = a.lastName.localeCompare(b.lastName);
+      } else if (sortBy === 'username') {
+          result = a.username.localeCompare(b.username);
+      } else if (sortBy === 'accumulatedPoints'){
+          result = a.accumulatedPoints - b.accumulatedPoints
+      }
+
+      return order === 'desc' ? -result : result;
+  });
+
+  console.log('Sorted results:', sorted); // Log za sortirane rezultate
+  return sorted;
+}
+
+filterUsers(users, filters) {
+  console.log('Filtering users with filters:', filters);
+
+  return users.filter(user => {
+      let matches = true;
+
+      if (filters.role) {
+          matches = matches && user.role === filters.role;
+          console.log(`Matching user ${user.name} with role ${filters.role}: ${matches}`);
+      }
+
+      if (filters.customerType) {
+          matches = matches && user.customerType === filters.customerType;
+          console.log(`Matching user ${user.name} with customerType ${filters.customerType}: ${matches}`);
+      }
+
+      if (filters.cancelationNumber !== undefined) {
+          matches = matches && user.cancelationNumber > 5;
+          console.log(`Matching user ${user.name} with cancelationNumber greater than 5: ${matches}`);
+      } else {
+          console.log(`Ignoring cancelationNumber filter for user ${user.name}`);
+      }
+
+      return matches;
+  });
+}
+
+
+
+
 }
 
 module.exports = new UserService();

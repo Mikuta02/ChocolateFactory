@@ -84,7 +84,7 @@
     "cartId": 0,
     "accumulatedPoints": 0,
     "customerType": "Bronze",
-    "isBanned": false,
+    "isBanned": true,
     "cancelationNumber": 0
   }
 ]

@@ -43,8 +43,10 @@
         <button @click="cancelEdit">Cancel</button>
       </div>
   
-      <div v-if="userRole === 'Administrator'" class="user-list">
+      <div v-if="userRole === 'Administrator'" class="admin-section">
+      <div class="user-list">
         <h2>User List</h2>
+        <SearchFilterUsers @search="handleUserSearch" />
         <div v-for="user in users" :key="user.id" class="user-item">
           <p><strong>Username:</strong> {{ user.username }}</p>
           <p><strong>Name:</strong> {{ user.name }}</p>
@@ -56,17 +58,20 @@
           <p><strong>Accumulated Points:</strong> {{ user.accumulatedPoints }}</p>
           <p><strong>Customer Type:</strong> {{ user.customerType }}</p>
           <p><strong>Banned:</strong> {{ user.isBanned ? 'Yes' : 'No' }}</p>
+          <button class="ban-button" @click="banUser(user.username)">Ban</button>
           <hr />
         </div>
       </div>
     </div>
-  </template>
+  </div>
+</template>
   
   <script setup>
   import { ref, onMounted } from 'vue';
   import { useRouter } from 'vue-router';
   import axios from 'axios';
   import { useStore } from 'vuex';
+  import SearchFilterUsers from './SearchFilterUsers.vue';
   
   const store = useStore();
   const router = useRouter();
@@ -85,13 +90,13 @@
   onMounted(() => {
     loadUser();
   
-    if(userRole === "Administrator"){
+    if (userRole === "Administrator") {
       loadUsers();
     }
   });
   
-  function loadUsers(){
-    axios.get(`http://localhost:3001/api/users`)
+  function loadUsers(params = {}) {
+    axios.get('http://localhost:3001/api/search/users', { params })
       .then(response => {
         console.log('Users fetched:', response.data);
         users.value = response.data;
@@ -121,7 +126,7 @@
   
   function cancelEdit() {
     isEditing.value = false;
-    loadUser(); 
+    loadUser();
   }
   
   function saveProfile() {
@@ -139,6 +144,23 @@
         console.error('There was an error updating the user!', error);
       });
   }
+  
+  function handleUserSearch(searchParams) {
+    loadUsers(searchParams);
+  }
+
+
+  function banUser(usernameToBan) {
+  axios.patch(`http://localhost:3001/api/ban/${usernameToBan}`)
+    .then(response => {
+      console.log('User banned:', response.data);
+      loadUsers(); // Refresh the user list after banning
+    })
+    .catch(error => {
+      console.error('There was an error banning the user!', error);
+    });
+}
+
   </script>
   
   <style scoped>
@@ -217,6 +239,10 @@
     background-color: #c9302c;
   }
   
+  .admin-section {
+    margin-top: 30px;
+  }
+  
   .user-list {
     margin-top: 30px;
     background-color: #fff;
@@ -251,5 +277,20 @@
   .user-item hr {
     margin-top: 10px;
   }
+
+  .ban-button {
+  padding: 8px 16px;
+  background-color: #d9534f;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9em;
+  margin-top: 10px;
+}
+
+.ban-button:hover {
+  background-color: #c9302c;
+}
   </style>
   
