@@ -83,3 +83,19 @@ exports.updateChocolate = (req, res) => {
     }
 };
 
+exports.updateChocolateAmount = (req, res) => {
+    const { id } = req.params;
+    const { amount } = req.body;
+
+    try {
+        const updatedChocolate = chocolateService.updateChocolateAmount(Number(id), amount);
+        if (updatedChocolate) {
+            res.status(200).json(updatedChocolate);
+        } else {
+            res.status(404).json({ error: 'Chocolate not found' });
+        }
+    } catch (error) {
+        console.error('Error updating chocolate amount:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+};

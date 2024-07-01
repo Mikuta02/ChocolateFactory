@@ -1,23 +1,18 @@
 [
   {
     "id": 1,
-    "name": "Uleti ti kita",
-    "price": 999,
-    "chocolateType": "Cooking",
-    "factoryId": 1,
-    "chocolateVariety": "Dark",
-    "grams": 999,
-    "description": "ulcece kita",
-    "picturePath": "coko4.jpg",
+    "factoryId": null,
+    "description": "N/A",
+    "picturePath": "",
     "status": "unavailable",
-    "amount": 0
+    "amount": 10
   },
   {
     "id": 2,
     "name": "Proteinska mala",
     "price": 550,
     "chocolateType": "Cooking",
-    "factoryId": 3,
+    "factoryId": 1,
     "chocolateVariety": "Nuts",
     "grams": 40,
     "description": "lesnik protein",
@@ -49,45 +44,45 @@
     "description": "jeftino",
     "picturePath": "coko6.jpg",
     "status": "unavailable",
-    "amount": 0
+    "amount": 15
   },
   {
     "id": 5,
     "name": "kita",
     "price": 120,
     "chocolateType": "Normal",
-    "factoryId": 5,
+    "factoryId": 4,
     "chocolateVariety": "Dark",
     "grams": 120,
     "description": "nista",
     "picturePath": "coko7.jpg",
     "status": "unavailable",
-    "amount": 0
+    "amount": 10
   },
   {
     "id": 6,
     "name": "cokoladica",
     "price": 123,
     "chocolateType": "Normal",
-    "factoryId": 5,
+    "factoryId": 3,
     "chocolateVariety": "Dark",
     "grams": 123,
     "description": "mala",
     "picturePath": "coko1.jpg",
     "status": "unavailable",
-    "amount": 0
+    "amount": 10
   },
   {
     "id": 7,
     "name": "mala plava",
     "price": 120,
     "chocolateType": "Normal",
-    "factoryId": 4,
+    "factoryId": 2,
     "chocolateVariety": "Dark",
     "grams": 120,
     "description": "mala",
     "picturePath": "coko1.jpg",
     "status": "unavailable",
-    "amount": 0
+    "amount": 4
   }
 ]

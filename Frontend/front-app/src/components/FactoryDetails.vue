@@ -14,6 +14,7 @@
     <ul v-if="chocolates.length">
       <li v-for="chocolate in chocolates" :key="chocolate.id" class="chocolate-item">
         <button @click="editChocolate(chocolate.id)" class="edit-button">Edit</button>
+        <button @click="editAmount(chocolate.id)" v-if="canEditAmount(chocolate)" class="edit-amount-button">Edit Amount</button>
         <button @click="confirmDelete(chocolate.id)" class="delete-button">X</button>
         <img :src="getChocolatePictureUrl(chocolate.picturePath)" :alt="chocolate.name + ' picture'" class="chocolate-picture" />
         <div class="chocolate-details">
@@ -25,7 +26,11 @@
           <p class="chocolate-description">Description: {{ chocolate.description }}</p>
           <p>Status: {{ chocolate.status }}</p>
           <p>Amount: {{ chocolate.amount }}</p>
-          <button @click="addToCart(chocolate.id, 1)" class="add-to-cart-button">Add to Cart</button>
+          <div>
+            <label for="quantity">Quantity:</label>
+            <input type="number" v-model.number="chocolate.quantity" :max="chocolate.amount" min="1" />
+          </div>
+          <button @click="addToCart(chocolate.id, chocolate.quantity)" class="add-to-cart-button">Add to Cart</button>
         </div>
       </li>
     </ul>
@@ -33,9 +38,9 @@
       
     <button @click="addNewChocolate" class="add-button">Add New Chocolate</button>
 
-    <button @click="goToAddComment" class="add-comment-button">Add Comment</button> <!-- Dodato dugme za dodavanje komentara -->
+    <button @click="goToAddComment" class="add-comment-button">Add Comment</button>
 
-    <Comments :factoryId="factory.id" /> <!-- Dodato prikazivanje komentara -->
+    <Comments :factoryId="factory.id" />
 
     <div v-if="showModal" class="modal-overlay">
       <div class="modal">
@@ -51,8 +56,10 @@
 import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import axios from 'axios';
-import Comments from './Comments.vue'; // Dodato: import za Comments
+import Comments from './Comments.vue'; 
+import { useStore } from 'vuex';
 
+const store = useStore();
 const route = useRoute();
 const router = useRouter();
 const factory = ref(null);
@@ -81,7 +88,7 @@ function loadChocolates(factoryId) {
   loadingChocolates.value = true;
   axios.get(`http://localhost:3001/api/chocolates?factoryId=${factoryId}`)
     .then(response => {
-      chocolates.value = response.data;
+      chocolates.value = response.data.map(chocolate => ({ ...chocolate, quantity: 1 }));
       loadingChocolates.value = false;
     })
     .catch(error => {
@@ -97,6 +104,10 @@ function addNewChocolate() {
 
 function editChocolate(chocolateId) {
   router.push({ name: 'EditChocolate', params: { factoryId: factory.value.id, chocolateId } });
+}
+
+function editAmount(chocolateId) {
+  router.push({ name: 'EditAmount', params: { id: chocolateId, factoryId: factory.value.id } });
 }
 
 function confirmDelete(id) {
@@ -122,12 +133,29 @@ function cancelDelete() {
 }
 
 function addToCart(chocolateId, quantity) {
-  axios.post('http://localhost:3001/api/cart/add', { chocolateId, quantity })
+  const chocolate = chocolates.value.find(choc => choc.id === chocolateId);
+  if (quantity > chocolate.amount) {
+    alert(`Cannot add more than ${chocolate.amount} of this chocolate. Please adjust the quantity.`);
+    chocolate.quantity = chocolate.amount; // Reset quantity to max available
+    return;
+  }
+
+  const userId = store.getters.userId;
+  const tokenPayload = store.state.token ? JSON.parse(atob(store.state.token.split('.')[1])) : {};
+  const username = tokenPayload.username || '';
+
+  axios.post('http://localhost:3001/api/cart/add', { userId, username, chocolateId, quantity }, {
+    headers: {
+      'Authorization': `Bearer ${store.state.token}`
+    }
+  })
     .then(response => {
       console.log('Added to cart:', response.data);
+      alert('Chocolate successfully added to the cart.');
     })
     .catch(error => {
       console.error('Error adding to cart:', error);
+      alert('Failed to add chocolate to the cart.');
     });
 }
 
@@ -142,6 +170,11 @@ function getChocolatePictureUrl(path) {
 function goToAddComment() {
   const factoryId = route.params.id;
   router.push({ name: 'AddComment', params: { factoryId } });
+}
+
+function canEditAmount(chocolate) {
+  const role = store.getters.userRole;
+  return role === 'Worker';
 }
 </script>
 

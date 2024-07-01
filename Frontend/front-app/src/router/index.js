@@ -5,6 +5,7 @@ import AddFactory from '../components/AddFactory.vue';
 import FactoryDetails from '../components/FactoryDetails.vue';
 import AddChocolate from '../components/AddChocolate.vue';
 import EditChocolate from '../components/EditChocolate.vue';
+import EditAmount from '../components/EditAmount.vue';
 import Cart from '../components/Cart.vue';
 import AddComment from '../components/AddComment.vue'; 
 import Login from '../components/Login.vue';
@@ -43,6 +44,12 @@ const routes = [
     path: '/edit-chocolate/:id/:factoryId',
     name: 'EditChocolate',
     component: EditChocolate,
+    props: true
+  },
+  {
+    path: '/edit-amount/:id/:factoryId', 
+    name: 'EditAmount',
+    component: EditAmount,
     props: true
   },
   {
@@ -93,5 +100,7 @@ router.beforeEach((to, from, next) => {
     next();
   }
 });
+
+
 
 export default router;
