@@ -101,4 +101,107 @@ exports.delete = async (req, res) => {
         console.error('Error deleting User:', error);
         res.status(500).json({ error: 'Internal server error' });
     }
+};
+
+exports.updateUser = (req, res) => {
+    const { id } = req.params;
+    const { username, name, lastName, gender, birthDate} = req.body;
+
+    const updatedUser = {
+        id: Number(id),
+        username,
+        name,
+        lastName,
+        gender,
+        birthDate
+    };
+
+    try {
+        const result = userService.updateUser(Number(id), updatedUser);
+        if (result) {
+            res.status(200).json(result);
+        } else {
+            res.status(404).json({ error: 'User not found' });
+        }
+    } catch (error) {
+        console.error('Error updating user:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+};
+
+
+exports.getUserById = (req, res) => {
+    const { id } = req.params;
+
+    if (!id) {
+        return res.status(400).json({ error: 'User ID is required' });
+    }
+
+    try {
+        const user = userService.getUserById(Number(id));
+        if (user) {
+            res.status(200).json(user);
+        } else {
+            res.status(404).json({ error: 'User not found' });
+        }
+    } catch (error) {
+        console.error('Error finding User:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+};
+
+exports.getAllUsers = (req, res) => {
+    const users = userService.getAllUsers();
+    res.json(users);
+};
+
+
+
+exports.searchUsers = (req, res) => {
+    const { name, lastName, username, accumulatedPoints, sortBy, order, cancelationNumber, role, customerType } = req.query;
+
+    try {
+        //console.log('Search parameters:', { name, lastName, username, accumulatedPoints, sortBy, order, cancelationNumber, role, customerType });
+
+        let users = userService.searchUsers({ name, lastName, username });
+        //console.log('Filtered Users:', users);
+
+        if (sortBy) {
+            users = userService.sortUsers(users, sortBy, order || 'asc');
+            //console.log('Sorted users:', users);
+        }
+
+        if (cancelationNumber || role || customerType) {
+            users = userService.filterUsers(users, { role, customerType, cancelationNumber });
+            //console.log('Filtered users (after additional filters):', users);
+        }
+
+        res.json(users);
+    } catch (error) {
+        console.error('Error searching users:', error);
+        res.status(500).send(error.message);
+    }
+};
+
+exports.banUser = (req, res) => {
+    const { username } = req.params;
+
+    const isBanned = true;
+
+    const updatedUser = {
+        username,
+        isBanned
+    };
+
+    try {
+        const result = userService.banUser(username, updatedUser);
+        if (result) {
+            res.status(200).json(result);
+        } else {
+            res.status(404).json({ error: 'User not found' });
+        }
+    } catch (error) {
+        console.error('Error banning user:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
 }

@@ -12,6 +12,7 @@ class User{
         this.accumulatedPoints = accumulatedPoints;
         this.customerType = customerType;
         this.isBanned = false;
+        this.cancelationNumber = 0;
     }
 }
 
