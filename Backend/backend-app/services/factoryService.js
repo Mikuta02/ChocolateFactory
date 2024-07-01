@@ -23,7 +23,8 @@ class FactoryService {
                     factory.status,
                     new Location(factory.location.latitude, factory.location.longitude, factory.location.address),
                     factory.logoPath,
-                    factory.rating
+                    factory.rating,
+                    factory.managerId
                 ));
             }
         } catch (err) {
@@ -38,6 +39,10 @@ class FactoryService {
         } catch (err) {
             console.error('Error writing factories to file:', err);
         }
+    }
+
+    getAll(){
+        return this.factories;
     }
 
     getAllFactories() {
@@ -134,10 +139,10 @@ class FactoryService {
         });
     }
 
-    addFactory(name, workingHours, status, latitude, longitude, address, logoPath = '', rating = 0) {
-        if (!this.validateAddress(address)) {
-            throw new Error('Invalid address format');
-        }
+    addFactory(name, workingHours, status, latitude, longitude, address, logoPath = '', rating = 0, managerId) {
+        // if (!this.validateAddress(address)) {
+        //     throw new Error('Invalid address format');
+        // }
 
         if (isNaN(latitude) || isNaN(longitude)) {
             throw new Error('Latitude and longitude must be numbers');
@@ -146,7 +151,7 @@ class FactoryService {
         const maxId = this.factories.reduce((max, factory) => (factory.id > max ? factory.id : max), 0);
         const newId = maxId + 1;
         const newLocation = new Location(latitude, longitude, address);
-        const newFactory = new Factory(newId, name, workingHours, status, newLocation, logoPath, rating);
+        const newFactory = new Factory(newId, name, workingHours, status, newLocation, logoPath, rating, managerId);
         this.factories.push(newFactory);
         this.saveFactories();
         return newFactory;

@@ -2,6 +2,7 @@ const User = require('../models/userModel');
 const path = require('path');
 const fs = require('fs');
 const { user } = require('./cartService');
+const FactoryService = require('./factoryService');
 
 class UserService {
   constructor() {
@@ -14,7 +15,8 @@ class UserService {
       if (fs.existsSync(this.filePath)) {
         const data = fs.readFileSync(this.filePath, 'utf8');
         const users = JSON.parse(data);
-        return users.map(user => new User(user.id, user.username, user.password, user.name, user.lastName, user.gender, user.birthDate, user.role, user.cartId, user.accumulatedPoints, user.customerType, user.isBanned));
+        return users.map(user => new User(user.id, user.username, user.password, user.name, user.lastName, user.gender, 
+          user.birthDate, user.role, user.cartId, user.accumulatedPoints, user.customerType, user.isBanned, user.cancelationNumber));
       }
     } catch (err) {
       console.error('Error reading users from file:', err);
@@ -22,8 +24,6 @@ class UserService {
     // Return an example user if file doesn't exist
     return [new User(1, 'Boris')];
   }
-
- 
 
   saveUsers() {
     try {
@@ -49,7 +49,7 @@ class UserService {
         this.saveUsers();
     }
     return userDeleted;
-}
+  }
 
   registerUser( username, 
     password, 
@@ -83,7 +83,138 @@ class UserService {
         this.saveUsers();
         console.log(`Deducted points for user ${user.username}. New total: ${user.accumulatedPoints}`);
     }
-}
+  }
+
+  registerUserWithRole( username, 
+    password, 
+    name, 
+    lastName, 
+    gender, 
+    birthDate,
+    role) {
+    const maxId = this.users.reduce((max, user) => (user.id > max ? user.id : max), 0);
+    const newId = maxId + 1;
+    const newUser = new User(newId, username, password, name, lastName, gender, birthDate);
+    newUser.role = role;
+    this.users.push(newUser);
+    this.saveUsers();
+    return newUser;
+  }
+
+  getAllUsers(){
+    return this.users;
+  }
+
+  updateUser(id, updatedUser) {
+    const user = this.users.find(u => u.id === id);
+    if (user) {
+        Object.assign(user, updatedUser);
+        this.saveUsers();
+        return user;
+    }
+    return null;
+  }
+
+  banUser(username, updatedUser) {
+    const user = this.users.find(u => u.username === username);
+    if (user) {
+        Object.assign(user, updatedUser);
+        this.saveUsers();
+        return user;
+    }
+    return null;
+  }
+
+  searchUsers({ name, lastName, username}) {
+    console.log('Search parameters in service:', { name, lastName, username });
+
+    return this.users.filter(user => {
+        let matches = true;
+
+        if (name) {
+            matches = matches && user.name.toLowerCase().includes(name.toLowerCase());
+        }
+        console.log(`Matching user ${user.name} with name ${name}: ${matches}`);
+
+        if (lastName) {
+            matches = matches && user.lastName.toLowerCase().includes(lastName.toLowerCase());
+        }
+        console.log(`Matching User ${user.lastName} with lastName ${lastName}: ${matches}`);
+
+        if (username) {
+            matches = matches && user.username.toLowerCase().includes(username.toLowerCase());
+        }
+        console.log(`Matching user ${user.username} with location ${username}: ${matches}`);
+        return matches;
+    });
+  }
+
+  sortUsers(users, sortBy, order) {
+    console.log('Sorting parameters:', { sortBy, order }); // Log za sortiranje
+
+    const sorted = users.sort((a, b) => {
+        let result = 0;
+
+        if (sortBy === 'name') {
+            result = a.name.localeCompare(b.name);
+        } else if (sortBy === 'lastName') {
+            result = a.lastName.localeCompare(b.lastName);
+        } else if (sortBy === 'username') {
+            result = a.username.localeCompare(b.username);
+        } else if (sortBy === 'accumulatedPoints'){
+            result = a.accumulatedPoints - b.accumulatedPoints;
+        }
+
+        return order === 'desc' ? -result : result;
+    });
+
+    console.log('Sorted results:', sorted); // Log za sortirane rezultate
+    return sorted;
+  }
+
+  filterUsers(users, filters) {
+    console.log('Filtering users with filters:', filters);
+
+    return users.filter(user => {
+        let matches = true;
+
+        if (filters.role) {
+            matches = matches && user.role === filters.role;
+            console.log(`Matching user ${user.name} with role ${filters.role}: ${matches}`);
+        }
+
+        if (filters.customerType) {
+            matches = matches && user.customerType === filters.customerType;
+            console.log(`Matching user ${user.name} with customerType ${filters.customerType}: ${matches}`);
+        }
+
+        if (filters.cancelationNumber !== undefined) {
+            matches = matches && user.cancelationNumber > 5;
+            console.log(`Matching user ${user.name} with cancelationNumber greater than 5: ${matches}`);
+        } else {
+            console.log(`Ignoring cancelationNumber filter for user ${user.name}`);
+        }
+
+        return matches;
+    });
+  }
+
+  getAllFreeManagers(){
+    const factories = factoryService.getAllFactories();
+    const managers = this.users.filter(user => user.role === "Manager");
+    
+    const managerIds = factories.map(factory => factory.managerId);
+    const freeManagers = managers.filter(manager => !managerIds.includes(manager.id));
+    
+    return freeManagers;
+  }
+
+  getManagerByFactoryId(factoryId){
+    const factories = FactoryService.getAll();
+    const factory = factories.find(factory => factory.id === factoryId);
+    const manager = this.users.find(user => user.id === factory.managerId);
+    return manager;
+  }
 }
 
 module.exports = new UserService();

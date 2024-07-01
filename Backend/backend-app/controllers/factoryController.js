@@ -6,7 +6,7 @@ exports.getAllFactories = (req, res) => {
 };
 
 exports.addFactory = async (req, res) => {
-    const { name, workingHours, status, latitude, longitude, address, logoPath, rating } = req.body;
+    const { name, workingHours, status, latitude, longitude, address, logoPath, rating, managerId } = req.body;
 
     if (!name || !address || !status || latitude === undefined || longitude === undefined) {
         return res.status(400).json({ error: 'Name, address, status, latitude, and longitude are required' });
@@ -31,7 +31,8 @@ exports.addFactory = async (req, res) => {
             parseFloat(longitude), 
             address,
             logoPath, 
-            rating
+            rating,
+            managerId
         );
         res.status(201).json(newFactory);
     } catch (error) {

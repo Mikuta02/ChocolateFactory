@@ -26,6 +26,18 @@ const store = createStore({
     isAuthenticated(state) {
       return !!state.token;
     },
+    isManager(state){
+        if (state.token) {
+            const payload = JSON.parse(atob(state.token.split('.')[1]));
+            return payload.role === "Manager";
+            }
+    },
+    isAdministrator(state){
+        if (state.token) {
+            const payload = JSON.parse(atob(state.token.split('.')[1]));
+            return payload.role === "Administrator";
+        }
+    },
     userRole(state) {
       if (state.token) {
         const payload = JSON.parse(atob(state.token.split('.')[1]));
