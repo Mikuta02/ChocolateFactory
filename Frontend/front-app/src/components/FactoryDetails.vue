@@ -26,7 +26,11 @@
           <p class="chocolate-description">Description: {{ chocolate.description }}</p>
           <p>Status: {{ chocolate.status }}</p>
           <p>Amount: {{ chocolate.amount }}</p>
-          <button @click="addToCart(chocolate.id, 1)" class="add-to-cart-button">Add to Cart</button>
+          <div>
+            <label for="quantity">Quantity:</label>
+            <input type="number" v-model.number="chocolate.quantity" :max="chocolate.amount" min="1" />
+          </div>
+          <button @click="addToCart(chocolate.id, chocolate.quantity)" class="add-to-cart-button">Add to Cart</button>
         </div>
       </li>
     </ul>
@@ -84,7 +88,7 @@ function loadChocolates(factoryId) {
   loadingChocolates.value = true;
   axios.get(`http://localhost:3001/api/chocolates?factoryId=${factoryId}`)
     .then(response => {
-      chocolates.value = response.data;
+      chocolates.value = response.data.map(chocolate => ({ ...chocolate, quantity: 1 }));
       loadingChocolates.value = false;
     })
     .catch(error => {
@@ -129,16 +133,16 @@ function cancelDelete() {
 }
 
 function addToCart(chocolateId, quantity) {
+  const chocolate = chocolates.value.find(choc => choc.id === chocolateId);
+  if (quantity > chocolate.amount) {
+    alert(`Cannot add more than ${chocolate.amount} of this chocolate. Please adjust the quantity.`);
+    chocolate.quantity = chocolate.amount; // Reset quantity to max available
+    return;
+  }
+
   const userId = store.getters.userId;
   const tokenPayload = store.state.token ? JSON.parse(atob(store.state.token.split('.')[1])) : {};
   const username = tokenPayload.username || '';
-
-  // Find the chocolate by its ID to check the amount
-  const chocolate = chocolates.value.find(choc => choc.id === chocolateId);
-  if (!chocolate || chocolate.amount === 0) {
-    alert('This chocolate is not available to be added to the cart.');
-    return;
-  }
 
   axios.post('http://localhost:3001/api/cart/add', { userId, username, chocolateId, quantity }, {
     headers: {
