@@ -68,3 +68,29 @@ exports.getPurchasesByFactory = (req, res) => {
         res.status(500).send(error.message);
     }
 };
+
+exports.updatePurchaseStatus = (req, res) => {
+    try {
+        const { purchaseId, status, reason } = req.body;
+        const managerId = req.userData.userId;
+
+        const purchase = purchaseService.getPurchaseById(purchaseId);
+
+        if (!purchase) {
+            return res.status(404).json({ message: 'Purchase not found' });
+        }
+
+        const factory = factoryService.getFactoryById(purchase.chocolates[0].chocolate.factoryId);
+
+        if (factory.managerId !== managerId) {
+            return res.status(403).json({ message: 'Unauthorized action' });
+        }
+
+        purchaseService.updatePurchaseStatus(purchaseId, status, reason);
+
+        res.status(200).json({ message: 'Purchase status updated successfully' });
+    } catch (error) {
+        console.error('Error updating purchase status:', error);
+        res.status(500).json({ message: 'Server error' });
+    }
+};

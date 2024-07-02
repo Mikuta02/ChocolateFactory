@@ -97,6 +97,23 @@ class PurchaseService {
         }
     }
     
+    updatePurchaseStatus(purchaseId, status, reason) {
+        const purchase = this.purchases.find(p => p.id === purchaseId);
+        if (purchase) {
+            purchase.status = status;
+            if (status === 'Odbijeno') {
+                purchase.reason = reason;
+            }
+            this.savePurchases();
+            return purchase;
+        }
+        throw new Error('Purchase not found');
+    }
+    
+    getPurchaseById(purchaseId) {
+        return this.purchases.find(p => p.id === purchaseId);
+    }
+
 }
 
 module.exports = new PurchaseService();
