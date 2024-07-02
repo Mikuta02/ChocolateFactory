@@ -97,10 +97,10 @@ const router = useRouter();
 const factory = ref(null);
 const chocolates = ref([]);
 const managerId = ref('');
+const workers = ref([]);
 const loadingChocolates = ref(false);
 const showModal = ref(false);
 const chocolateToDelete = ref(null);
-const role = "Worker";
 
 const showRegisterForm = ref(false);
 const workerUsername = ref('');
@@ -121,12 +121,13 @@ function registerWorker() {
     name: workerName.value,
     lastName: workerLastName.value,
     gender: workerGender.value,
-    birthDate: workerBirthDate.value
+    birthDate: workerBirthDate.value,
+    worksAtFactoryId: route.params.id
   };
 
-  axios.post(`http://localhost:3001/api/signup/${role}`, userToRegister)
+  axios.post(`http://localhost:3001/api/signupworker`, userToRegister)
     .then(response => {
-      showRegisterForm.value = false;  
+      showRegisterForm.value = false;
     })
     .catch(error => {
       console.error('There was an error registering the worker!', error);
@@ -153,6 +154,17 @@ function loadManager(){
     })
     .catch(error => {
       console.error('Error fetching manager details:', error);
+    });
+}
+
+function loadWorkers(){
+  const factoryId = route.params.id;
+  axios.get(`http://localhost:3001/api/users/workers/${factoryId}`)
+  .then(response => {
+    workers.value = response.data;
+    })
+    .catch(error => {
+      console.error('Error fetching worker details:', error);
     });
 }
 
@@ -245,9 +257,13 @@ function goToAddComment() {
 }
 
 function canEditAmount(chocolate) {
+  loadWorkers(); 
   const loggedInUserId = store.getters.userId;
   const role = store.getters.userRole;
-  return role === 'Worker';
+  
+  const isWorker = workers.value.some(worker => worker.id === loggedInUserId);
+  
+  return role === 'Worker' && isWorker;
 }
 
 function canEditChocolate(chocolate) {
@@ -399,5 +415,23 @@ function canEditChocolate(chocolate) {
 
 .register-button:hover {
   background-color: #0056b3;
+}
+
+.edit-amount-button {
+  position: absolute;
+  top: 10px; /* Aligns with other buttons */
+  right: 10px; /* Adjust the right position */
+  background-color: purple;
+  width: 100px; /* Increase the width to fit the text */
+  height: 30px; /* Keep the height consistent with other buttons */
+  border: none;
+  border-radius: 5px; /* Slightly rounded corners */
+  color: white;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  font-weight: bold;
 }
 </style>

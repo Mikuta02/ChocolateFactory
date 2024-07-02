@@ -1,6 +1,6 @@
 <template>
     <form @submit.prevent="register" class="register-form">
-      <h2>Please register a Worker</h2>
+      <h2>Please register a Worker!</h2>
       <div>
         <label>Username:</label>
         <input type="text" v-model="username" placeholder="Username"/>
@@ -34,19 +34,42 @@
   </template>
   
   <script setup>
-  import { ref } from 'vue';
+  import { ref, onMounted } from 'vue';
   import axios from 'axios';
   import { useStore } from 'vuex';
   import { useRouter } from 'vue-router';
   
   const router = useRouter();
+  const store = useStore();
+
   const username = ref('');
   const password = ref('');
   const name = ref('');
   const lastName = ref('');
   const gender = ref('');
   const birthDate = ref('');
-  const role = "Worker";
+  const worksAtFactoryId = ref('');
+
+  const token = store.state.token; // Get token from the store
+  
+  const payload = JSON.parse(atob(token.split('.')[1]));
+  const userId = payload.userId;
+  const userRole = payload.role;
+
+  onMounted(() => {
+    loadFactory();
+   });
+
+function loadFactory() {
+axios.get(`http://localhost:3001/api/factories/manager/${userId}`)
+    .then(response => {
+        worksAtFactoryId.value = response.data.id;
+    })
+    .catch(error => {
+    console.error('There was an error fetching the factories!', error);
+    });
+}
+
 
   function register() {
     const userToRegister = {
@@ -55,10 +78,11 @@
     name: name.value,
     lastName: lastName.value,
     gender: gender.value,
-    birthDate: birthDate.value
+    birthDate: birthDate.value,
+    worksAtFactoryId: worksAtFactoryId.value
     };
 
-    axios.post(`http://localhost:3001/api/signup/${role}`, userToRegister)
+    axios.post(`http://localhost:3001/api/signupworker`, userToRegister)
       .then(response => {
         router.push('/login');
       })

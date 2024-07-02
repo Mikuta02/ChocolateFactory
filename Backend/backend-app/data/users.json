@@ -10,9 +10,10 @@
     "role": "Customer",
     "cartId": 0,
     "accumulatedPoints": 1909,
-    "customerType": "Bronze",
+    "customerTypeId": 1,
     "isBanned": false,
-    "cancelationNumber": 0
+    "cancelationNumber": 0,
+    "worksAtFactoryId": 0
   },
   {
     "id": 2,
@@ -25,9 +26,10 @@
     "role": "Administrator",
     "cartId": 0,
     "accumulatedPoints": 0,
-    "customerType": "Bronze",
+    "customerTypeId": 1,
     "isBanned": false,
-    "cancelationNumber": 0
+    "cancelationNumber": 0,
+    "worksAtFactoryId": 0
   },
   {
     "id": 3,
@@ -40,9 +42,10 @@
     "role": "Worker",
     "cartId": 0,
     "accumulatedPoints": 15304,
-    "customerType": "Bronze",
+    "customerTypeId": 1,
     "isBanned": false,
-    "cancelationNumber": 0
+    "cancelationNumber": 0,
+    "worksAtFactoryId": 0
   },
   {
     "id": 4,
@@ -55,9 +58,10 @@
     "role": "Manager",
     "cartId": 0,
     "accumulatedPoints": 0,
-    "customerType": "Bronze",
+    "customerTypeId": 1,
     "isBanned": false,
-    "cancelationNumber": 0
+    "cancelationNumber": 0,
+    "worksAtFactoryId": 0
   },
   {
     "id": 5,
@@ -70,9 +74,10 @@
     "role": "Customer",
     "cartId": 0,
     "accumulatedPoints": 0,
-    "customerType": "Bronze",
+    "customerTypeId": 1,
     "isBanned": false,
-    "cancelationNumber": 0
+    "cancelationNumber": 0,
+    "worksAtFactoryId": 0
   },
   {
     "id": 6,
@@ -85,9 +90,10 @@
     "role": "Customer",
     "cartId": 0,
     "accumulatedPoints": 0,
-    "customerType": "Bronze",
+    "customerTypeId": 1,
     "isBanned": true,
-    "cancelationNumber": 0
+    "cancelationNumber": 0,
+    "worksAtFactoryId": 0
   },
   {
     "id": 7,
@@ -100,9 +106,10 @@
     "role": "Manager",
     "cartId": 0,
     "accumulatedPoints": 0,
-    "customerType": "Bronze",
+    "customerTypeId": 1,
     "isBanned": false,
-    "cancelationNumber": 0
+    "cancelationNumber": 0,
+    "worksAtFactoryId": 0
   },
   {
     "id": 8,
@@ -115,9 +122,10 @@
     "role": "Manager",
     "cartId": 0,
     "accumulatedPoints": 0,
-    "customerType": "Bronze",
+    "customerTypeId": 1,
     "isBanned": false,
-    "cancelationNumber": 0
+    "cancelationNumber": 0,
+    "worksAtFactoryId": 0
   },
   {
     "id": 9,
@@ -130,9 +138,10 @@
     "role": "Manager",
     "cartId": 0,
     "accumulatedPoints": 0,
-    "customerType": "Bronze",
+    "customerTypeId": 1,
     "isBanned": false,
-    "cancelationNumber": 0
+    "cancelationNumber": 0,
+    "worksAtFactoryId": 0
   },
   {
     "id": 10,
@@ -145,9 +154,10 @@
     "role": "Manager",
     "cartId": 0,
     "accumulatedPoints": 0,
-    "customerType": "Bronze",
+    "customerTypeId": 1,
     "isBanned": false,
-    "cancelationNumber": 0
+    "cancelationNumber": 0,
+    "worksAtFactoryId": 0
   },
   {
     "id": 11,
@@ -160,9 +170,10 @@
     "role": "Manager",
     "cartId": 0,
     "accumulatedPoints": 0,
-    "customerType": "Bronze",
+    "customerTypeId": 1,
     "isBanned": false,
-    "cancelationNumber": 0
+    "cancelationNumber": 0,
+    "worksAtFactoryId": 0
   },
   {
     "id": 14,
@@ -175,9 +186,10 @@
     "role": "Manager",
     "cartId": 0,
     "accumulatedPoints": 0,
-    "customerType": "Bronze",
+    "customerTypeId": 1,
     "isBanned": false,
-    "cancelationNumber": 0
+    "cancelationNumber": 0,
+    "worksAtFactoryId": 0
   },
   {
     "id": 15,
@@ -190,9 +202,10 @@
     "role": "Manager",
     "cartId": 0,
     "accumulatedPoints": 0,
-    "customerType": "Bronze",
+    "customerTypeId": 1,
     "isBanned": false,
-    "cancelationNumber": 0
+    "cancelationNumber": 0,
+    "worksAtFactoryId": 0
   },
   {
     "id": 16,
@@ -205,9 +218,10 @@
     "role": "Worker",
     "cartId": 0,
     "accumulatedPoints": 0,
-    "customerType": "Bronze",
+    "customerTypeId": 1,
     "isBanned": false,
-    "cancelationNumber": 0
+    "cancelationNumber": 0,
+    "worksAtFactoryId": 0
   },
   {
     "id": 17,
@@ -220,8 +234,41 @@
     "role": "Customer",
     "cartId": 0,
     "accumulatedPoints": 0,
-    "customerType": "Bronze",
+    "customerTypeId": 2,
     "isBanned": false,
-    "cancelationNumber": 0
+    "cancelationNumber": 0,
+    "worksAtFactoryId": 0
+  },
+  {
+    "id": 18,
+    "username": "Minja",
+    "password": "$2b$10$dddRaVUu6YyzECp9X0ZgDuu3klDZVIqucehBn8BS8WL/6wthzRvqe",
+    "name": "Minja",
+    "lastName": "Minjic",
+    "gender": "Male",
+    "birthDate": "1999-02-02",
+    "role": "Worker",
+    "cartId": 0,
+    "accumulatedPoints": 0,
+    "customerTypeId": 1,
+    "isBanned": false,
+    "cancelationNumber": 0,
+    "worksAtFactoryId": 1
+  },
+  {
+    "id": 19,
+    "username": "plecko",
+    "password": "$2b$10$3MpbEoD0LVgDJVcWRfoDaemNpr3FnlzcVfnCGUdHXIkeXCd5vw/2.",
+    "name": "Karlo",
+    "lastName": "Horvat",
+    "gender": "Female",
+    "birthDate": "1989-02-02",
+    "role": "Worker",
+    "cartId": 0,
+    "accumulatedPoints": 0,
+    "customerTypeId": 1,
+    "isBanned": false,
+    "cancelationNumber": 0,
+    "worksAtFactoryId": 1
   }
 ]
