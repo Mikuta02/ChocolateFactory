@@ -81,7 +81,7 @@ function createPurchase() {
     .then(response => {
       console.log('Purchase created:', response.data);
       alert('Purchase successfully created.');
-      loadCart();  // Reload cart to show it's empty
+      loadCart();  
     })
     .catch(error => {
       console.error('Error creating purchase:', error);

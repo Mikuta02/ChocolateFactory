@@ -6,11 +6,13 @@ const PurchaseStatusEnum = require('../models/purchaseStatusEnum');
 const userService = require('./userService');
 const cartService = require('./cartService');
 const factoryService = require('./factoryService')
+const CancellationService = require ('./cancellationService')
 
 class PurchaseService {
     constructor() {
         this.filePath = path.join(__dirname, '../data/purchases.json');
         this.purchases = this.loadPurchases();
+        this.startCancellationCheck(); 
     }
 
     addPurchase(purchase) {
@@ -49,12 +51,19 @@ class PurchaseService {
             };
         });
 
+        let discount = 1
+        if(user.customerTypeId === 2){
+            discount = 0.97; 
+        }else if(user.customerTypeId === 3){
+            discount = 0.95;
+        }
+
         const purchase = {
             id: this.purchases.length + 1,
             chocolates: cart.chocolates,
             factory: chocolatesWithFactory,
             date: new Date().toISOString(),
-            totalPrice: totalPrice,
+            totalPrice: totalPrice*discount,
             customerName: `${user.name} ${user.lastName}`,
             customerId: cart.user.id,
             status: PurchaseStatusEnum.PROCESSING
@@ -96,6 +105,15 @@ class PurchaseService {
             throw new Error('Purchase cannot be canceled');
         }
     }
+
+    getCurrentDateFormatted() {
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, '0'); 
+        const day = String(now.getDate()).padStart(2, '0');
+    
+        return `${year}-${month}-${day}`;
+    }
     
     updatePurchaseStatus(purchaseId, status, reason) {
         const purchase = this.purchases.find(p => p.id === purchaseId);
@@ -114,6 +132,28 @@ class PurchaseService {
         return this.purchases.find(p => p.id === purchaseId);
     }
 
+
+    startCancellationCheck() {
+        setInterval(() => {
+            this.checkAndUpdateCancellations();
+        }, 10 * 60 * 1000); 
+    }
+
+    checkAndUpdateCancellations() {
+        const oneMonthAgo = new Date();
+        oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
+        console.log("Checking cancellations");
+        const users = userService.getAllUsers();
+        users.forEach(user => {
+            const cancellationsInLastMonth = this.purchases.filter(purchase =>
+                purchase.customerId === user.id &&
+                (purchase.status === PurchaseStatusEnum.CANCELED || purchase.status === "otkazano") &&
+                new Date(purchase.date) >= oneMonthAgo
+            ).length;
+
+            userService.updateUserCancellationNumber(user.id, cancellationsInLastMonth);
+        });
+    }
 }
 
 module.exports = new PurchaseService();
