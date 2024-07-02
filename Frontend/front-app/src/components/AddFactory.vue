@@ -23,6 +23,7 @@
       <input type="number" v-model="longitude" step="any" placeholder="e.g., 20.4489" />
       <span v-if="longitudeError" class="error">{{ longitudeError }}</span>
     </div>
+    <div id="map" class="map"></div>
     <div>
       <label>Address:</label>
       <input type="text" v-model="address" placeholder="e.g., Ulica 123, Grad, 11000 or Ulica 123, Grad 11000" />
@@ -78,10 +79,16 @@
   </form>
 </template>
 
+
 <script setup>
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
+import 'ol/ol.css';
+import { Map, View } from 'ol';
+import TileLayer from 'ol/layer/Tile';
+import OSM from 'ol/source/OSM';
+import { fromLonLat, toLonLat } from 'ol/proj';
 
 const router = useRouter();
 const name = ref('');
@@ -109,9 +116,12 @@ const latitudeError = ref('');
 const longitudeError = ref('');
 const addressError = ref('');
 
+const apiKey = 'b37e021a32e1470785f50fce7fb07b2d';
+
+let map;
+
 function validateAddress(address) {
   const regex = /^[a-zA-Z0-9\s,.'-]+, [a-zA-Z\s]+ ?\d{5}$/;
-  //return regex.test(address);
   return true;
 }
 
@@ -127,9 +137,9 @@ function registerManager() {
 
   axios.post(`http://localhost:3001/api/signup/${role}`, userToRegister)
     .then(response => {
-      managerId.value = response.data.id;  
-      showRegisterForm.value = false;  
-      loadManagers();  
+      managerId.value = response.data.id;
+      showRegisterForm.value = false;
+      loadManagers();
     })
     .catch(error => {
       console.error('There was an error registering the manager!', error);
@@ -146,8 +156,50 @@ function loadManagers() {
     });
 }
 
+async function getAddressFromCoordinates(lat, lon) {
+  try {
+    const response = await axios.get('https://api.opencagedata.com/geocode/v1/json', {
+      params: {
+        q: `${lat},${lon}`,
+        key: apiKey
+      }
+    });
+    if (response.data && response.data.results && response.data.results.length > 0) {
+      return response.data.results[0].formatted;
+    } else {
+      return 'Address not found';
+    }
+  } catch (error) {
+    console.error('Geocoding error:', error);
+    return 'Error fetching address';
+  }
+}
+
 onMounted(() => {
   loadManagers();
+
+  // Initialize the OpenLayers map
+  map = new Map({
+    target: 'map',
+    layers: [
+      new TileLayer({
+        source: new OSM()
+      })
+    ],
+    view: new View({
+      center: fromLonLat([20.4489, 44.7866]),
+      zoom: 6
+    })
+  });
+
+  // Add a click event listener to the map
+  map.on('click', async function (evt) {
+    const coords = toLonLat(evt.coordinate);
+    longitude.value = coords[0].toFixed(6);
+    latitude.value = coords[1].toFixed(6);
+
+    address.value = await getAddressFromCoordinates(latitude.value, longitude.value);
+  });
 });
 
 function handleSubmit() {
@@ -192,6 +244,8 @@ function handleSubmit() {
     });
 }
 </script>
+
+
 
 <style scoped>
 .add-factory-form {
@@ -249,6 +303,14 @@ function handleSubmit() {
   background-color: #3a9d70;
 }
 
+#map {
+  width: 100%;
+  height: 400px;
+  margin-top: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
 .register-manager-form {
   margin-top: 20px;
   background-color: #e9ecef;
@@ -274,3 +336,4 @@ function handleSubmit() {
   font-size: 0.8em;
 }
 </style>
+
