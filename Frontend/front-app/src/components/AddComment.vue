@@ -1,95 +1,70 @@
 <template>
-  <div class="add-comment-form">
+  <div>
     <h2>Add Comment</h2>
-    <form @submit.prevent="handleSubmit">
+    <form @submit.prevent="submitComment">
       <div>
         <label for="text">Comment:</label>
-        <textarea v-model="text" id="text" required></textarea>
+        <textarea id="text" v-model="text" required></textarea>
       </div>
       <div>
         <label for="rating">Rating:</label>
-        <select v-model="rating" id="rating" required>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-        </select>
+        <input id="rating" type="number" v-model="rating" min="1" max="5" required />
       </div>
       <button type="submit">Submit</button>
     </form>
   </div>
 </template>
 
-<script setup>
-import { ref } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
+<script>
+import { useStore } from 'vuex';
 import axios from 'axios';
+import { useRouter } from 'vue-router';
 
-const route = useRoute();
-const router = useRouter();
-const text = ref('');
-const rating = ref(1);
-const userId = ref(1); // Hard-coded user ID for now
+export default {
+  data() {
+    return {
+      text: '',
+      rating: 5,
+      factoryId: 1, // Pretpostavljamo da imate factoryId iz nekog izvora
+    };
+  },
+  setup() {
+    const store = useStore();
+    const router = useRouter(); // Dodajemo router
+    return { store, router };
+  },
+  methods: {
+    submitComment() {
+      const userId = this.store.getters.userId; // Koristimo getter za userId
+      const token = this.store.state.token; // Dobijamo token iz store-a
 
-const handleSubmit = () => {
-  const factoryId = route.params.factoryId;
-  const newComment = {
-    userId: userId.value,
-    factoryId: factoryId,
-    text: text.value,
-    rating: rating.value
-  };
-  axios.post('http://localhost:3001/api/comments', newComment)
-    .then(response => {
-      console.log('Comment added:', response.data);
-      router.push(`/factory-detailed/${factoryId}`);
-    })
-    .catch(error => {
-      console.error('Error adding comment:', error);
-    });
+      if (!userId) {
+        console.error('User is not defined or user.id is missing');
+        return;
+      }
+
+      axios.post('http://localhost:3001/api/comments', {
+        userId,
+        factoryId: this.factoryId,
+        text: this.text,
+        rating: this.rating,
+      }, {
+        headers: {
+          'Authorization': `Bearer ${token}` // Dodajemo Authorization header
+        }
+      })
+      .then(response => {
+        console.log('Comment added:', response.data);
+        this.router.push('/purchases'); // Preusmeravanje na stranicu sa kupovinama
+      })
+      .catch(error => {
+        console.error('Error adding comment:', error);
+      });
+    },
+  },
 };
 </script>
 
 <style scoped>
-.add-comment-form {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: #f5f5f5;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-.add-comment-form h2 {
-  text-align: center;
-  color: #333;
-}
-.add-comment-form div {
-  margin-bottom: 15px;
-}
-.add-comment-form label {
-  display: block;
-  margin-bottom: 5px;
-}
-.add-comment-form textarea,
-.add-comment-form select {
-  width: 100%;
-  padding: 8px;
-  box-sizing: border-box;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-.add-comment-form button {
-  display: block;
-  width: 100%;
-  padding: 10px;
-  background-color: #42b983;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-.add-comment-form button:hover {
-  background-color: #3a9d70;
-}
+/* Stilizacija */
 </style>

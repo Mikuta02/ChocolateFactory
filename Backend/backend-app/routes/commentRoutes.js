@@ -7,5 +7,6 @@ router.post('/comments', authenticate, commentController.addComment);
 router.post('/comments/update-status', authenticate, commentController.updateCommentStatus);
 router.get('/comments/factory/:factoryId', commentController.getCommentsByFactoryId);
 router.get('/comments/factory/:factoryId/all', authenticate, commentController.getAllCommentsByFactoryId);
+router.post('/comments/approve', authenticate, commentController.approveComment);
 
 module.exports = router;

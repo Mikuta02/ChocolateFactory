@@ -48,6 +48,9 @@
           <p>Price: {{ item.chocolate.price }}</p>
           <p>Factory Name: {{ getFactoryName(purchase, item.chocolate.id) }}</p>
         </div>
+        <div v-if="purchase.status === 'Odobreno'">
+          <router-link :to="{ name: 'AddComment', params: { factoryId: purchase.chocolates[0].chocolate.factoryId } }">Add Comment</router-link>
+        </div>
         <button v-if="purchase.status === 'Obrada'" @click="cancelPurchase(purchase.id)">Cancel</button>
       </div>
     </div>

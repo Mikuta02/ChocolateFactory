@@ -170,6 +170,8 @@ class FactoryService {
     getFactoryById(id) {
         return this.factories.find(factory => factory.id === id);
     }
+
+    
 }
 
 module.exports = new FactoryService();

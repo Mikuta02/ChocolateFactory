@@ -94,3 +94,14 @@ exports.updatePurchaseStatus = (req, res) => {
         res.status(500).json({ message: 'Server error' });
     }
 };
+
+exports.approveComment = (req, res) => {
+    try {
+        const { commentId, status } = req.body;
+        const updatedComment = commentService.updateCommentStatus(commentId, status);
+        res.status(200).json(updatedComment);
+    } catch (error) {
+        console.error('Error approving comment:', error);
+        res.status(500).json({ message: 'Server error' });
+    }
+};

@@ -1,8 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 const Comment = require('../models/commentModel');
-const UserService = require('./userService'); // Pretpostavljam da postoji userService
-const FactoryService = require('./factoryService'); // Pretpostavljam da postoji factoryService
+const UserService = require('./userService');
+const FactoryService = require('./factoryService');
 
 class CommentService {
   constructor() {
@@ -15,17 +15,18 @@ class CommentService {
       if (fs.existsSync(this.filePath)) {
         const data = fs.readFileSync(this.filePath, 'utf8');
         const parsedComments = JSON.parse(data);
-        
+
         return parsedComments.map(comment => {
-          const user = UserService.getUserById(comment.user.id); // Pronađi korisnika
-          const factory = FactoryService.getFactoryById(comment.factory); // Pronađi fabriku
-          
+          const user = UserService.getUserById(comment.user.id);
+          const factory = FactoryService.getFactoryById(comment.factory.id);
+
           return new Comment(
             comment.id,
             user,
             factory,
             comment.text,
-            comment.rating
+            comment.rating,
+            comment.status
           );
         });
       }
@@ -43,9 +44,13 @@ class CommentService {
           id: comment.user.id,
           username: comment.user.username
         },
-        factory: comment.factory.id,
+        factory: {
+          id: comment.factory.id,
+          name: comment.factory.name
+        },
         text: comment.text,
-        rating: comment.rating
+        rating: comment.rating,
+        status: comment.status
       }));
       fs.writeFileSync(this.filePath, JSON.stringify(commentsToSave, null, 2));
     } catch (err) {
@@ -57,19 +62,19 @@ class CommentService {
     const newId = this.comments.length ? this.comments[this.comments.length - 1].id + 1 : 1;
     const user = UserService.getUserById(userId);
     const factory = FactoryService.getFactoryById(factoryId);
-    
+
     if (!user || !factory) {
         throw new Error('Invalid user or factory');
     }
 
-    const newComment = new Comment(newId, user, factory, text, rating);
+    const newComment = new Comment(newId, user, factory, text, rating, 'pending');
     this.comments.push(newComment);
     this.saveComments();
     return newComment;
   }
 
   updateCommentStatus(commentId, status) {
-    const comment = this.comments.find(comment => comment.id === commentId);
+    const comment = this.comments.find(c => c.id === commentId);
     if (comment) {
         comment.status = status;
         this.saveComments();
@@ -79,11 +84,20 @@ class CommentService {
   }
 
   getCommentsByFactoryId(factoryId) {
-    return this.comments.filter(comment => comment.factory.id === factoryId && comment.status === 'approved');
+    return this.comments.filter(comment => comment.factory.id === parseInt(factoryId));
   }
 
   getAllCommentsByFactoryId(factoryId) {
-    return this.comments.filter(comment => comment.factory.id === factoryId);
+    console.log(`Filtering comments for factoryId: ${factoryId}`);
+    return this.comments.filter(comment => {
+      const result = comment.factory && comment.factory.id === parseInt(factoryId);
+      console.log(`Comment ID: ${comment.id}, Factory ID: ${comment.factory ? comment.factory.id : 'undefined'}, Result: ${result}`);
+      return result;
+    });
+  }
+
+  getAllComments() {
+    return this.comments;
   }
 }
 

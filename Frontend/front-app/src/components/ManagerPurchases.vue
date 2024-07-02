@@ -1,6 +1,6 @@
 <template>
   <div class="manager-purchases">
-    <h1>Manager's Purchases</h1>
+    <h1>Purchases from Factory</h1>
     <div v-if="purchases.length">
       <div v-for="purchase in purchases" :key="purchase.id" class="purchase-item">
         <h3>Purchase ID: {{ purchase.id }}</h3>
@@ -38,6 +38,7 @@ import { useStore } from 'vuex';
 
 const store = useStore();
 const purchases = ref([]);
+const comments = ref([]);
 
 onMounted(() => {
   loadPurchases();
