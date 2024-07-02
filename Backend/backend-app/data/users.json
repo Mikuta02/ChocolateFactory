@@ -12,7 +12,8 @@
     "accumulatedPoints": 1909,
     "customerTypeId": 1,
     "isBanned": false,
-    "cancelationNumber": 0
+    "cancelationNumber": 0,
+    "worksAtFactoryId": 0
   },
   {
     "id": 2,
@@ -27,7 +28,8 @@
     "accumulatedPoints": 0,
     "customerTypeId": 1,
     "isBanned": false,
-    "cancelationNumber": 0
+    "cancelationNumber": 0,
+    "worksAtFactoryId": 0
   },
   {
     "id": 3,
@@ -42,7 +44,8 @@
     "accumulatedPoints": 15304,
     "customerTypeId": 1,
     "isBanned": false,
-    "cancelationNumber": 0
+    "cancelationNumber": 0,
+    "worksAtFactoryId": 0
   },
   {
     "id": 4,
@@ -57,7 +60,8 @@
     "accumulatedPoints": 0,
     "customerTypeId": 1,
     "isBanned": false,
-    "cancelationNumber": 0
+    "cancelationNumber": 0,
+    "worksAtFactoryId": 0
   },
   {
     "id": 5,
@@ -72,7 +76,8 @@
     "accumulatedPoints": 0,
     "customerTypeId": 1,
     "isBanned": false,
-    "cancelationNumber": 0
+    "cancelationNumber": 0,
+    "worksAtFactoryId": 0
   },
   {
     "id": 6,
@@ -87,7 +92,8 @@
     "accumulatedPoints": 0,
     "customerTypeId": 1,
     "isBanned": true,
-    "cancelationNumber": 0
+    "cancelationNumber": 0,
+    "worksAtFactoryId": 0
   },
   {
     "id": 7,
@@ -102,7 +108,8 @@
     "accumulatedPoints": 0,
     "customerTypeId": 1,
     "isBanned": false,
-    "cancelationNumber": 0
+    "cancelationNumber": 0,
+    "worksAtFactoryId": 0
   },
   {
     "id": 8,
@@ -117,7 +124,8 @@
     "accumulatedPoints": 0,
     "customerTypeId": 1,
     "isBanned": false,
-    "cancelationNumber": 0
+    "cancelationNumber": 0,
+    "worksAtFactoryId": 0
   },
   {
     "id": 9,
@@ -132,7 +140,8 @@
     "accumulatedPoints": 0,
     "customerTypeId": 1,
     "isBanned": false,
-    "cancelationNumber": 0
+    "cancelationNumber": 0,
+    "worksAtFactoryId": 0
   },
   {
     "id": 10,
@@ -147,7 +156,8 @@
     "accumulatedPoints": 0,
     "customerTypeId": 1,
     "isBanned": false,
-    "cancelationNumber": 0
+    "cancelationNumber": 0,
+    "worksAtFactoryId": 0
   },
   {
     "id": 11,
@@ -162,7 +172,8 @@
     "accumulatedPoints": 0,
     "customerTypeId": 1,
     "isBanned": false,
-    "cancelationNumber": 0
+    "cancelationNumber": 0,
+    "worksAtFactoryId": 0
   },
   {
     "id": 14,
@@ -177,7 +188,8 @@
     "accumulatedPoints": 0,
     "customerTypeId": 1,
     "isBanned": false,
-    "cancelationNumber": 0
+    "cancelationNumber": 0,
+    "worksAtFactoryId": 0
   },
   {
     "id": 15,
@@ -192,7 +204,8 @@
     "accumulatedPoints": 0,
     "customerTypeId": 1,
     "isBanned": false,
-    "cancelationNumber": 0
+    "cancelationNumber": 0,
+    "worksAtFactoryId": 0
   },
   {
     "id": 16,
@@ -207,7 +220,8 @@
     "accumulatedPoints": 0,
     "customerTypeId": 1,
     "isBanned": false,
-    "cancelationNumber": 0
+    "cancelationNumber": 0,
+    "worksAtFactoryId": 0
   },
   {
     "id": 17,
@@ -222,6 +236,23 @@
     "accumulatedPoints": 0,
     "customerTypeId": 2,
     "isBanned": false,
-    "cancelationNumber": 0
+    "cancelationNumber": 0,
+    "worksAtFactoryId": 0
+  },
+  {
+    "id": 18,
+    "username": "Minja",
+    "password": "$2b$10$dddRaVUu6YyzECp9X0ZgDuu3klDZVIqucehBn8BS8WL/6wthzRvqe",
+    "name": "Minja",
+    "lastName": "Minjic",
+    "gender": "Male",
+    "birthDate": "1999-02-02",
+    "role": "Worker",
+    "cartId": 0,
+    "accumulatedPoints": 0,
+    "customerTypeId": 1,
+    "isBanned": false,
+    "cancelationNumber": 0,
+    "worksAtFactoryId": 1
   }
 ]
