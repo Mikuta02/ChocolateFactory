@@ -88,6 +88,16 @@ class UserService {
     const user = this.getUserById(userId);
     if (user) {
       user.accumulatedPoints += points;
+
+
+      if(user.accumulatedPoints>=5000 && user.accumulatedPoints < 10000){
+        user.customerTypeId = 2;
+      }else if (user.accumulatedPoints >= 10000){
+        user.customerTypeId = 3;
+      }else{
+        user.customerTypeId = 1;
+      }
+
       this.saveUsers();
       console.log(`Updated points for user ${user.username}. New total: ${user.accumulatedPoints}`);
       return user;
@@ -99,6 +109,15 @@ class UserService {
     const user = this.getUserById(userId);
     if (user) {
         user.accumulatedPoints = Math.max(0, user.accumulatedPoints - points);
+
+        if(user.accumulatedPoints>=5000 && user.accumulatedPoints < 10000){
+          user.customerTypeId = 2;
+        }else if (user.accumulatedPoints >= 10000){
+          user.customerTypeId = 3;
+        }else{
+          user.customerTypeId = 1;
+        }
+
         this.saveUsers();
         console.log(`Deducted points for user ${user.username}. New total: ${user.accumulatedPoints}`);
     }
@@ -255,14 +274,6 @@ class UserService {
       id: Number(id),
       cancelationNumber
     };
-
-    if(user.accumulatedPoints>=5000 && user.accumulatedPoints < 10000){
-      updatedUser.customerTypeId = 2;
-    }else if (user.accumulatedPoints >= 10000){
-      updatedUser.customerTypeId = 3;
-    }else{
-      updatedUser.customerTypeId = 1;
-    }
     
     if (user) {
         Object.assign(user, updatedUser);
