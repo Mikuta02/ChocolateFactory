@@ -7,8 +7,9 @@
       "role": "Customer",
       "cartId": 0,
       "accumulatedPoints": 0,
-      "customerType": "Bronze",
-      "isBanned": false
+      "customerTypeId": 1,
+      "isBanned": false,
+      "cancelationNumber": 0
     },
     "chocolates": [],
     "totalPrice": 0
@@ -21,8 +22,9 @@
       "role": "Customer",
       "cartId": 0,
       "accumulatedPoints": 0,
-      "customerType": "Bronze",
-      "isBanned": false
+      "customerTypeId": 1,
+      "isBanned": false,
+      "cancelationNumber": 0
     },
     "chocolates": [],
     "totalPrice": 0

@@ -221,7 +221,7 @@ class UserService {
   }
 
   getAllFreeManagers(){
-    const factories = factoryService.getAllFactories();
+    const factories = FactoryService.getAllFactories();
     const managers = this.users.filter(user => user.role === "Manager");
     
     const managerIds = factories.map(factory => factory.managerId);

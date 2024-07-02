@@ -38,9 +38,11 @@ import { useStore } from 'vuex';
 
 const store = useStore();
 const purchases = ref([]);
+const chocolates = ref([]);
 
 onMounted(() => {
   loadPurchases();
+  loadChocolates();
 });
 
 function loadPurchases() {
@@ -61,6 +63,20 @@ function loadPurchases() {
     });
 }
 
+function loadChocolates() {
+  axios.get('http://localhost:3001/api/chocolates', {
+    headers: {
+      'Authorization': `Bearer ${store.state.token}`
+    }
+  })
+    .then(response => {
+      chocolates.value = response.data;
+    })
+    .catch(error => {
+      console.error('Error fetching chocolates:', error);
+    });
+}
+
 function updatePurchaseStatus(purchase) {
   const updateData = {
     purchaseId: purchase.id,
@@ -76,11 +92,14 @@ function updatePurchaseStatus(purchase) {
     .then(response => {
       console.log('Purchase status updated:', response.data);
       loadPurchases();
+      loadChocolates(); // Ponovno učitajte čokolade da se osveži količina
     })
     .catch(error => {
       console.error('Error updating purchase status:', error);
     });
 }
+
+
 </script>
 
 <style scoped>
