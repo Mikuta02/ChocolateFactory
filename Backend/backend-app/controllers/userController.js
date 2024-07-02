@@ -258,6 +258,7 @@ exports.searchUsers = (req, res) => {
 
         if (cancelationNumber || role || customerType) {
             users = userService.filterUsers(users, { role, customerType, cancelationNumber });
+            console.log("DE DA VIDIM", cancelationNumber, role);
             //console.log('Filtered users (after additional filters):', users);
         }
 

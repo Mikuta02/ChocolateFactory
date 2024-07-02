@@ -20,7 +20,7 @@ exports.addChocolate = (req, res) => {
     try {
         const { userId, chocolateId, quantity, username } = req.body;
         console.log('Request to add chocolate:', userId, chocolateId, quantity, username);
-
+        const user = userService.getUserById(Number(userId));
         if (!userId) {
             return res.status(400).json({ error: 'User ID is required' });
         }
@@ -34,7 +34,7 @@ exports.addChocolate = (req, res) => {
             return res.status(400).send('This chocolate is not available to be added to the cart.');
         }
 
-        cartService.addChocolateToCart(Number(userId), chocolate, quantity, username);
+        cartService.addChocolateToCart(Number(userId), chocolate, quantity, username, user.customerTypeId);
         res.status(200).send('Chocolate successfully added to the cart.');
     } catch (error) {
         console.error('Error in addChocolate:', error.message);
