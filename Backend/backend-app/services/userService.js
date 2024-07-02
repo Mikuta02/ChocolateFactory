@@ -236,6 +236,14 @@ class UserService {
     const manager = this.users.find(user => user.id === factory.managerId);
     return manager;
   }
+
+
+  getWorkersByFactoryId(factoryId){
+    const factories = FactoryService.getAll();
+    const factory = factories.find(factory => factory.id === factoryId);
+    const worker = this.users.filter(user => user.worksAtFactoryId === factory.id);
+    return worker;
+  }
 }
 
 module.exports = new UserService();
