@@ -3,6 +3,7 @@ const path = require('path');
 const fs = require('fs');
 const { user } = require('./cartService');
 const FactoryService = require('./factoryService');
+const CustomerTypeService = require('./customerTypeService');
 
 class UserService {
   constructor() {
@@ -16,7 +17,7 @@ class UserService {
         const data = fs.readFileSync(this.filePath, 'utf8');
         const users = JSON.parse(data);
         return users.map(user => new User(user.id, user.username, user.password, user.name, user.lastName, user.gender, 
-          user.birthDate, user.role, user.cartId, user.accumulatedPoints, user.customerType, user.isBanned, user.cancelationNumber));
+          user.birthDate, user.role, user.cartId, user.accumulatedPoints, user.customerTypeId, user.isBanned, user.cancelationNumber));
       }
     } catch (err) {
       console.error('Error reading users from file:', err);
@@ -184,8 +185,9 @@ class UserService {
         }
 
         if (filters.customerType) {
-            matches = matches && user.customerType === filters.customerType;
-            console.log(`Matching user ${user.name} with customerType ${filters.customerType}: ${matches}`);
+          const name = filters.customerType.toLowerCase();
+          const type = CustomerTypeService.getTypeByName(name);
+          matches = matches && type && user.customerTypeId === type.id;
         }
 
         if (filters.cancelationNumber !== undefined) {
