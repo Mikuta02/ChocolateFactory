@@ -121,12 +121,13 @@ function registerWorker() {
     name: workerName.value,
     lastName: workerLastName.value,
     gender: workerGender.value,
-    birthDate: workerBirthDate.value
+    birthDate: workerBirthDate.value,
+    worksAtFactoryId: route.params.id
   };
 
-  axios.post(`http://localhost:3001/api/signup/${role}`, userToRegister)
+  axios.post(`http://localhost:3001/api/signupworker`, userToRegister)
     .then(response => {
-      showRegisterForm.value = false;  
+      showRegisterForm.value = false;
     })
     .catch(error => {
       console.error('There was an error registering the worker!', error);

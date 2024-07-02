@@ -81,6 +81,26 @@ exports.getFactoryById = (req, res) => {
     }
 };
 
+exports.getFactoryByManagerId = (req, res) => {
+    const { id } = req.params;
+
+    if (!id) {
+        return res.status(400).json({ error: 'Manager ID is required' });
+    }
+
+    try {
+        const factory = factoryService.getFactoryByManagerId(Number(id));
+        if (factory) {
+            res.status(200).json(factory);
+        } else {
+            res.status(404).json({ error: 'Factory not found' });
+        }
+    } catch (error) {
+        console.error('Error finding factory:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+};
+
 exports.searchFactories = (req, res) => {
     const { name, chocolateName, location, rating, sortBy, order, chocolateType, chocolateVariety, openOnly } = req.query;
 
