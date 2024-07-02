@@ -33,17 +33,32 @@ const route = useRoute();
 const comments = ref([]);
 const factoryId = ref(parseInt(route.params.factoryId, 10)); // Ensure factoryId is a number
 
+const token = store.state.token; // Get token from the store
+const payload = JSON.parse(atob(token.split('.')[1]));
+const userId = payload.userId;
+
 onMounted(() => {
   if (!factoryId.value) {
-    console.error('Factory ID is missing or undefined');
-    return;
+    console.log('Factory ID is missing in route, fetching from backend');
+    loadFactory();
+  } else {
+    loadComments();
   }
-  loadComments();
 });
 
-function loadComments() {
-  const token = store.state.token;
+function loadFactory() {
+  axios.get(`http://localhost:3001/api/factories/manager/${userId}`)
+    .then(response => {
+      factoryId.value = response.data.id;
+      console.log(`Factory ID set to: ${factoryId.value}`); // Log to check factoryId
+      loadComments();
+    })
+    .catch(error => {
+      console.error('There was an error fetching the factory ID!', error);
+    });
+}
 
+function loadComments() {
   console.log(`Factory ID set to: ${factoryId.value}`); // Log to check factoryId
 
   axios.get(`http://localhost:3001/api/comments/factory/${factoryId.value}/all`, {
@@ -64,8 +79,6 @@ function loadComments() {
 }
 
 function updateCommentStatus(comment) {
-  const token = store.state.token;
-
   axios.post('http://localhost:3001/api/comments/update-status', {
     commentId: comment.id,
     status: comment.newStatus
