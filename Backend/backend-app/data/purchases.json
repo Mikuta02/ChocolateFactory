@@ -39,7 +39,7 @@
     "totalPrice": 366,
     "customerName": "Pablo Eskobar",
     "customerId": 3,
-    "status": "Otkazano"
+    "status": "Odobreno"
   },
   {
     "id": 2,
@@ -174,7 +174,7 @@
     "totalPrice": 673,
     "customerName": "Pablo Eskobar",
     "customerId": 3,
-    "status": "Odobreno"
+    "status": "Obrada"
   },
   {
     "id": 5,
@@ -219,8 +219,7 @@
     "totalPrice": 1100,
     "customerName": "Pablo Eskobar",
     "customerId": 3,
-    "status": "Odbijeno",
-    "reason": "mali je gadan"
+    "status": "Obrada"
   },
   {
     "id": 6,
@@ -298,7 +297,7 @@
     "totalPrice": 220,
     "customerName": "Pablo Eskobar",
     "customerId": 3,
-    "status": "Otkazano"
+    "status": "Obrada"
   },
   {
     "id": 7,
@@ -376,7 +375,8 @@
     "totalPrice": 670,
     "customerName": "Pablo Eskobar",
     "customerId": 3,
-    "status": "Obrada"
+    "status": "Odbijeno",
+    "reason": "nema na stanju"
   },
   {
     "id": 8,
@@ -565,6 +565,6 @@
     "totalPrice": 363,
     "customerName": "Pablo Eskobar",
     "customerId": 3,
-    "status": "Obrada"
+    "status": "Otkazano"
   }
 ]

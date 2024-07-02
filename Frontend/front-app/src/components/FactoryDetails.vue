@@ -70,9 +70,6 @@
 
     <button @click="addNewChocolate" v-if="canEditChocolate()" class="add-button">Add New Chocolate</button>
 
-    <button @click="goToAddComment" class="add-comment-button">Add Comment</button>
-
-    <Comments :factoryId="factory.id" />
 
     <div v-if="showModal" class="modal-overlay">
       <div class="modal">
@@ -81,11 +78,26 @@
         <button @click="cancelDelete" class="cancel-button">No</button>
       </div>
     </div>
+
+
+   
+    <Comments v-if="isManagerOrAdmin" :factoryId="factory.id" />
+    <p v-else>You do not have permission to view comments.</p>
+
+    <h2>Approved Comments</h2>
+    <div v-if="approvedComments.length">
+      <div v-for="comment in approvedComments" :key="comment.id" class="comment-item">
+        <p><strong>User:</strong> {{ comment.user.username }}</p>
+        <p><strong>Comment:</strong> {{ comment.text }}</p>
+        <p><strong>Rating:</strong> {{ comment.rating }}</p>
+      </div>
+    </div>
+    <p v-else>No approved comments available for this factory.</p>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref,computed,onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import axios from 'axios';
 import Comments from './Comments.vue'; 
@@ -96,6 +108,8 @@ const route = useRoute();
 const router = useRouter();
 const factory = ref(null);
 const chocolates = ref([]);
+const approvedComments = ref([]);
+const comments = ref([]);  
 const managerId = ref('');
 const workers = ref([]);
 const loadingChocolates = ref(false);
@@ -110,8 +124,14 @@ const workerLastName = ref('');
 const workerGender = ref('');
 const workerBirthDate = ref('');
 
+const isManagerOrAdmin = computed(() => {
+  const role = store.getters.userRole;
+  return role === 'Manager' || role === 'Administrator';
+});
+
 onMounted(() => {
   loadFactory();
+  loadComments();
 });
 
 function registerWorker() {
@@ -145,6 +165,21 @@ function loadFactory() {
       console.error('Error fetching factory details:', error);
     });
 }
+
+function loadComments() {
+  const factoryId = route.params.id;
+  axios.get(`http://localhost:3001/api/comments/factory/${factoryId}`)
+    .then(response => {
+      comments.value = response.data;
+      approvedComments.value = comments.value.filter(comment => comment.status === 'approved');
+      console.log('Fetched comments:', comments.value);
+      console.log('Filtered approved comments:', approvedComments.value);
+    })
+    .catch(error => {
+      console.error('Error fetching comments:', error);
+    });
+}
+
 
 function loadManager(){
   const factoryId = route.params.id;
@@ -433,5 +468,46 @@ function canEditChocolate(chocolate) {
   align-items: center;
   font-size: 14px;
   font-weight: bold;
+}
+
+.comment-item {
+  margin: 15px 0;
+  padding: 15px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background-color: #ffffff; /* White background */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
+  transition: transform 0.2s, box-shadow 0.2s; /* Smooth transition for hover effects */
+}
+
+.comment-item:hover {
+  transform: translateY(-5px); /* Slight lift on hover */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Deeper shadow on hover */
+}
+
+.comment-item p {
+  margin: 0;
+  padding: 5px 0;
+  color: #333333; /* Dark grey text */
+  font-family: 'Arial', sans-serif; /* Clean font */
+}
+
+.comment-item p strong {
+  color: #007bff; /* Highlight for strong text */
+}
+
+.comment-item p:first-of-type {
+  font-size: 1.1em;
+  font-weight: bold; /* Bold for the username */
+}
+
+.comment-item p:nth-of-type(2) {
+  font-size: 1em;
+  color: #555555; /* Lighter grey for the comment text */
+}
+
+.comment-item p:last-of-type {
+  font-size: 0.9em;
+  color: #777777; /* Even lighter grey for the rating */
 }
 </style>
