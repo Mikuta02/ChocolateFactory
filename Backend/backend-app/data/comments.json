@@ -2,21 +2,57 @@
   {
     "id": 1,
     "user": {
-      "id": 1,
-      "username": "User1"
+      "id": 3,
+      "username": "dragan"
     },
-    "factory": "1",
-    "text": "Mnogo dobra fabrike i cokolade mjau",
-    "rating": "3"
+    "factory": {
+      "id": 1,
+      "name": "Svicarska"
+    },
+    "text": "petica",
+    "rating": 5,
+    "status": "pending"
   },
   {
     "id": 2,
     "user": {
-      "id": 1,
-      "username": "User1"
+      "id": 3,
+      "username": "dragan"
     },
-    "factory": "1",
-    "text": "nesto nesto mjau mjau",
-    "rating": "4"
+    "factory": {
+      "id": 1,
+      "name": "Svicarska"
+    },
+    "text": "mala moja",
+    "rating": 5,
+    "status": "pending"
+  },
+  {
+    "id": 3,
+    "user": {
+      "id": 3,
+      "username": "dragan"
+    },
+    "factory": {
+      "id": 1,
+      "name": "Svicarska"
+    },
+    "text": "radi vise jebo t",
+    "rating": 5,
+    "status": "pending"
+  },
+  {
+    "id": 4,
+    "user": {
+      "id": 3,
+      "username": "dragan"
+    },
+    "factory": {
+      "id": 1,
+      "name": "Svicarska"
+    },
+    "text": "sto necesss",
+    "rating": 5,
+    "status": "pending"
   }
 ]

@@ -51,6 +51,13 @@ const store = createStore({
         return payload.userId;
       }
       return null;
+    },
+    userFactoryId(state) {
+      if (state.token) {
+        const payload = JSON.parse(atob(state.token.split('.')[1]));
+        return payload.factoryId; // Ensure this is correctly set in your token payload
+      }
+      return null;
     }
   }
 });

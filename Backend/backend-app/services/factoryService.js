@@ -171,9 +171,11 @@ class FactoryService {
         return this.factories.find(factory => factory.id === id);
     }
 
+
     getFactoryByManagerId(id) {
         return this.factories.find(factory => factory.managerId === id);
     }
+
 }
 
 module.exports = new FactoryService();

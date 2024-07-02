@@ -14,6 +14,8 @@ import UserPurchases from '../components/UserPurchases.vue';
 import Profile from '../components/Profile.vue';
 import RegisterManager from '../components/RegisterManager.vue';
 import RegisterWorker from '../components/RegisterWorker.vue';
+import ManagerPurchases from '../components/ManagerPurchases.vue';
+import ManagerComments from '../components/ManagerComments.vue';
 import store from '../store';
 
 const routes = [
@@ -101,6 +103,17 @@ const routes = [
     name: 'Profile',
     component: Profile,
     props: true
+  },
+  {
+    path: '/manager-purchases',
+    name: 'ManagerPurchases',
+    component: ManagerPurchases
+  },
+  {
+    path: '/factory/:factoryId/comments',
+    name: 'ManagerComments',
+    component: ManagerComments,
+    props: true
   }
 ];
 
@@ -109,25 +122,20 @@ const router = createRouter({
   routes
 });
 
-// Route guard
 router.beforeEach((to, from, next) => {
-  if (to.name === 'AddFactory') {
-    const token = store.state.token; // Get token from the store
-    if (token) {
-      const payload = JSON.parse(atob(token.split('.')[1]));
-      if (payload.role === 'Administrator') {
-        next();
-      } else {
-        next('/login'); // Redirect to login if not an Administrator
-      }
-    } else {
-      next('/login'); // Redirect to login if not logged in
-    }
+  const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
+  const requiresAdmin = to.matched.some(record => record.meta.requiresAdmin);
+  const requiresManager = to.matched.some(record => record.meta.requiresManager);
+
+  if (requiresAuth && !store.getters.isAuthenticated) {
+    next('/login');
+  } else if (requiresAdmin && !store.getters.isAdministrator) {
+    next('/');
+  } else if (requiresManager && !store.getters.isManager) {
+    next('/');
   } else {
     next();
   }
 });
-
-
 
 export default router;

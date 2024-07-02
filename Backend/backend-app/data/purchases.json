@@ -81,7 +81,8 @@
     "totalPrice": 1080,
     "customerName": "Pablo Eskobar",
     "customerId": 3,
-    "status": "Obrada"
+    "status": "Odbijeno",
+    "reason": "Nema na lagerima"
   },
   {
     "id": 3,
@@ -173,7 +174,7 @@
     "totalPrice": 673,
     "customerName": "Pablo Eskobar",
     "customerId": 3,
-    "status": "Obrada"
+    "status": "Odobreno"
   },
   {
     "id": 5,
@@ -218,7 +219,8 @@
     "totalPrice": 1100,
     "customerName": "Pablo Eskobar",
     "customerId": 3,
-    "status": "Obrada"
+    "status": "Odbijeno",
+    "reason": "mali je gadan"
   },
   {
     "id": 6,

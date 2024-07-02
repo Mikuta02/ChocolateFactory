@@ -1,6 +1,7 @@
 const purchaseService = require('../services/purchaseService');
 const cartService = require('../services/cartService');
 const userService = require('../services/userService');
+const factoryService = require('../services/factoryService');
 const jwt = require('jsonwebtoken'); 
 
 
@@ -46,5 +47,61 @@ exports.cancelPurchase = (req, res) => {
     } catch (error) {
         console.error('Error canceling purchase:', error.message);
         res.status(500).send(error.message);
+    }
+};
+
+exports.getPurchasesByFactory = (req, res) => {
+    try {
+        const managerId = req.userData.userId; // Preuzimanje userId iz tokena
+        const factories = factoryService.getAllFactories().filter(factory => factory.managerId === managerId);
+        
+        if (!factories.length) {
+            return res.status(404).json({ message: 'No factories found for this manager' });
+        }
+
+        const factoryIds = factories.map(factory => factory.id);
+        const purchases = purchaseService.getPurchasesByFactoryIds(factoryIds);
+
+        res.json(purchases);
+    } catch (error) {
+        console.error('Error getting purchases by factory:', error);
+        res.status(500).send(error.message);
+    }
+};
+
+exports.updatePurchaseStatus = (req, res) => {
+    try {
+        const { purchaseId, status, reason } = req.body;
+        const managerId = req.userData.userId;
+
+        const purchase = purchaseService.getPurchaseById(purchaseId);
+
+        if (!purchase) {
+            return res.status(404).json({ message: 'Purchase not found' });
+        }
+
+        const factory = factoryService.getFactoryById(purchase.chocolates[0].chocolate.factoryId);
+
+        if (factory.managerId !== managerId) {
+            return res.status(403).json({ message: 'Unauthorized action' });
+        }
+
+        purchaseService.updatePurchaseStatus(purchaseId, status, reason);
+
+        res.status(200).json({ message: 'Purchase status updated successfully' });
+    } catch (error) {
+        console.error('Error updating purchase status:', error);
+        res.status(500).json({ message: 'Server error' });
+    }
+};
+
+exports.approveComment = (req, res) => {
+    try {
+        const { commentId, status } = req.body;
+        const updatedComment = commentService.updateCommentStatus(commentId, status);
+        res.status(200).json(updatedComment);
+    } catch (error) {
+        console.error('Error approving comment:', error);
+        res.status(500).json({ message: 'Server error' });
     }
 };
