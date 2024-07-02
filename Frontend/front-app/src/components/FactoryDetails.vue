@@ -284,6 +284,7 @@ function addToCart(chocolateId, quantity) {
     .then(response => {
       console.log('Added to cart:', response.data);
       alert('Chocolate successfully added to the cart.');
+      loadChocolates(route.params.id); // Ponovo učitaj čokolade nakon dodavanja u korpu
     })
     .catch(error => {
       console.error('Error adding to cart:', error);

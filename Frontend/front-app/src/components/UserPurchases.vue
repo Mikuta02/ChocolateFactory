@@ -153,7 +153,19 @@ function resetFilters() {
   loadPurchases(); // Reload all purchases after resetting
 }
 
-// Function to cancel a purchase
+
+function loadChocolates() {
+  const factoryId = route.params.id;
+  axios.get(`http://localhost:3001/api/chocolates?factoryId=${factoryId}`)
+    .then(response => {
+      chocolates.value = response.data.map(chocolate => ({ ...chocolate, quantity: 1 }));
+    })
+    .catch(error => {
+      console.error('Error fetching chocolates:', error);
+    });
+}
+
+
 function cancelPurchase(purchaseId) {
   const userId = store.getters.userId;
   axios.post('http://localhost:3001/api/purchases/cancel', { purchaseId, userId }, {
@@ -164,6 +176,7 @@ function cancelPurchase(purchaseId) {
     .then(response => {
       console.log('Purchase canceled:', response.data);
       loadPurchases(); // Reload purchases after canceling
+      loadChocolates(); // Reload chocolates after canceling
     })
     .catch(error => {
       console.error('Error canceling purchase:', error);

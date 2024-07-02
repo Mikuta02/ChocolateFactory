@@ -656,5 +656,174 @@
     "customerName": "Pablo Eskobar",
     "customerId": 3,
     "status": "Otkazano"
+  },
+  {
+    "id": 12,
+    "chocolates": [
+      {
+        "chocolate": {
+          "id": 2,
+          "name": "Proteinska mala",
+          "price": 550,
+          "chocolateType": "Cooking",
+          "factoryId": 1,
+          "chocolateVariety": "Nuts",
+          "grams": 40,
+          "description": "lesnik protein",
+          "picturePath": "coko4.jpg",
+          "status": "unavailable",
+          "amount": 0
+        },
+        "quantity": 2
+      },
+      {
+        "chocolate": {
+          "id": 6,
+          "name": "cokoladica",
+          "price": 123,
+          "chocolateType": "Normal",
+          "factoryId": 3,
+          "chocolateVariety": "Dark",
+          "grams": 123,
+          "description": "mala",
+          "picturePath": "coko1.jpg",
+          "status": "unavailable",
+          "amount": 0
+        },
+        "quantity": 10
+      }
+    ],
+    "factory": [
+      {
+        "chocolate": {
+          "id": 2,
+          "name": "Proteinska mala",
+          "price": 550,
+          "chocolateType": "Cooking",
+          "factoryId": 1,
+          "chocolateVariety": "Nuts",
+          "grams": 40,
+          "description": "lesnik protein",
+          "picturePath": "coko4.jpg",
+          "status": "unavailable",
+          "amount": 0
+        },
+        "quantity": 2,
+        "factoryName": "Svicarska"
+      },
+      {
+        "chocolate": {
+          "id": 6,
+          "name": "cokoladica",
+          "price": 123,
+          "chocolateType": "Normal",
+          "factoryId": 3,
+          "chocolateVariety": "Dark",
+          "grams": 123,
+          "description": "mala",
+          "picturePath": "coko1.jpg",
+          "status": "unavailable",
+          "amount": 0
+        },
+        "quantity": 10,
+        "factoryName": "Rafanito"
+      }
+    ],
+    "date": "2024-07-02T22:13:11.757Z",
+    "totalPrice": 2330,
+    "customerName": "Pablo Eskobar",
+    "customerId": 3,
+    "status": "Odobreno"
+  },
+  {
+    "id": 13,
+    "chocolates": [
+      {
+        "chocolate": {
+          "id": 2,
+          "name": "Proteinska mala",
+          "price": 550,
+          "chocolateType": "Cooking",
+          "factoryId": 1,
+          "chocolateVariety": "Nuts",
+          "grams": 40,
+          "description": "lesnik protein",
+          "picturePath": "coko4.jpg",
+          "status": "unavailable",
+          "amount": 10
+        },
+        "quantity": 6
+      }
+    ],
+    "factory": [
+      {
+        "chocolate": {
+          "id": 2,
+          "name": "Proteinska mala",
+          "price": 550,
+          "chocolateType": "Cooking",
+          "factoryId": 1,
+          "chocolateVariety": "Nuts",
+          "grams": 40,
+          "description": "lesnik protein",
+          "picturePath": "coko4.jpg",
+          "status": "unavailable",
+          "amount": 10
+        },
+        "quantity": 6,
+        "factoryName": "Svicarska"
+      }
+    ],
+    "date": "2024-07-02T22:26:01.689Z",
+    "totalPrice": 3300,
+    "customerName": "Pablo Eskobar",
+    "customerId": 3,
+    "status": "Odbijeno",
+    "reason": "onako"
+  },
+  {
+    "id": 14,
+    "chocolates": [
+      {
+        "chocolate": {
+          "id": 2,
+          "name": "Proteinska mala",
+          "price": 550,
+          "chocolateType": "Cooking",
+          "factoryId": 1,
+          "chocolateVariety": "Nuts",
+          "grams": 40,
+          "description": "lesnik protein",
+          "picturePath": "coko4.jpg",
+          "status": "unavailable",
+          "amount": 10
+        },
+        "quantity": 7
+      }
+    ],
+    "factory": [
+      {
+        "chocolate": {
+          "id": 2,
+          "name": "Proteinska mala",
+          "price": 550,
+          "chocolateType": "Cooking",
+          "factoryId": 1,
+          "chocolateVariety": "Nuts",
+          "grams": 40,
+          "description": "lesnik protein",
+          "picturePath": "coko4.jpg",
+          "status": "unavailable",
+          "amount": 10
+        },
+        "quantity": 7,
+        "factoryName": "Svicarska"
+      }
+    ],
+    "date": "2024-07-02T22:26:57.234Z",
+    "totalPrice": 3850,
+    "customerName": "Pablo Eskobar",
+    "customerId": 3,
+    "status": "Otkazano"
   }
 ]

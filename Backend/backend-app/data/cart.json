@@ -1,5 +1,20 @@
 [
   {
+    "id": 2,
+    "user": {
+      "id": 1,
+      "username": "",
+      "role": "Customer",
+      "cartId": 0,
+      "accumulatedPoints": 0,
+      "customerTypeId": 1,
+      "isBanned": false,
+      "cancelationNumber": 0
+    },
+    "chocolates": [],
+    "totalPrice": 0
+  },
+  {
     "id": 1,
     "user": {
       "id": 3,

@@ -45,6 +45,19 @@ class ChocolateService {
         }
     }
 
+    reduceChocolateAmount(chocolateId, quantity) {
+        const chocolate = this.getChocolateById(chocolateId);
+        if (chocolate) {
+          chocolate.amount -= quantity;
+          if (chocolate.amount < 0) {
+            chocolate.amount = 0; // Ako količina ide ispod nule, postavi je na nulu
+          }
+          this.saveChocolates();
+        } else {
+          throw new Error('Chocolate not found');
+        }
+    }
+
     getAllChocolates() {
         return this.chocolates;
     }

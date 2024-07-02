@@ -41,8 +41,8 @@
     "birthDate": "2001-01-01",
     "role": "Worker",
     "cartId": 0,
-    "accumulatedPoints": 15559,
-    "customerTypeId": 2,
+    "accumulatedPoints": 24206,
+    "customerTypeId": 1,
     "isBanned": false,
     "cancelationNumber": 3,
     "worksAtFactoryId": 0

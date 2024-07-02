@@ -5,8 +5,9 @@ const Factory = require('../models/factoryModel');
 const PurchaseStatusEnum = require('../models/purchaseStatusEnum');
 const userService = require('./userService');
 const cartService = require('./cartService');
-const factoryService = require('./factoryService')
-const CancellationService = require ('./cancellationService')
+const factoryService = require('./factoryService');
+const chocolateService = require('./chocolateService');
+const CancellationService = require('./cancellationService');
 
 class PurchaseService {
     constructor() {
@@ -74,6 +75,10 @@ class PurchaseService {
         console.log(`Updated points for user ${user.username}. New total: ${user.accumulatedPoints + points}`);
         this.addPurchase(purchase);
         
+        cart.chocolates.forEach(item => {
+            chocolateService.reduceChocolateAmount(item.chocolate.id, item.quantity);
+        });
+
         cartService.clearCart(user.id);
         cartService.deleteCart(user.id);
         return purchase;
@@ -89,21 +94,31 @@ class PurchaseService {
         );
     }
 
+    
     cancelPurchase(purchaseId, userId) {
-        const purchase = this.purchases.find(p => p.id === purchaseId && p.customerId === userId);
-        if (!purchase) {
-            throw new Error('Purchase not found or does not belong to the user');
-        }
+    const purchase = this.purchases.find(p => p.id === purchaseId && p.customerId === userId);
+    if (!purchase) {
+        throw new Error('Purchase not found or does not belong to the user');
+    }
 
-        if (purchase.status === PurchaseStatusEnum.PROCESSING) {
-            purchase.status = PurchaseStatusEnum.CANCELED;
-            const lostPoints = Math.floor(purchase.totalPrice / 1000 * 133 * 4);
-            userService.deductPoints(userId, lostPoints);
-            this.savePurchases();
-            return purchase;
-        } else {
-            throw new Error('Purchase cannot be canceled');
-        }
+    if (purchase.status === PurchaseStatusEnum.PROCESSING) {
+        purchase.status = PurchaseStatusEnum.CANCELED;
+
+        // Vratite količinu čokolade
+        purchase.chocolates.forEach(item => {
+            const chocolate = chocolateService.getChocolateById(item.chocolate.id);
+            if (chocolate) {
+                chocolateService.updateChocolateAmount(chocolate.id, chocolate.amount + item.quantity);
+            }
+        });
+
+        const lostPoints = Math.floor(purchase.totalPrice / 1000 * 133 * 4);
+        userService.deductPoints(userId, lostPoints);
+        this.savePurchases();
+        return purchase;
+    } else {
+        throw new Error('Purchase cannot be canceled');
+    }
     }
 
     getCurrentDateFormatted() {
@@ -121,6 +136,14 @@ class PurchaseService {
             purchase.status = status;
             if (status === 'Odbijeno') {
                 purchase.reason = reason;
+    
+                // Vratiti količinu čokolade
+                purchase.chocolates.forEach(item => {
+                    const chocolate = chocolateService.getChocolateById(item.chocolate.id);
+                    if (chocolate) {
+                        chocolateService.updateChocolateAmount(chocolate.id, chocolate.amount + item.quantity);
+                    }
+                });
             }
             this.savePurchases();
             return purchase;
@@ -154,6 +177,7 @@ class PurchaseService {
             userService.updateUserCancellationNumber(user.id, cancellationsInLastMonth);
         });
     }
+
 }
 
 module.exports = new PurchaseService();
