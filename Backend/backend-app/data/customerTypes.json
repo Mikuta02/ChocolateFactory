@@ -7,13 +7,13 @@
     },
     {
         "id": 2,
-        "pointsNeeded": 2000,
+        "pointsNeeded": 5000,
         "discount": "3%",
         "name": "Silver"
     },
     {
         "id": 3,
-        "pointsNeeded": 3000,
+        "pointsNeeded": 10000,
         "discount": "5%",
         "name": "Gold"
     }

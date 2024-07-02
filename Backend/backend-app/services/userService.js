@@ -88,6 +88,16 @@ class UserService {
     const user = this.getUserById(userId);
     if (user) {
       user.accumulatedPoints += points;
+
+
+      if(user.accumulatedPoints>=5000 && user.accumulatedPoints < 10000){
+        user.customerTypeId = 2;
+      }else if (user.accumulatedPoints >= 10000){
+        user.customerTypeId = 3;
+      }else{
+        user.customerTypeId = 1;
+      }
+
       this.saveUsers();
       console.log(`Updated points for user ${user.username}. New total: ${user.accumulatedPoints}`);
       return user;
@@ -99,6 +109,15 @@ class UserService {
     const user = this.getUserById(userId);
     if (user) {
         user.accumulatedPoints = Math.max(0, user.accumulatedPoints - points);
+
+        if(user.accumulatedPoints>=5000 && user.accumulatedPoints < 10000){
+          user.customerTypeId = 2;
+        }else if (user.accumulatedPoints >= 10000){
+          user.customerTypeId = 3;
+        }else{
+          user.customerTypeId = 1;
+        }
+
         this.saveUsers();
         console.log(`Deducted points for user ${user.username}. New total: ${user.accumulatedPoints}`);
     }
@@ -209,7 +228,7 @@ class UserService {
           matches = matches && type && user.customerTypeId === type.id;
         }
 
-        if (filters.cancelationNumber !== undefined) {
+        if (filters.cancelationNumber) {
             matches = matches && user.cancelationNumber > 5;
             console.log(`Matching user ${user.name} with cancelationNumber greater than 5: ${matches}`);
         } else {
@@ -243,6 +262,25 @@ class UserService {
     const factory = factories.find(factory => factory.id === factoryId);
     const worker = this.users.filter(user => user.worksAtFactoryId === factory.id);
     return worker;
+  }
+
+
+  updateUserCancellationNumber(id, cancellationsInLastMonth){
+    const cancelationNumber = cancellationsInLastMonth;
+    const user = this.users.find(u => u.id === id);
+
+    
+    const updatedUser = {
+      id: Number(id),
+      cancelationNumber
+    };
+    
+    if (user) {
+        Object.assign(user, updatedUser);
+        this.saveUsers();
+        return user;
+    }
+    return null;
   }
 }
 

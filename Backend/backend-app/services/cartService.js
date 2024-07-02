@@ -69,10 +69,11 @@ class CartService {
         }
     }
 
-    getCartByUserId(userId) {
+    getCartByUserId(userId, customerTypeId=1) {
         let cart = this.carts.find(cart => cart.user.id === userId);
         if (!cart) {
             const user = new User(userId, '');
+            user.customerTypeId = customerTypeId;
             cart = new Cart(this.carts.length + 1, user);
             this.carts.push(cart);
             this.saveCarts();
@@ -81,15 +82,16 @@ class CartService {
         return cart;
     }
 
-    addChocolateToCart(userId, chocolate, quantity, username) {
-        let cart = this.getCartByUserId(userId);
+    addChocolateToCart(userId, chocolate, quantity, username, customerTypeId) {
+        let cart = this.getCartByUserId(userId, customerTypeId);
         if (!cart) {
             console.log(`No cart found for user ${userId}, creating a new one.`);
-            const user = new User(userId, username);
+            const user = new User(userId, username, customerTypeId);
+            user.customerTypeId = customerTypeId;
             cart = new Cart(this.carts.length + 1, user);
             this.carts.push(cart);
         } else if (!cart.user.username) {
-            // Ako korisničko ime nije postavljeno, postavite ga
+            // Ako korisničko ime nije postavljenp
             cart.user.username = username;
         }
         const existingChocolate = cart.chocolates.find(item => item.chocolate.id === chocolate.id);
@@ -122,6 +124,12 @@ class CartService {
 
     updateTotalPrice(cart) {
         cart.totalPrice = cart.chocolates.reduce((total, item) => total + item.chocolate.price * item.quantity, 0);
+        console.log("OVO JE NJEGOV ID TIP AJAAJAJAJAJ", cart.user.customerTypeId);
+        if (cart.user.customerTypeId === 2) {
+            cart.totalPrice *= 0.97; 
+        } else if (cart.user.customerTypeId === 3) {
+            cart.totalPrice *= 0.95;
+        }
     }
 
     updateChocolateQuantity(userId, chocolateId, quantity) {
@@ -151,9 +159,9 @@ class CartService {
 
         const totalPrice = cart.totalPrice;
         const purchase = {
-            id: generateUniqueId(),  // Implement this function to generate a unique ID
+            id: generateUniqueId(),  
             chocolates: cart.chocolates,
-            factoryId: cart.chocolates[0].chocolate.factoryId,  // Assuming all chocolates are from the same factory
+            factoryId: cart.chocolates[0].chocolate.factoryId, 
             date: new Date().toISOString(),
             price: totalPrice,
             customerName: `${cart.user.name} ${cart.user.lastName}`,
@@ -164,10 +172,10 @@ class CartService {
         const points = Math.floor(totalPrice / 1000 * 133);
         userService.addPoints(userId, points);
 
-        // Save the purchase
+       
         purchaseService.addPurchase(purchase);
 
-        // Clear the cart
+        
         this.clearCart(userId);
 
         return purchase;

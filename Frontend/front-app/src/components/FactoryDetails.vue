@@ -80,6 +80,18 @@
     </div>
 
 
+    <button v-if="canDeleteFactory()" @click="confirmDeleteFactory" class="delete-factory-button">Delete Factory</button>
+
+    
+    <div v-if="showDeleteFactoryModal" class="modal-overlay">
+      <div class="modal">
+        <p>Are you sure you want to delete this factory?</p>
+        <button @click="deleteFactory" class="confirm-button">Yes</button>
+        <button @click="cancelDeleteFactory" class="cancel-button">No</button>
+      </div>
+    </div>
+
+
    
     <Comments v-if="isManagerOrAdmin" :factoryId="factory.id" />
     <p v-else>You do not have permission to view comments.</p>
@@ -115,6 +127,7 @@ const workers = ref([]);
 const loadingChocolates = ref(false);
 const showModal = ref(false);
 const chocolateToDelete = ref(null);
+const showDeleteFactoryModal = ref(false);
 
 const showRegisterForm = ref(false);
 const workerUsername = ref('');
@@ -308,6 +321,32 @@ function canEditChocolate(chocolate) {
   const role = store.getters.userRole;
   return role === 'Manager' && managerId.value === loggedInUserId;
 }
+
+function canDeleteFactory(){
+  const role = store.getters.userRole;
+  return role === 'Administrator';
+}
+
+
+function confirmDeleteFactory() {
+  showDeleteFactoryModal.value = true;
+}
+
+function cancelDeleteFactory() {
+  showDeleteFactoryModal.value = false;
+}
+
+function deleteFactory() {
+  const factoryId = route.params.id;
+  axios.delete(`http://localhost:3001/api/factories/${factoryId}`)
+    .then(() => {
+      showDeleteFactoryModal.value = false;
+      router.push('/factories'); 
+    })
+    .catch(error => {
+
+    });
+}
 </script>
 
 <style scoped>
@@ -455,13 +494,13 @@ function canEditChocolate(chocolate) {
 
 .edit-amount-button {
   position: absolute;
-  top: 10px; /* Aligns with other buttons */
-  right: 10px; /* Adjust the right position */
+  top: 10px; 
+  right: 10px; 
   background-color: purple;
-  width: 100px; /* Increase the width to fit the text */
-  height: 30px; /* Keep the height consistent with other buttons */
+  width: 100px; 
+  height: 30px; 
   border: none;
-  border-radius: 5px; /* Slightly rounded corners */
+  border-radius: 5px; 
   color: white;
   cursor: pointer;
   display: flex;
@@ -476,39 +515,51 @@ function canEditChocolate(chocolate) {
   padding: 15px;
   border: 1px solid #e0e0e0;
   border-radius: 8px;
-  background-color: #ffffff; /* White background */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
-  transition: transform 0.2s, box-shadow 0.2s; /* Smooth transition for hover effects */
+  background-color: #ffffff; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  transition: transform 0.2s, box-shadow 0.2s; 
 }
 
 .comment-item:hover {
-  transform: translateY(-5px); /* Slight lift on hover */
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Deeper shadow on hover */
+  transform: translateY(-5px); 
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); 
 }
 
 .comment-item p {
   margin: 0;
   padding: 5px 0;
-  color: #333333; /* Dark grey text */
-  font-family: 'Arial', sans-serif; /* Clean font */
+  color: #333333; 
+  font-family: 'Arial', sans-serif; 
 }
 
 .comment-item p strong {
-  color: #007bff; /* Highlight for strong text */
+  color: #007bff; 
 }
 
 .comment-item p:first-of-type {
   font-size: 1.1em;
-  font-weight: bold; /* Bold for the username */
+  font-weight: bold; 
 }
 
 .comment-item p:nth-of-type(2) {
   font-size: 1em;
-  color: #555555; /* Lighter grey for the comment text */
+  color: #555555; 
 }
 
 .comment-item p:last-of-type {
   font-size: 0.9em;
-  color: #777777; /* Even lighter grey for the rating */
+  color: #777777; 
 }
+
+
+.delete-factory-button {
+  background-color: red;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
 </style>

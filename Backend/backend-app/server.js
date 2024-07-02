@@ -34,3 +34,4 @@ app.use('/api', customerTypeRoutes);
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
+

@@ -606,11 +606,11 @@
         "factoryName": "Svicarska"
       }
     ],
-    "date": "2024-07-02T21:34:27.568Z",
+    "date": "2024-07-02T19:03:59.140Z",
     "totalPrice": 550,
     "customerName": "Pablo Eskobar",
     "customerId": 3,
-    "status": "Obrada"
+    "status": "Otkazano"
   },
   {
     "id": 11,
@@ -651,7 +651,7 @@
         "factoryName": "Svicarska"
       }
     ],
-    "date": "2024-07-02T21:36:04.406Z",
+    "date": "2024-07-02T19:05:00.631Z",
     "totalPrice": 550,
     "customerName": "Pablo Eskobar",
     "customerId": 3,

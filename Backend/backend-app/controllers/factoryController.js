@@ -13,10 +13,10 @@ exports.addFactory = async (req, res) => {
     }
 
     const addressRegex = /^[a-zA-Z0-9\s,.'-]+, [a-zA-Z\s]+,?\s*\d{5}$/;
-    console.log('Address:', address); // Dodan ispis za debug
-    if (!addressRegex.test(address)) {
-        return res.status(400).json({ error: 'Invalid address format (e.g., Ulica 123, Grad, 11000 or Ulica 123, Grad 11000)' });
-    }
+    // console.log('Address:', address); // Dodan ispis za debug
+    // if (!addressRegex.test(address)) {
+    //     return res.status(400).json({ error: 'Invalid address format (e.g., Ulica 123, Grad, 11000 or Ulica 123, Grad 11000)' });
+    // }
 
     if (isNaN(latitude) || isNaN(longitude)) {
         return res.status(400).json({ error: 'Latitude and longitude must be numbers' });
