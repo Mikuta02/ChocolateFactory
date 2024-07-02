@@ -1,6 +1,7 @@
 const purchaseService = require('../services/purchaseService');
 const cartService = require('../services/cartService');
 const userService = require('../services/userService');
+const factoryService = require('../services/factoryService');
 const jwt = require('jsonwebtoken'); 
 
 
@@ -45,6 +46,25 @@ exports.cancelPurchase = (req, res) => {
         res.status(200).json(canceledPurchase);
     } catch (error) {
         console.error('Error canceling purchase:', error.message);
+        res.status(500).send(error.message);
+    }
+};
+
+exports.getPurchasesByFactory = (req, res) => {
+    try {
+        const managerId = req.userData.userId; // Preuzimanje userId iz tokena
+        const factories = factoryService.getAllFactories().filter(factory => factory.managerId === managerId);
+        
+        if (!factories.length) {
+            return res.status(404).json({ message: 'No factories found for this manager' });
+        }
+
+        const factoryIds = factories.map(factory => factory.id);
+        const purchases = purchaseService.getPurchasesByFactoryIds(factoryIds);
+
+        res.json(purchases);
+    } catch (error) {
+        console.error('Error getting purchases by factory:', error);
         res.status(500).send(error.message);
     }
 };

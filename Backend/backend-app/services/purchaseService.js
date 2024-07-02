@@ -74,6 +74,12 @@ class PurchaseService {
     return this.purchases.filter(purchase => purchase.customerId === userId);
     }
 
+    getPurchasesByFactoryIds(factoryIds) {
+        return this.purchases.filter(purchase => 
+            purchase.chocolates.some(item => factoryIds.includes(item.chocolate.factoryId))
+        );
+    }
+
     cancelPurchase(purchaseId, userId) {
         const purchase = this.purchases.find(p => p.id === purchaseId && p.customerId === userId);
         if (!purchase) {

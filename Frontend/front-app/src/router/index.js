@@ -14,6 +14,7 @@ import UserPurchases from '../components/UserPurchases.vue';
 import Profile from '../components/Profile.vue';
 import RegisterManager from '../components/RegisterManager.vue';
 import RegisterWorker from '../components/RegisterWorker.vue';
+import ManagerPurchases from '../components/ManagerPurchases.vue';
 import store from '../store';
 
 const routes = [
@@ -101,6 +102,11 @@ const routes = [
     name: 'Profile',
     component: Profile,
     props: true
+  },
+  {
+    path: '/manager-purchases',
+    name: 'ManagerPurchases',
+    component: ManagerPurchases
   }
 ];
 
