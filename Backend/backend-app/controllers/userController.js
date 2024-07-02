@@ -302,3 +302,10 @@ exports.getManagerByFactoryId = (req, res) => {
     const manager = userService.getManagerByFactoryId(Number(factoryId));
     res.json(manager);
 };
+
+
+exports.getWorkersByFactoryId = (req, res) => {
+    const { factoryId } = req.params;
+    const worker = userService.getWorkersByFactoryId(Number(factoryId));
+    res.json(worker);
+};

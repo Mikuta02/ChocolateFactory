@@ -254,5 +254,21 @@
     "isBanned": false,
     "cancelationNumber": 0,
     "worksAtFactoryId": 1
+  },
+  {
+    "id": 19,
+    "username": "plecko",
+    "password": "$2b$10$3MpbEoD0LVgDJVcWRfoDaemNpr3FnlzcVfnCGUdHXIkeXCd5vw/2.",
+    "name": "Karlo",
+    "lastName": "Horvat",
+    "gender": "Female",
+    "birthDate": "1989-02-02",
+    "role": "Worker",
+    "cartId": 0,
+    "accumulatedPoints": 0,
+    "customerTypeId": 1,
+    "isBanned": false,
+    "cancelationNumber": 0,
+    "worksAtFactoryId": 1
   }
 ]
