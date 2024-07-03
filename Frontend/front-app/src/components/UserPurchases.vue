@@ -59,7 +59,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, reactive, watchEffect } from 'vue';
+import { ref, onMounted, reactive } from 'vue';
 import axios from 'axios';
 import { useStore } from 'vuex';
 
@@ -79,19 +79,32 @@ const initialSortOptions = {
 const searchFilters = reactive({ ...initialSearchFilters });
 const sortOptions = reactive({ ...initialSortOptions });
 
-// Function to load purchases
 onMounted(() => {
   loadPurchases();
 });
 
 function loadPurchases() {
   const userId = store.getters.userId;
+  const params = {
+    factoryName: searchFilters.factoryName || '',
+    minPrice: searchFilters.minPrice || '',
+    maxPrice: searchFilters.maxPrice || '',
+    startDate: searchFilters.startDate || '',
+    endDate: searchFilters.endDate || '',
+    sortBy: sortOptions.sortBy || '',
+    sortOrder: sortOptions.sortOrder || 'asc'
+  };
+
+  console.log('Loading purchases with params:', params);
+
   axios.get(`http://localhost:3001/api/purchases/user/${userId}`, {
     headers: {
       'Authorization': `Bearer ${store.state.token}`
-    }
+    },
+    params
   })
     .then(response => {
+      console.log('Purchases received:', response.data);
       purchases.value = response.data;
     })
     .catch(error => {
@@ -99,72 +112,16 @@ function loadPurchases() {
     });
 }
 
-// Function to apply filters and sort
+
 function applyFiltersAndSort() {
-  let filteredPurchases = purchases.value.slice(); // Create a copy of purchases
-  
-   if (searchFilters.factoryName) {
-    filteredPurchases = filteredPurchases.filter(purchase =>
-      purchase.chocolates.some(item =>
-        item.factoryName && item.factoryName.includes(searchFilters.factoryName)
-      )
-    );
-  }
-  
-  // Filter by price range
-  if (searchFilters.minPrice !== '' && searchFilters.maxPrice !== '') {
-    filteredPurchases = filteredPurchases.filter(purchase =>
-      purchase.totalPrice >= parseFloat(searchFilters.minPrice) &&
-      purchase.totalPrice <= parseFloat(searchFilters.maxPrice)
-    );
-  }
-  
-  // Filter by date range
-  if (searchFilters.startDate && searchFilters.endDate) {
-    filteredPurchases = filteredPurchases.filter(purchase =>
-      new Date(purchase.date) >= new Date(searchFilters.startDate) &&
-      new Date(purchase.date) <= new Date(searchFilters.endDate)
-    );
-  }
-  
-  // Apply sorting
-  if (sortOptions.sortBy) {
-    filteredPurchases.sort((a, b) => {
-      const fieldA = a[sortOptions.sortBy];
-      const fieldB = b[sortOptions.sortBy];
-      if (fieldA < fieldB) {
-        return sortOptions.sortOrder === 'asc' ? -1 : 1;
-      }
-      if (fieldA > fieldB) {
-        return sortOptions.sortOrder === 'asc' ? 1 : -1;
-      }
-      return 0;
-    });
-  }
-  
-  // Update purchases with filtered and sorted data
-  purchases.value = filteredPurchases;
+  loadPurchases();
 }
 
-// Function to reset filters and sorting options
 function resetFilters() {
   Object.assign(searchFilters, { ...initialSearchFilters });
   Object.assign(sortOptions, { ...initialSortOptions });
-  loadPurchases(); // Reload all purchases after resetting
+  loadPurchases();
 }
-
-
-function loadChocolates() {
-  const factoryId = route.params.id;
-  axios.get(`http://localhost:3001/api/chocolates?factoryId=${factoryId}`)
-    .then(response => {
-      chocolates.value = response.data.map(chocolate => ({ ...chocolate, quantity: 1 }));
-    })
-    .catch(error => {
-      console.error('Error fetching chocolates:', error);
-    });
-}
-
 
 function cancelPurchase(purchaseId) {
   const userId = store.getters.userId;
@@ -175,8 +132,7 @@ function cancelPurchase(purchaseId) {
   })
     .then(response => {
       console.log('Purchase canceled:', response.data);
-      loadPurchases(); // Reload purchases after canceling
-      loadChocolates(); // Reload chocolates after canceling
+      loadPurchases();
     })
     .catch(error => {
       console.error('Error canceling purchase:', error);

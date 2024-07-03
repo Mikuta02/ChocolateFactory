@@ -31,7 +31,11 @@ exports.createPurchase = (req, res) => {
 exports.getUserPurchases = (req, res) => {
     try {
         const { userId } = req.params;
-        const purchases = purchaseService.getPurchasesByUserId(Number(userId));
+        const { factoryName = '', minPrice = '', maxPrice = '', startDate = '', endDate = '', sortBy = '', sortOrder = 'asc' } = req.query;
+        console.log('Received search parameters:', { factoryName, minPrice, maxPrice, startDate, endDate, sortBy, sortOrder });
+        const purchases = purchaseService.getPurchasesByUserId(Number(userId), {
+            factoryName, minPrice, maxPrice, startDate, endDate, sortBy, sortOrder
+        });
         res.status(200).json(purchases);
     } catch (error) {
         console.error('Error getting user purchases:', error.message);
@@ -97,3 +101,6 @@ exports.updatePurchaseStatus = (req, res) => {
         res.status(500).json({ message: 'Server error' });
     }
 };
+
+
+
