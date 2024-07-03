@@ -4,16 +4,11 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/factories">Factories</router-link> |
       <router-link to="/add-factory">Add Factory</router-link>|
-      <router-link v-if="isAuthenticated" to="/cart">Cart</router-link>|
-      <router-link v-if="isAuthenticated" to="/purchases">My Purchases</router-link>|
-      <router-link v-if="isAuthenticated && isManager" to="/manager-purchases">Factory Purchases</router-link>|
-      <router-link v-if="isAuthenticated && isManager" to="/factory/:factoryId/comments">Manage Comments</router-link>|
+      <router-link v-if="isAuthenticated && isCustomer" to="/cart">Cart </router-link> 
       <router-link v-if="!isAuthenticated" to="/login">Login</router-link> |
-      <router-link v-if="!isAuthenticated" to="/register">Register</router-link> |
-      <button v-if="isAuthenticated" @click="logout">Logout</button>
+      <router-link v-if="!isAuthenticated" to="/register">Register </router-link> |
+      <button v-if="isAuthenticated" @click="logout">Logout</button> |
       <router-link v-if="isAuthenticated" to="/profile">Profile</router-link> |
-      <router-link v-if="isAuthenticated && isAdministrator" to="/registerManager">Register Manager</router-link>
-      <router-link v-if="isAuthenticated && isManager" to="/registerWorker">Register Worker</router-link>
     </nav>
     <router-view/>
   </div>
@@ -31,6 +26,7 @@ export default {
     const isAuthenticated = computed(() => store.getters.isAuthenticated);
     const isManager = computed(() => store.getters.isManager);
     const isAdministrator = computed(() => store.getters.isAdministrator);
+    const isCustomer = computed(() => store.getters.userRole === 'Customer');
 
     const logout = () => {
       store.dispatch('logout');
@@ -41,6 +37,7 @@ export default {
       isAuthenticated,
       isAdministrator,
       isManager,
+      isCustomer,
       logout
     };
   }

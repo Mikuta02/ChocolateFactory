@@ -44,7 +44,7 @@
     "accumulatedPoints": 24206,
     "customerTypeId": 1,
     "isBanned": false,
-    "cancelationNumber": 3,
+    "cancelationNumber": 4,
     "worksAtFactoryId": 0
   },
   {
@@ -73,7 +73,7 @@
     "birthDate": "2001-01-01",
     "role": "Customer",
     "cartId": 0,
-    "accumulatedPoints": 0,
+    "accumulatedPoints": 1322,
     "customerTypeId": 1,
     "isBanned": false,
     "cancelationNumber": 0,

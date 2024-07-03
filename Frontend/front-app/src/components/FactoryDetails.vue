@@ -26,11 +26,11 @@
           <p class="chocolate-description">Description: {{ chocolate.description }}</p>
           <p>Status: {{ chocolate.status }}</p>
           <p>Amount: {{ chocolate.amount }}</p>
-          <div>
+          <div  v-if="isCustomer">
             <label for="quantity">Quantity:</label>
             <input type="number" v-model.number="chocolate.quantity" :max="chocolate.amount" min="1" />
           </div>
-          <button @click="addToCart(chocolate.id, chocolate.quantity)" class="add-to-cart-button">Add to Cart</button>
+          <button v-if="isCustomer" @click="addToCart(chocolate.id, chocolate.quantity)" class="add-to-cart-button">Add to Cart</button>
         </div>
       </li>
     </ul>
@@ -140,6 +140,10 @@ const workerBirthDate = ref('');
 const isManagerOrAdmin = computed(() => {
   const role = store.getters.userRole;
   return role === 'Manager' || role === 'Administrator';
+});
+
+const isCustomer = computed(() => {
+  return store.getters.userRole === 'Customer';
 });
 
 onMounted(() => {

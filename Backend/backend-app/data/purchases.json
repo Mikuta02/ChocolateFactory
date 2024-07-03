@@ -825,5 +825,50 @@
     "customerName": "Pablo Eskobar",
     "customerId": 3,
     "status": "Otkazano"
+  },
+  {
+    "id": 15,
+    "chocolates": [
+      {
+        "chocolate": {
+          "id": 2,
+          "name": "Proteinska mala",
+          "price": 550,
+          "chocolateType": "Cooking",
+          "factoryId": 1,
+          "chocolateVariety": "Nuts",
+          "grams": 40,
+          "description": "lesnik protein",
+          "picturePath": "coko4.jpg",
+          "status": "unavailable",
+          "amount": 10
+        },
+        "quantity": 4
+      }
+    ],
+    "factory": [
+      {
+        "chocolate": {
+          "id": 2,
+          "name": "Proteinska mala",
+          "price": 550,
+          "chocolateType": "Cooking",
+          "factoryId": 1,
+          "chocolateVariety": "Nuts",
+          "grams": 40,
+          "description": "lesnik protein",
+          "picturePath": "coko4.jpg",
+          "status": "unavailable",
+          "amount": 10
+        },
+        "quantity": 4,
+        "factoryName": "Svicarska"
+      }
+    ],
+    "date": "2024-07-03T12:50:46.401Z",
+    "totalPrice": 2200,
+    "customerName": "Bogdan Djukic",
+    "customerId": 5,
+    "status": "Otkazano"
   }
 ]

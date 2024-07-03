@@ -22,28 +22,26 @@
       "role": "Customer",
       "cartId": 0,
       "accumulatedPoints": 0,
-      "customerTypeId": 2,
+      "customerTypeId": 1,
       "isBanned": false,
       "cancelationNumber": 0
     },
-    "chocolates": [
-      {
-        "chocolate": {
-          "id": 2,
-          "name": "Proteinska mala",
-          "price": 550,
-          "chocolateType": "Cooking",
-          "factoryId": 1,
-          "chocolateVariety": "Nuts",
-          "grams": 40,
-          "description": "lesnik protein",
-          "picturePath": "coko4.jpg",
-          "status": "unavailable",
-          "amount": 2
-        },
-        "quantity": 1
-      }
-    ],
-    "totalPrice": 533.5
+    "chocolates": [],
+    "totalPrice": 0
+  },
+  {
+    "id": 3,
+    "user": {
+      "id": 5,
+      "username": "",
+      "role": "Customer",
+      "cartId": 0,
+      "accumulatedPoints": 0,
+      "customerTypeId": 1,
+      "isBanned": false,
+      "cancelationNumber": 0
+    },
+    "chocolates": [],
+    "totalPrice": 0
   }
 ]
