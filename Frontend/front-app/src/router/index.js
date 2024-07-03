@@ -32,7 +32,8 @@ const routes = [
   {
     path: '/add-factory',
     name: 'AddFactory',
-    component: AddFactory
+    component: AddFactory,
+    meta: { requiresAuth: true, requiresAdmin: true }
   },
   {
     path: '/factory-detailed/:id',
@@ -61,12 +62,14 @@ const routes = [
   {
     path: '/cart',
     name: 'Cart',
-    component: Cart 
+    component: Cart,
+    meta: { requiresAuth: true }
   },
   {
     path: '/purchases',
     name: 'UserPurchases',
-    component: UserPurchases
+    component: UserPurchases,
+    meta: { requiresAuth: true }
   },
   {
     path: '/add-comment/:factoryId',
@@ -87,33 +90,42 @@ const routes = [
     props: true
   },
   {
-    path: '/registerManager',
-    name: 'RegisterManager',
-    component: RegisterManager,
-    props: true
-  },
-  {
-    path: '/registerWorker',
-    name: 'RegisterWorker',
-    component: RegisterWorker,
-    props: true
-  },
-  {
     path: '/profile',
     name: 'Profile',
     component: Profile,
-    props: true
-  },
-  {
-    path: '/manager-purchases',
-    name: 'ManagerPurchases',
-    component: ManagerPurchases
-  },
-  {
-    path: '/factory/:factoryId/comments',
-    name: 'ManagerComments',
-    component: ManagerComments,
-    props: true
+    meta: { requiresAuth: true },
+    children: [
+      {
+        path: 'my-purchases',
+        name: 'MyPurchases',
+        component: UserPurchases,
+        meta: { requiresAuth: true }
+      },
+      {
+        path: 'factory-purchases',
+        name: 'FactoryPurchases',
+        component: ManagerPurchases,
+        meta: { requiresAuth: true, requiresManager: true }
+      },
+      {
+        path: 'manage-comments',
+        name: 'ManageComments',
+        component: ManagerComments,
+        meta: { requiresAuth: true, requiresManager: true }
+      },
+      {
+        path: 'register-manager',
+        name: 'RegisterManager',
+        component: RegisterManager,
+        meta: { requiresAuth: true, requiresAdmin: true }
+      },
+      {
+        path: 'register-worker',
+        name: 'RegisterWorker',
+        component: RegisterWorker,
+        meta: { requiresAuth: true, requiresManager: true }
+      }
+    ]
   }
 ];
 
@@ -126,15 +138,12 @@ router.beforeEach((to, from, next) => {
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
   const requiresAdmin = to.matched.some(record => record.meta.requiresAdmin);
   const requiresManager = to.matched.some(record => record.meta.requiresManager);
-  const requiresAdminOnly = to.matched.some(record => record.name === 'AddFactory');
 
   if (requiresAuth && !store.getters.isAuthenticated) {
     next('/login');
   } else if (requiresAdmin && !store.getters.isAdministrator) {
     next('/login');
   } else if (requiresManager && !store.getters.isManager) {
-    next('/login');
-  } else if (requiresAdminOnly && !store.getters.isAdministrator) {
     next('/login');
   } else {
     next();
