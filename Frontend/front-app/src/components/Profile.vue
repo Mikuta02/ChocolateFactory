@@ -65,11 +65,10 @@
           <p><strong>Gender:</strong> {{ user.gender }}</p>
           <p><strong>Birth Date:</strong> {{ user.birthDate }}</p>
           <p><strong>Role:</strong> {{ user.role }}</p>
-          <p><strong>Cart ID:</strong> {{ user.cartId }}</p>
           <p><strong>Accumulated Points:</strong> {{ user.accumulatedPoints }}</p>
-          <p><strong>Customer Type:</strong> {{ user.customerType }}</p>
           <p><strong>Banned:</strong> {{ user.isBanned ? 'Yes' : 'No' }}</p>
           <button class="ban-button" @click="banUser(user.username)">Ban</button>
+          <button class="delete-user-button" @click="deleteUser(user.id)">Delete User</button>
           <hr />
         </div>
       </div>
@@ -107,6 +106,16 @@ onMounted(() => {
     loadUsers();
   }
 });
+
+function deleteUser(userToDeleteId) {
+  axios.delete(`http://localhost:3001/api/users/${userToDeleteId}`)
+    .then(() => {
+        loadUsers();
+    })
+    .catch(error => {
+
+    });
+}
 
 function loadUsers(params = {}) {
   axios.get('http://localhost:3001/api/search/users', { params })
@@ -304,7 +313,23 @@ function banUser(usernameToBan) {
   margin-top: 10px;
 }
 
+.delete-user-button {
+  padding: 8px 16px;
+  background-color: #d9534f;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9em;
+  margin-top: 10px;
+  margin-left: 2px;
+}
+
 .ban-button:hover {
+  background-color: #c9302c;
+}
+
+.delete-user-button:hover {
   background-color: #c9302c;
 }
 
