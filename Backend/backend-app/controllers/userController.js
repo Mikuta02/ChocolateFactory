@@ -243,7 +243,7 @@ exports.getAllUsers = (req, res) => {
 
 
 exports.searchUsers = (req, res) => {
-    const { name, lastName, username, accumulatedPoints, sortBy, order, cancelationNumber, role, customerType } = req.query;
+    const { name, lastName, username, accumulatedPoints, sortBy, order, filterByCancellation, role, customerType } = req.query;
 
     try {
         //console.log('Search parameters:', { name, lastName, username, accumulatedPoints, sortBy, order, cancelationNumber, role, customerType });
@@ -256,9 +256,9 @@ exports.searchUsers = (req, res) => {
             //console.log('Sorted users:', users);
         }
 
-        if (cancelationNumber || role || customerType) {
-            users = userService.filterUsers(users, { role, customerType, cancelationNumber });
-            console.log("DE DA VIDIM", cancelationNumber, role);
+        if (filterByCancellation || role || customerType) {
+            users = userService.filterUsers(users, { role, customerType, filterByCancellation });
+            console.log("DE DA VIDIM", filterByCancellation, role);
             //console.log('Filtered users (after additional filters):', users);
         }
 
