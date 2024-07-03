@@ -4,8 +4,10 @@
     
     <!-- Search filters -->
     <div class="search-filters">
-      <label>Factory Name:</label>
-      <input v-model="searchFilters.factoryName" type="text" placeholder="Enter factory name">
+      <div v-if="isCustomer">
+        <label>Factory Name:</label>
+        <input v-model="searchFilters.factoryName" type="text" placeholder="Enter factory name" >
+      </div>
       
       <label>Price Range:</label>
       <input v-model="searchFilters.minPrice" type="number" placeholder="Min">
@@ -24,7 +26,7 @@
       <label>Sort By:</label>
       <select v-model="sortOptions.sortBy">
         <option value="">Select</option>
-        <option value="factoryName">Factory Name</option>
+        <option value="factoryName" v-if="isCustomer">Factory Name</option>
         <option value="totalPrice">Total Price</option>
         <option value="date">Date</option>
       </select>
@@ -59,7 +61,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, reactive } from 'vue';
+import { ref, onMounted, reactive, computed } from 'vue';
 import axios from 'axios';
 import { useStore } from 'vuex';
 
@@ -78,6 +80,8 @@ const initialSortOptions = {
 };
 const searchFilters = reactive({ ...initialSearchFilters });
 const sortOptions = reactive({ ...initialSortOptions });
+
+const isCustomer = computed(() => store.getters.userRole === 'Customer');
 
 onMounted(() => {
   loadPurchases();
