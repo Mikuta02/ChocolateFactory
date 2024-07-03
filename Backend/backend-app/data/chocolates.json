@@ -18,7 +18,7 @@
     "description": "lesnik protein",
     "picturePath": "coko4.jpg",
     "status": "unavailable",
-    "amount": 10
+    "amount": 11
   },
   {
     "id": 3,
@@ -70,7 +70,7 @@
     "description": "mala",
     "picturePath": "coko1.jpg",
     "status": "unavailable",
-    "amount": 0
+    "amount": 1
   },
   {
     "id": 7,

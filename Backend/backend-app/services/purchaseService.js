@@ -84,8 +84,55 @@ class PurchaseService {
         return purchase;
     }
 
-    getPurchasesByUserId(userId) {
-    return this.purchases.filter(purchase => purchase.customerId === userId);
+    getPurchasesByUserId(userId, { factoryName, minPrice, maxPrice, startDate, endDate, sortBy, sortOrder }) {
+        console.log('Filtering purchases for user:', userId);
+        console.log('Received filter parameters:', { factoryName, minPrice, maxPrice, startDate, endDate, sortBy, sortOrder });
+
+        let purchases = this.purchases.filter(purchase => purchase.customerId === Number(userId));
+        console.log('Initial purchases:', purchases);
+
+        // Apply filters
+        if (factoryName) {
+            purchases = purchases.filter(purchase =>
+                purchase.factory && purchase.factory.some(f => f.factoryName && f.factoryName.includes(factoryName))
+            );
+            console.log('After factoryName filter:', purchases);
+        }
+
+        if (minPrice !== undefined && maxPrice !== undefined && minPrice !== '' && maxPrice !== '') {
+            purchases = purchases.filter(purchase =>
+                purchase.totalPrice >= Number(minPrice) && purchase.totalPrice <= Number(maxPrice)
+            );
+            console.log('After price range filter:', purchases);
+        }
+
+        if (startDate && endDate) {
+            purchases = purchases.filter(purchase =>
+                new Date(purchase.date) >= new Date(startDate) && new Date(purchase.date) <= new Date(endDate)
+            );
+            console.log('After date range filter:', purchases);
+        }
+
+        // Apply sorting
+        if (sortBy) {
+            purchases.sort((a, b) => {
+                let fieldA, fieldB;
+                if (sortBy === 'factoryName') {
+                    fieldA = (a.factory && a.factory[0]) ? a.factory[0].factoryName : '';
+                    fieldB = (b.factory && b.factory[0]) ? b.factory[0].factoryName : '';
+                } else {
+                    fieldA = a[sortBy];
+                    fieldB = b[sortBy];
+                }
+
+                if (fieldA < fieldB) return sortOrder === 'asc' ? -1 : 1;
+                if (fieldA > fieldB) return sortOrder === 'asc' ? 1 : -1;
+                return 0;
+            });
+            console.log('After sorting:', purchases);
+        }
+
+        return purchases;
     }
 
     getPurchasesByFactoryIds(factoryIds) {
