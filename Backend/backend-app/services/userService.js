@@ -228,8 +228,8 @@ class UserService {
           matches = matches && type && user.customerTypeId === type.id;
         }
 
-        if (filters.cancelationNumber) {
-            matches = matches && user.cancelationNumber > 5;
+        if (filters.filterByCancellation === 'check_sus') {
+            matches = matches && user.cancelationNumber > 5 ;
             console.log(`Matching user ${user.name} with cancelationNumber greater than 5: ${matches}`);
         } else {
             console.log(`Ignoring cancelationNumber filter for user ${user.name}`);

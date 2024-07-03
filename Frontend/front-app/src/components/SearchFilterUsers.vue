@@ -73,7 +73,7 @@
           order: this.order,
           role: this.role,
           customerType: this.customerType,
-          filterByCancellation: this.filterByCancellation
+          filterByCancellation: this.filterByCancellation ? 'check_sus' : 'no_check'
         });
       },
       resetFields() {
