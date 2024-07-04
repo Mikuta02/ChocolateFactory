@@ -1,4 +1,5 @@
 <template>
+<div id="map" class="map"></div>
   <div class="factory-details" v-if="factory">
     <h1>DETAILED VIEW</h1>
     <h2>{{ factory.name }}</h2>
@@ -115,6 +116,18 @@ import axios from 'axios';
 import Comments from './Comments.vue'; 
 import { useStore } from 'vuex';
 
+import 'ol/ol.css';
+import Map from 'ol/Map';
+import View from 'ol/View';
+import TileLayer from 'ol/layer/Tile';
+import OSM from 'ol/source/OSM';
+import { fromLonLat } from 'ol/proj';
+import Feature from 'ol/Feature';
+import Point from 'ol/geom/Point';
+import VectorLayer from 'ol/layer/Vector';
+import VectorSource from 'ol/source/Vector';
+import { Icon, Style } from 'ol/style';
+
 const store = useStore();
 const route = useRoute();
 const router = useRouter();
@@ -171,12 +184,56 @@ function registerWorker() {
     });
 }
 
+function initMap() {
+  if (factory.value && factory.value.location) {
+    const coordinates = [factory.value.location.longitude, factory.value.location.latitude];
+    const transformedCoordinates = fromLonLat(coordinates);
+
+    const map = new Map({
+      target: 'map',
+      layers: [
+        new TileLayer({
+          source: new OSM()
+        })
+      ],
+      view: new View({
+        center: transformedCoordinates,
+        zoom: 15
+      })
+    });
+
+    const iconFeature = new Feature({
+      geometry: new Point(transformedCoordinates),
+    });
+
+    const iconStyle = new Style({
+      image: new Icon({
+        anchor: [0.5, 1],
+        src: 'https://openlayers.org/en/latest/examples/data/icon.png'
+      })
+    });
+
+    iconFeature.setStyle(iconStyle);
+
+    const vectorSource = new VectorSource({
+      features: [iconFeature],
+    });
+
+    const vectorLayer = new VectorLayer({
+      source: vectorSource,
+    });
+
+    map.addLayer(vectorLayer);
+  }
+}
+
 function loadFactory() {
   const factoryId = route.params.id;
   axios.get(`http://localhost:3001/api/factories/${factoryId}`)
     .then(response => {
       factory.value = response.data;
       loadChocolates(factoryId);
+      initMap();
     })
     .catch(error => {
       console.error('Error fetching factory details:', error);
@@ -565,5 +622,9 @@ function deleteFactory() {
   cursor: pointer;
   margin-top: 20px;
 }
-
+.map {
+  width: 100%;
+  height: 400px;
+  margin-top: 20px;
+}
 </style>

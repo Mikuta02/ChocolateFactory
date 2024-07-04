@@ -27,6 +27,7 @@
 import { computed } from 'vue';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
+import 'ol/ol.css';
 
 export default {
   setup() {
