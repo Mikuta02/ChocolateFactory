@@ -52,6 +52,11 @@ class ChocolateService {
           if (chocolate.amount < 0) {
             chocolate.amount = 0; // Ako količina ide ispod nule, postavi je na nulu
           }
+          if(chocolate.amount === 0){
+            chocolate.status = "unavailable";
+            }else{
+                chocolate.status = "available";
+            }
           this.saveChocolates();
         } else {
           throw new Error('Chocolate not found');
@@ -103,6 +108,11 @@ class ChocolateService {
         const chocolate = this.chocolates.find(choc => choc.id === id);
         if (chocolate) {
             chocolate.amount = amount;
+            if(chocolate.amount === 0){
+                chocolate.status = "unavailable";
+            }else{
+                chocolate.status = "available";
+            }
             this.saveChocolates();
             return chocolate;
         }
