@@ -4,7 +4,7 @@
     "factoryId": null,
     "description": "N/A",
     "picturePath": "",
-    "status": "available",
+    "status": "unavailable",
     "amount": 10
   },
   {
@@ -17,8 +17,8 @@
     "grams": 40,
     "description": "lesnik protein",
     "picturePath": "coko4.jpg",
-    "status": "available",
-    "amount": 11
+    "status": "unavailable",
+    "amount": 0
   },
   {
     "id": 3,
@@ -43,7 +43,7 @@
     "grams": 100,
     "description": "jeftino",
     "picturePath": "coko6.jpg",
-    "status": "available",
+    "status": "unavailable",
     "amount": 15
   },
   {
@@ -56,7 +56,7 @@
     "grams": 120,
     "description": "nista",
     "picturePath": "coko7.jpg",
-    "status": "available",
+    "status": "unavailable",
     "amount": 10
   },
   {
@@ -69,7 +69,7 @@
     "grams": 123,
     "description": "mala",
     "picturePath": "coko1.jpg",
-    "status": "available",
+    "status": "unavailable",
     "amount": 1
   },
   {
@@ -83,6 +83,6 @@
     "description": "mala",
     "picturePath": "coko1.jpg",
     "status": "available",
-    "amount": 4
+    "amount": 1
   }
 ]

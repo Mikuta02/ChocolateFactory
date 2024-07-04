@@ -10,7 +10,11 @@
             <p>Type: {{ item.chocolate.chocolateType }}</p>
             <p>Variety: {{ item.chocolate.chocolateVariety }}</p>
             <p>Price: {{ item.chocolate.price }}</p>
-            <p>Quantity: {{ item.quantity }}</p>
+            <div class="quantity-control">
+              <label for="quantity">Quantity:</label>
+              <input type="number" v-model.number="item.quantity" min="1" :max="item.chocolate.amount" @change="validateAndUpdateQuantity(item.chocolate.id, item.quantity, item.chocolate.amount)">
+              <button @click="updateQuantity(item.chocolate.id, item.quantity)">Update</button>
+            </div>
             <button @click="removeFromCart(item.chocolate.id)">Remove</button>
           </div>
         </li>
@@ -89,6 +93,28 @@ function createPurchase() {
     });
 }
 
+function updateQuantity(chocolateId, quantity) {
+  const userId = store.getters.userId;
+  axios.post('http://localhost:3001/api/cart/update-quantity', { userId, chocolateId, quantity })
+    .then(response => {
+      cart.value = response.data;
+    })
+    .catch(error => {
+      console.error('Error updating chocolate quantity:', error);
+      alert('Failed to update chocolate quantity.');
+    });
+}
+
+function validateAndUpdateQuantity(chocolateId, quantity, maxQuantity) {
+  if (quantity < 1) {
+    quantity = 1;
+  }
+  if (quantity > maxQuantity) {
+    quantity = maxQuantity;
+  }
+  updateQuantity(chocolateId, quantity);
+}
+
 function getChocolatePictureUrl(path) {
   return `http://localhost:3001/images/${path}`;
 }
@@ -119,5 +145,25 @@ function getChocolatePictureUrl(path) {
 }
 .cart-details {
   flex-grow: 1;
+}
+.quantity-control {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+.quantity-control input {
+  width: 50px;
+  margin-right: 10px;
+}
+.quantity-control button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+.quantity-control button:hover {
+  background-color: #0056b3;
 }
 </style>

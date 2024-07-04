@@ -870,5 +870,50 @@
     "customerName": "Bogdan Djukic",
     "customerId": 5,
     "status": "Otkazano"
+  },
+  {
+    "id": 16,
+    "chocolates": [
+      {
+        "chocolate": {
+          "id": 7,
+          "name": "mala plava",
+          "price": 120,
+          "chocolateType": "Normal",
+          "factoryId": 2,
+          "chocolateVariety": "Dark",
+          "grams": 120,
+          "description": "mala",
+          "picturePath": "coko1.jpg",
+          "status": "unavailable",
+          "amount": 4
+        },
+        "quantity": 3
+      }
+    ],
+    "factory": [
+      {
+        "chocolate": {
+          "id": 7,
+          "name": "mala plava",
+          "price": 120,
+          "chocolateType": "Normal",
+          "factoryId": 2,
+          "chocolateVariety": "Dark",
+          "grams": 120,
+          "description": "mala",
+          "picturePath": "coko1.jpg",
+          "status": "unavailable",
+          "amount": 4
+        },
+        "quantity": 3,
+        "factoryName": "Smederevac"
+      }
+    ],
+    "date": "2024-07-04T15:56:30.872Z",
+    "totalPrice": 342,
+    "customerName": "Pablo Eskobar",
+    "customerId": 3,
+    "status": "Obrada"
   }
 ]
