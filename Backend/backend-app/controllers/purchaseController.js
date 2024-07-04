@@ -102,5 +102,32 @@ exports.updatePurchaseStatus = (req, res) => {
     }
 };
 
+exports.updatePurchaseStatus = (req, res) => {
+    try {
+        const { purchaseId, status, reason } = req.body;
+        const managerId = req.userData.userId; // Assume we're using JWT and middleware for authentication
 
+        const purchase = purchaseService.getPurchaseById(purchaseId);
+
+        if (!purchase) {
+            return res.status(404).json({ message: 'Purchase not found' });
+        }
+
+        // Check if the managerId matches any of the factories in the purchase
+        const isAuthorized = purchase.chocolates.some(item => {
+            const factory = factoryService.getFactoryById(item.chocolate.factoryId);
+            return factory.managerId === managerId;
+        });
+
+        if (!isAuthorized) {
+            return res.status(403).json({ message: 'Unauthorized action' });
+        }
+
+        purchaseService.updatePurchaseStatus(purchaseId, status, reason);
+        res.status(200).json({ message: 'Purchase status updated successfully' });
+    } catch (error) {
+        console.error('Error updating purchase status:', error);
+        res.status(500).json({ message: 'Server error' });
+    }
+};
 
