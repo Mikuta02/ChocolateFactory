@@ -39,12 +39,12 @@
     "lastName": "Eskobar",
     "gender": "Attack Helicopter",
     "birthDate": "2001-01-01",
-    "role": "Worker",
+    "role": "Customer",
     "cartId": 0,
     "accumulatedPoints": 23848,
     "customerTypeId": 3,
     "isBanned": false,
-    "cancelationNumber": 4,
+    "cancelationNumber": 5,
     "worksAtFactoryId": 0
   },
   {
@@ -76,7 +76,7 @@
     "accumulatedPoints": 1322,
     "customerTypeId": 1,
     "isBanned": false,
-    "cancelationNumber": 0,
+    "cancelationNumber": 1,
     "worksAtFactoryId": 0
   },
   {
@@ -284,7 +284,7 @@
     "accumulatedPoints": 0,
     "customerTypeId": 1,
     "isBanned": false,
-    "cancelationNumber": 10,
+    "cancelationNumber": 0,
     "worksAtFactoryId": 0
   }
 ]

@@ -30,12 +30,6 @@ const routes = [
     component: Factories
   },
   {
-    path: '/add-factory',
-    name: 'AddFactory',
-    component: AddFactory,
-    meta: { requiresAuth: true, requiresAdmin: true }
-  },
-  {
     path: '/factory-detailed/:id',
     name: 'FactoryDetailed',
     component: FactoryDetails,
@@ -124,6 +118,12 @@ const routes = [
         name: 'RegisterWorker',
         component: RegisterWorker,
         meta: { requiresAuth: true, requiresManager: true }
+      },
+      {
+        path: 'add-factory',
+        name: 'AddFactory',
+        component: AddFactory,
+        meta: { requiresAuth: true, requiresAdmin: true }
       }
     ]
   }

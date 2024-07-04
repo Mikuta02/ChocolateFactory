@@ -1,14 +1,23 @@
 <template>
   <div id="app">
     <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/factories">Factories</router-link> |
-      <router-link to="/add-factory">Add Factory</router-link>|
-      <router-link v-if="isAuthenticated && isCustomer" to="/cart">Cart </router-link> 
-      <router-link v-if="!isAuthenticated" to="/login">Login</router-link> |
-      <router-link v-if="!isAuthenticated" to="/register">Register </router-link> |
-      <button v-if="isAuthenticated" @click="logout">Logout</button> |
-      <router-link v-if="isAuthenticated" to="/profile">Profile</router-link> |
+      <div class="nav-links">
+        <router-link to="/">Home</router-link>
+        <template v-if="isAuthenticated">
+          |
+          <router-link to="/profile">Profile</router-link>
+        </template>
+        <template v-else>
+          |
+          <router-link to="/login">Login</router-link>
+          |
+          <router-link to="/register">Register</router-link>
+        </template>
+        |
+        <router-link to="/factories">Factories</router-link>
+        <router-link v-if="isAuthenticated && isCustomer" to="/cart">| Cart</router-link>
+      </div>
+      <button v-if="isAuthenticated" class="logout-button" @click="logout">Logout</button>
     </nav>
     <router-view/>
   </div>
@@ -18,6 +27,7 @@
 import { computed } from 'vue';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
+import 'ol/ol.css';
 
 export default {
   setup() {
@@ -56,7 +66,15 @@ export default {
 }
 
 nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding: 30px;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
 }
 
 nav a {
@@ -74,5 +92,19 @@ nav a.router-link-exact-active {
 
 nav a:hover {
   color: #FFD700; /* zlatna boja na hover */
+}
+
+.logout-button {
+  padding: 8px 16px;
+  background-color: #d9534f;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9em;
+}
+
+.logout-button:hover {
+  background-color: #c9302c;
 }
 </style>
