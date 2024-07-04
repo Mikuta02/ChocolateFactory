@@ -69,7 +69,7 @@ class CartService {
         }
     }
 
-    getCartByUserId(userId, customerTypeId=1) {
+    getCartByUserId(userId, customerTypeId) {
         let cart = this.carts.find(cart => cart.user.id === userId);
         if (!cart) {
             const user = new User(userId, '');

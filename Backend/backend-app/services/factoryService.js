@@ -176,6 +176,18 @@ class FactoryService {
         return this.factories.find(factory => factory.managerId === id);
     }
 
+
+    updateRating(comments, id){
+        const factory = this.factories.find(factory => factory.id === id);
+        comments = comments.filter(comment => comment.status === "approved");
+        console.log("updating Rating");
+        const totalRating = comments.reduce((sum, comment) => sum + comment.rating, 0);
+        const averageRating = comments.length > 0 ? totalRating / comments.length : 0;
+    
+        factory.rating = parseFloat(averageRating.toFixed(2));
+        this.saveFactories();
+    }
+
 }
 
 module.exports = new FactoryService();
