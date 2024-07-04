@@ -361,7 +361,7 @@ function deleteFactory() {
   margin: 20px;
 }
 .factory-logo {
-  width: 300px;
+  width: 500px;
   height: auto;
   margin: 20px 0;
 }
@@ -377,7 +377,7 @@ function deleteFactory() {
   position: relative;
 }
 .chocolate-picture {
-  width: 100px;
+  width: 300px;
   height: auto;
   margin-right: 20px;
 }

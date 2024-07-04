@@ -50,6 +50,7 @@
       <router-link v-if="isManager" to="/profile/manage-comments">Manage Comments </router-link> 
       <router-link v-if="isAdministrator" to="/profile/register-manager">Register Manager </router-link> 
       <router-link v-if="isManager" to="/profile/register-worker">Register Worker </router-link>
+      <router-link v-if="isAdministrator" to="/profile/add-factory">Add factory </router-link> 
     </div>
 
     <router-view></router-view>
