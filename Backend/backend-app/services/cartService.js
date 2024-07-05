@@ -100,7 +100,7 @@ class CartService {
         } else {
             cart.chocolates.push({ chocolate, quantity });
         }
-        this.updateTotalPrice(cart);
+        this.updateTotalPrice(cart, customerTypeId);
         this.saveCarts();
     }
 
@@ -122,12 +122,12 @@ class CartService {
         }
     }
 
-    updateTotalPrice(cart) {
+    updateTotalPrice(cart, customerTypeId) {
         cart.totalPrice = cart.chocolates.reduce((total, item) => total + item.chocolate.price * item.quantity, 0);
         console.log("OVO JE NJEGOV ID TIP AJAAJAJAJAJ", cart.user.customerTypeId);
-        if (cart.user.customerTypeId === 2) {
+        if (customerTypeId === 2) {
             cart.totalPrice *= 0.97; 
-        } else if (cart.user.customerTypeId === 3) {
+        } else if (customerTypeId === 3) {
             cart.totalPrice *= 0.95;
         }
     }
