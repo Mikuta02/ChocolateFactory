@@ -43,7 +43,7 @@ class PurchaseService {
 
     createPurchaseFromCart(cart, user) {
         const totalPrice = cart.totalPrice;
-        
+
         const chocolatesWithFactory = cart.chocolates.map(item => {
             const factory = factoryService.getFactoryById(item.chocolate.factoryId);
             return {
@@ -52,19 +52,20 @@ class PurchaseService {
             };
         });
 
-        let discount = 1
-        if(user.customerTypeId === 2){
+        let discount = 1;
+        if (user.customerTypeId === 2) {
             discount = 0.97; 
-        }else if(user.customerTypeId === 3){
+        } else if (user.customerTypeId === 3) {
             discount = 0.95;
         }
 
+        const factoryIds = [...new Set(cart.chocolates.map(item => item.chocolate.factoryId))];
         const purchase = {
             id: this.purchases.length + 1,
             chocolates: cart.chocolates,
-            factory: chocolatesWithFactory,
+            factoryIds: factoryIds,
             date: new Date().toISOString(),
-            totalPrice: totalPrice*discount,
+            totalPrice: totalPrice * discount,
             customerName: `${user.name} ${user.lastName}`,
             customerId: cart.user.id,
             status: PurchaseStatusEnum.PROCESSING
@@ -74,7 +75,7 @@ class PurchaseService {
         userService.updateUserPoints(user.id, points);
         console.log(`Updated points for user ${user.username}. New total: ${user.accumulatedPoints + points}`);
         this.addPurchase(purchase);
-        
+
         cart.chocolates.forEach(item => {
             chocolateService.reduceChocolateAmount(item.chocolate.id, item.quantity);
         });

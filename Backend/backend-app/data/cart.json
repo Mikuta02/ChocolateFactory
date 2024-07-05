@@ -15,10 +15,10 @@
     "totalPrice": 0
   },
   {
-    "id": 1,
+    "id": 3,
     "user": {
       "id": 3,
-      "username": "dragan",
+      "username": "",
       "role": "Customer",
       "cartId": 0,
       "accumulatedPoints": 0,
@@ -37,7 +37,6 @@
       "role": "Customer",
       "cartId": 0,
       "accumulatedPoints": 0,
-      "customerTypeId": 1,
       "isBanned": false,
       "cancelationNumber": 0
     },

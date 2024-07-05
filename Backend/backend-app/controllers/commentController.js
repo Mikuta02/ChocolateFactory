@@ -1,14 +1,14 @@
 const commentService = require('../services/commentService');
 
 exports.addComment = (req, res) => {
+    const { userId, factoryId, text, rating } = req.body;
+
     try {
-        const { userId, factoryId, text, rating } = req.body;
-        console.log('Request to add comment:', { userId, factoryId, text, rating }); // Log added
         const newComment = commentService.addComment(userId, factoryId, text, rating);
         res.status(201).json(newComment);
     } catch (error) {
         console.error('Error adding comment:', error);
-        res.status(500).json({ message: 'Server error' });
+        res.status(500).json({ error: error.message });
     }
 };
 
