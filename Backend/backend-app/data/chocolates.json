@@ -17,8 +17,8 @@
     "grams": 40,
     "description": "lesnik protein",
     "picturePath": "coko4.jpg",
-    "status": "unavailable",
-    "amount": 0
+    "status": "available",
+    "amount": 4
   },
   {
     "id": 3,
@@ -30,8 +30,8 @@
     "grams": 450,
     "description": "Losa verzija praline",
     "picturePath": "coko1.jpg",
-    "status": "unavailable",
-    "amount": 0
+    "status": "available",
+    "amount": 3
   },
   {
     "id": 4,
@@ -43,8 +43,8 @@
     "grams": 100,
     "description": "jeftino",
     "picturePath": "coko6.jpg",
-    "status": "unavailable",
-    "amount": 15
+    "status": "available",
+    "amount": 13
   },
   {
     "id": 5,
@@ -69,8 +69,8 @@
     "grams": 123,
     "description": "mala",
     "picturePath": "coko1.jpg",
-    "status": "unavailable",
-    "amount": 1
+    "status": "available",
+    "amount": 3
   },
   {
     "id": 7,
@@ -82,7 +82,7 @@
     "grams": 120,
     "description": "mala",
     "picturePath": "coko1.jpg",
-    "status": "available",
-    "amount": 1
+    "status": "unavailable",
+    "amount": 0
   }
 ]

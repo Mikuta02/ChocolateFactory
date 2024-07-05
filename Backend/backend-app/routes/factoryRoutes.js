@@ -9,5 +9,6 @@ router.post('/factories', factoryController.addFactory);
 router.delete('/factories/:id', factoryController.deleteFactoryById);
 router.get('/search/factories', factoryController.searchFactories); 
 router.get('/factories/manager/:id', factoryController.getFactoryByManagerId);
+router.post('/factories/by-ids', factoryController.getFactoriesByIds);
 
 module.exports = router;
