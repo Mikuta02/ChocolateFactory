@@ -61,7 +61,7 @@ class CommentService {
   addComment(userId, factoryId, text, rating) {
     const newId = this.comments.length ? this.comments[this.comments.length - 1].id + 1 : 1;
     const user = UserService.getUserById(userId);
-    const factory = FactoryService.getFactoryById(factoryId);
+    const factory = FactoryService.getFactoryById(Number(factoryId)); 
 
     if (!user || !factory) {
         throw new Error('Invalid user or factory');

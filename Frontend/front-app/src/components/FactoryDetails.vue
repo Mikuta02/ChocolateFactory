@@ -1,5 +1,5 @@
 <template>
-<div id="map" class="map"></div>
+  <div id="map" class="map"></div>
   <div class="factory-details" v-if="factory">
     <h1>DETAILED VIEW</h1>
     <h2>{{ factory.name }}</h2>
@@ -13,7 +13,7 @@
   
     <h2>Chocolates</h2>
     <ul v-if="chocolates.length">
-      <li v-for="chocolate in chocolates" :key="chocolate.id" class="chocolate-item">
+      <li v-for="chocolate in filteredChocolates" :key="chocolate.id" class="chocolate-item">
         <button @click="editChocolate(chocolate.id)" v-if="canEditChocolate(chocolate)" class="edit-button">Edit</button>
         <button @click="editAmount(chocolate.id)" v-if="canEditAmount(chocolate)" class="edit-amount-button">Edit Amount</button>
         <button @click="confirmDelete(chocolate.id)" v-if="canEditChocolate(chocolate)" class="delete-button">X</button>
@@ -27,9 +27,9 @@
           <p class="chocolate-description">Description: {{ chocolate.description }}</p>
           <p>Status: {{ chocolate.status }}</p>
           <p>Amount: {{ chocolate.amount }}</p>
-          <div  v-if="isCustomer">
+          <div v-if="isCustomer">
             <label for="quantity">Quantity:</label>
-            <input type="number" v-model.number="chocolate.quantity" :max="chocolate.amount" min="1" />
+            <input type="number" v-model.number="chocolate.quantity" :max="chocolate.amount" min="1" @input="validateQuantity(chocolate)" />
           </div>
           <button v-if="isCustomer" @click="addToCart(chocolate.id, chocolate.quantity)" class="add-to-cart-button">Add to Cart</button>
         </div>
@@ -68,9 +68,7 @@
       <button @click.prevent="registerWorker" class="register-button">Register Worker</button>
     </div>
 
-
     <button @click="addNewChocolate" v-if="canEditChocolate()" class="add-button">Add New Chocolate</button>
-
 
     <div v-if="showModal" class="modal-overlay">
       <div class="modal">
@@ -80,10 +78,8 @@
       </div>
     </div>
 
-
     <button v-if="canDeleteFactory()" @click="confirmDeleteFactory" class="delete-factory-button">Delete Factory</button>
 
-    
     <div v-if="showDeleteFactoryModal" class="modal-overlay">
       <div class="modal">
         <p>Are you sure you want to delete this factory?</p>
@@ -92,8 +88,6 @@
       </div>
     </div>
 
-
-   
     <Comments v-if="isManagerOrAdmin" :factoryId="factory.id" />
     <p v-else>You do not have permission to view all comments.</p>
 
@@ -110,7 +104,7 @@
 </template>
 
 <script setup>
-import { ref,computed,onMounted } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import axios from 'axios';
 import Comments from './Comments.vue'; 
@@ -157,6 +151,13 @@ const isManagerOrAdmin = computed(() => {
 
 const isCustomer = computed(() => {
   return store.getters.userRole === 'Customer';
+});
+
+const filteredChocolates = computed(() => {
+  if (isCustomer.value) {
+    return chocolates.value.filter(chocolate => chocolate.amount > 0);
+  }
+  return chocolates.value;
 });
 
 onMounted(() => {
@@ -253,7 +254,6 @@ function loadComments() {
       console.error('Error fetching comments:', error);
     });
 }
-
 
 function loadManager(){
   const factoryId = route.params.id;
@@ -353,6 +353,12 @@ function addToCart(chocolateId, quantity) {
     });
 }
 
+function validateQuantity(chocolate) {
+  if (chocolate.quantity < 1) {
+    chocolate.quantity = 1;
+  }
+}
+
 function getFactoryLogoUrl(path) {
   return `http://localhost:3001/images/${path}`;
 }
@@ -387,7 +393,6 @@ function canDeleteFactory(){
   const role = store.getters.userRole;
   return role === 'Administrator';
 }
-
 
 function confirmDeleteFactory() {
   showDeleteFactoryModal.value = true;

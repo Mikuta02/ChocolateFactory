@@ -22,7 +22,6 @@
       "role": "Customer",
       "cartId": 0,
       "accumulatedPoints": 0,
-      "customerTypeId": 1,
       "isBanned": false,
       "cancelationNumber": 0
     },

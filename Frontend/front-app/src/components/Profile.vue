@@ -45,7 +45,7 @@
 
     <div class="profile-links">
       <h3>Profile Actions</h3>
-      <router-link to="/profile/my-purchases">My Purchases </router-link> 
+      <router-link v-if="isCustomer"to="/profile/my-purchases">My Purchases </router-link> 
       <router-link v-if="isManager" to="/profile/factory-purchases">Factory Purchases </router-link> 
       <router-link v-if="isManager" to="/profile/manage-comments">Manage Comments </router-link> 
       <router-link v-if="isAdministrator" to="/profile/register-manager">Register Manager </router-link> 
@@ -97,6 +97,7 @@ const payload = JSON.parse(atob(token.split('.')[1]));
 const userId = payload.userId;
 const userRole = payload.role;
 
+const isCustomer = computed(() => store.getters.userRole === 'Customer');
 const isManager = computed(() => store.getters.isManager);
 const isAdministrator = computed(() => store.getters.isAdministrator);
 

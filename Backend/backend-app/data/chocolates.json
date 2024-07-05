@@ -4,7 +4,7 @@
     "factoryId": null,
     "description": "N/A",
     "picturePath": "",
-    "status": "available",
+    "status": "unavailable",
     "amount": 10
   },
   {
@@ -18,7 +18,7 @@
     "description": "lesnik protein",
     "picturePath": "coko4.jpg",
     "status": "available",
-    "amount": 11
+    "amount": 4
   },
   {
     "id": 3,
@@ -30,8 +30,8 @@
     "grams": 450,
     "description": "Losa verzija praline",
     "picturePath": "coko1.jpg",
-    "status": "unavailable",
-    "amount": 0
+    "status": "available",
+    "amount": 3
   },
   {
     "id": 4,
@@ -44,7 +44,7 @@
     "description": "milky milky chocolate",
     "picturePath": "coko6.jpg",
     "status": "available",
-    "amount": 15
+    "amount": 13
   },
   {
     "id": 5,
@@ -56,7 +56,7 @@
     "grams": 120,
     "description": "nutty chocolate",
     "picturePath": "coko7.jpg",
-    "status": "available",
+    "status": "unavailable",
     "amount": 10
   },
   {
@@ -70,7 +70,7 @@
     "description": "mala",
     "picturePath": "coko1.jpg",
     "status": "available",
-    "amount": 1
+    "amount": 3
   },
   {
     "id": 7,
@@ -82,7 +82,7 @@
     "grams": 120,
     "description": "mala",
     "picturePath": "coko1.jpg",
-    "status": "available",
-    "amount": 4
+    "status": "unavailable",
+    "amount": 0
   }
 ]

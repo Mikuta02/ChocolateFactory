@@ -4,7 +4,8 @@ import { createStore } from 'vuex';
 
 const store = createStore({
   state: {
-    token: null
+    token: null,
+    factories: []
   },
   mutations: {
     setToken(state, token) {
@@ -58,6 +59,10 @@ const store = createStore({
         return payload.factoryId; // Ensure this is correctly set in your token payload
       }
       return null;
+    },
+    getFactoryById: (state) => (id) => {
+
+      return state.factories.find(factory => factory.id === id);
     }
   }
 });

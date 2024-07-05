@@ -54,5 +54,75 @@
     "text": "Moze bolje ali ukusno",
     "rating": 5,
     "status": "pending"
+  },
+  {
+    "id": 5,
+    "user": {
+      "id": 3,
+      "username": "dragan"
+    },
+    "factory": {
+      "id": 1,
+      "name": "Svicarska"
+    },
+    "text": "ajde bre",
+    "rating": 1,
+    "status": "pending"
+  },
+  {
+    "id": 6,
+    "user": {
+      "id": 3,
+      "username": "dragan"
+    },
+    "factory": {
+      "id": 3,
+      "name": "Rafanito"
+    },
+    "text": "ajde molim te vise",
+    "rating": 3,
+    "status": "approved"
+  },
+  {
+    "id": 7,
+    "user": {
+      "id": 5,
+      "username": "bogdan"
+    },
+    "factory": {
+      "id": 2,
+      "name": "Smederevac"
+    },
+    "text": "moze i bolje ",
+    "rating": 2,
+    "status": "approved"
+  },
+  {
+    "id": 8,
+    "user": {
+      "id": 5,
+      "username": "bogdan"
+    },
+    "factory": {
+      "id": 4,
+      "name": "Vozic Krstic"
+    },
+    "text": "smece od cokolade",
+    "rating": 1,
+    "status": "rejected"
+  },
+  {
+    "id": 9,
+    "user": {
+      "id": 5,
+      "username": "bogdan"
+    },
+    "factory": {
+      "id": 3,
+      "name": "Rafanito"
+    },
+    "text": "ne moze gore",
+    "rating": 1,
+    "status": "rejected"
   }
 ]

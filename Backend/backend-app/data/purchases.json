@@ -219,7 +219,7 @@
     "totalPrice": 1100,
     "customerName": "Pablo Eskobar",
     "customerId": 3,
-    "status": "Obrada"
+    "status": "Odobreno"
   },
   {
     "id": 6,
@@ -870,5 +870,200 @@
     "customerName": "Bogdan Djukic",
     "customerId": 5,
     "status": "Otkazano"
+  },
+  {
+    "id": 16,
+    "chocolates": [
+      {
+        "chocolate": {
+          "id": 7,
+          "name": "mala plava",
+          "price": 120,
+          "chocolateType": "Normal",
+          "factoryId": 2,
+          "chocolateVariety": "Dark",
+          "grams": 120,
+          "description": "mala",
+          "picturePath": "coko1.jpg",
+          "status": "unavailable",
+          "amount": 4
+        },
+        "quantity": 3
+      }
+    ],
+    "factory": [
+      {
+        "chocolate": {
+          "id": 7,
+          "name": "mala plava",
+          "price": 120,
+          "chocolateType": "Normal",
+          "factoryId": 2,
+          "chocolateVariety": "Dark",
+          "grams": 120,
+          "description": "mala",
+          "picturePath": "coko1.jpg",
+          "status": "unavailable",
+          "amount": 4
+        },
+        "quantity": 3,
+        "factoryName": "Smederevac"
+      }
+    ],
+    "date": "2024-07-04T15:56:30.872Z",
+    "totalPrice": 342,
+    "customerName": "Pablo Eskobar",
+    "customerId": 3,
+    "status": "Obrada"
+  },
+  {
+    "id": 17,
+    "chocolates": [
+      {
+        "chocolate": {
+          "id": 2,
+          "name": "Proteinska mala",
+          "price": 550,
+          "chocolateType": "Cooking",
+          "factoryId": 1,
+          "chocolateVariety": "Nuts",
+          "grams": 40,
+          "description": "lesnik protein",
+          "picturePath": "coko4.jpg",
+          "status": "available",
+          "amount": 4
+        },
+        "quantity": 1
+      },
+      {
+        "chocolate": {
+          "id": 3,
+          "name": "Malina Pralina",
+          "price": 400,
+          "chocolateType": "Normal",
+          "factoryId": 3,
+          "chocolateVariety": "Dark",
+          "grams": 450,
+          "description": "Losa verzija praline",
+          "picturePath": "coko1.jpg",
+          "status": "available",
+          "amount": 3
+        },
+        "quantity": 2
+      }
+    ],
+    "factoryIds": [
+      1,
+      3
+    ],
+    "date": "2024-07-05T10:27:17.076Z",
+    "totalPrice": 1282.5,
+    "customerName": "Pablo Eskobar",
+    "customerId": 3,
+    "status": "Odobreno"
+  },
+  {
+    "id": 18,
+    "chocolates": [
+      {
+        "chocolate": {
+          "id": 6,
+          "name": "cokoladica",
+          "price": 123,
+          "chocolateType": "Normal",
+          "factoryId": 3,
+          "chocolateVariety": "Dark",
+          "grams": 123,
+          "description": "mala",
+          "picturePath": "coko1.jpg",
+          "status": "available",
+          "amount": 3
+        },
+        "quantity": 1
+      },
+      {
+        "chocolate": {
+          "id": 7,
+          "name": "mala plava",
+          "price": 120,
+          "chocolateType": "Normal",
+          "factoryId": 2,
+          "chocolateVariety": "Dark",
+          "grams": 120,
+          "description": "mala",
+          "picturePath": "coko1.jpg",
+          "status": "unavailable",
+          "amount": 0
+        },
+        "quantity": 1
+      }
+    ],
+    "factoryIds": [
+      3,
+      2
+    ],
+    "date": "2024-07-05T11:34:47.478Z",
+    "totalPrice": 243,
+    "customerName": "Bogdan Djukic",
+    "customerId": 5,
+    "status": "Odobreno"
+  },
+  {
+    "id": 19,
+    "chocolates": [
+      {
+        "chocolate": {
+          "id": 4,
+          "name": "picka",
+          "price": 100,
+          "chocolateType": "Drink",
+          "factoryId": 4,
+          "chocolateVariety": "Nuts",
+          "grams": 100,
+          "description": "jeftino",
+          "picturePath": "coko6.jpg",
+          "status": "available",
+          "amount": 13
+        },
+        "quantity": 2
+      }
+    ],
+    "factoryIds": [
+      4
+    ],
+    "date": "2024-07-05T11:35:33.039Z",
+    "totalPrice": 200,
+    "customerName": "Bogdan Djukic",
+    "customerId": 5,
+    "status": "Odobreno"
+  },
+  {
+    "id": 20,
+    "chocolates": [
+      {
+        "chocolate": {
+          "id": 6,
+          "name": "cokoladica",
+          "price": 123,
+          "chocolateType": "Normal",
+          "factoryId": 3,
+          "chocolateVariety": "Dark",
+          "grams": 123,
+          "description": "mala",
+          "picturePath": "coko1.jpg",
+          "status": "available",
+          "amount": 3
+        },
+        "quantity": 1
+      }
+    ],
+    "factoryIds": [
+      3
+    ],
+    "date": "2024-07-05T11:40:30.747Z",
+    "totalPrice": 123,
+    "customerName": "Bogdan Djukic",
+    "customerId": 5,
+    "status": "Odobreno"
   }
 ]

@@ -127,4 +127,12 @@ exports.searchFactories = (req, res) => {
     }
 };
 
+exports.getFactoriesByIds = (req, res) => {
+    const { ids } = req.body;
+    if (!Array.isArray(ids)) {
+        return res.status(400).json({ error: 'Invalid input' });
+    }
+    const factories = factoryService.getFactoriesByIds(ids);
+    res.json(factories);
+};
 

@@ -48,10 +48,15 @@
           <h4>{{ item.chocolate.name }}</h4>
           <p>Quantity: {{ item.quantity }}</p>
           <p>Price: {{ item.chocolate.price }}</p>
-          <p>Factory Name: {{ getFactoryName(purchase, item.chocolate.id) }}</p>
+          <p>Factory Name: {{ getFactoryNameById(item.chocolate.factoryId) }}</p>
         </div>
         <div v-if="purchase.status === 'Odobreno'">
-          <router-link :to="{ name: 'AddComment', params: { factoryId: purchase.chocolates[0].chocolate.factoryId } }">Add Comment</router-link>
+          <label>Add Comment for Factory:</label>
+          <select v-model="selectedFactory" @change="navigateToAddComment(selectedFactory)">
+            <option v-for="factory in getFactoryNamesFromPurchase(purchase)" :key="factory.id" :value="factory.id">
+              {{ factory.name }}
+            </option>
+          </select>
         </div>
         <button v-if="purchase.status === 'Obrada'" @click="cancelPurchase(purchase.id)">Cancel</button>
       </div>
@@ -64,9 +69,12 @@
 import { ref, onMounted, reactive, computed } from 'vue';
 import axios from 'axios';
 import { useStore } from 'vuex';
+import { useRouter } from 'vue-router';
 
 const store = useStore();
+const router = useRouter();
 const purchases = ref([]);
+const factories = ref([]);
 const initialSearchFilters = {
   factoryName: '',
   minPrice: '',
@@ -80,6 +88,7 @@ const initialSortOptions = {
 };
 const searchFilters = reactive({ ...initialSearchFilters });
 const sortOptions = reactive({ ...initialSortOptions });
+const selectedFactory = ref('');
 
 const isCustomer = computed(() => store.getters.userRole === 'Customer');
 
@@ -110,12 +119,25 @@ function loadPurchases() {
     .then(response => {
       console.log('Purchases received:', response.data);
       purchases.value = response.data;
+      loadFactoriesFromPurchases(response.data);
     })
     .catch(error => {
       console.error('Error fetching purchases:', error);
     });
 }
 
+function loadFactoriesFromPurchases(purchases) {
+  const factoryIds = [...new Set(purchases.flatMap(purchase => purchase.chocolates.map(chocolate => chocolate.chocolate.factoryId)))];
+  console.log('Factory IDs to fetch:', factoryIds);
+  axios.post('http://localhost:3001/api/factories/by-ids', { ids: factoryIds })
+    .then(response => {
+      console.log('Factories received:', response.data);
+      factories.value = response.data;
+    })
+    .catch(error => {
+      console.error('Error fetching factories:', error);
+    });
+}
 
 function applyFiltersAndSort() {
   loadPurchases();
@@ -143,15 +165,30 @@ function cancelPurchase(purchaseId) {
     });
 }
 
-function getFactoryName(purchase, chocolateId) {
-  if (!purchase || !purchase.factory) {
-    return 'Unknown Factory';
+function getFactoryNameById(factoryId) {
+  const factory = factories.value.find(factory => factory.id === factoryId);
+  console.log(`Factory name for ID ${factoryId}: ${factory ? factory.name : 'Unknown Factory'}`);
+  return factory ? factory.name : 'Unknown Factory';
+}
+
+function getFactoryNamesFromPurchase(purchase) {
+  if (!purchase || !purchase.chocolates) {
+    return [];
   }
-  const factory = purchase.factory.find(f => f.chocolate && f.chocolate.id === chocolateId);
-  return factory ? factory.factoryName : 'Unknown Factory';
+  const factoryIds = new Set(purchase.chocolates.map(item => item.chocolate.factoryId));
+  return Array.from(factoryIds).map(factoryId => ({
+    id: factoryId,
+    name: getFactoryNameById(factoryId)
+  }));
+}
+
+function navigateToAddComment(factoryId) {
+  console.log('Navigating to add comment for factory ID:', factoryId);
+  if (factoryId) {
+    router.push({ name: 'AddComment', params: { factoryId } });
+  }
 }
 </script>
-
 <style scoped>
 .user-purchases {
   max-width: 800px;

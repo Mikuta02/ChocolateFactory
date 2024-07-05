@@ -139,6 +139,11 @@ class FactoryService {
         });
     }
 
+    getFactoriesByIds(ids) {
+        return this.factories.filter(factory => ids.includes(factory.id));
+    }
+    
+
     addFactory(name, workingHours, status, latitude, longitude, address, logoPath = '', rating = 0, managerId) {
         // if (!this.validateAddress(address)) {
         //     throw new Error('Invalid address format');
