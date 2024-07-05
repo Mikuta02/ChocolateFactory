@@ -47,11 +47,11 @@
       {
         "chocolate": {
           "id": 4,
-          "name": "picka",
+          "name": "Ritter Sport Milk",
           "price": 100,
           "chocolateType": "Drink",
           "factoryId": 4,
-          "chocolateVariety": "Nuts",
+          "chocolateVariety": "Milk",
           "grams": 100,
           "description": "jeftino",
           "picturePath": "coko6.jpg",
@@ -63,11 +63,11 @@
       {
         "chocolate": {
           "id": 5,
-          "name": "kita",
+          "name": "Ritter Sport Nuts",
           "price": 120,
           "chocolateType": "Normal",
           "factoryId": 4,
-          "chocolateVariety": "Dark",
+          "chocolateVariety": "Nuts",
           "grams": 120,
           "description": "nista",
           "picturePath": "coko7.jpg",
@@ -227,11 +227,11 @@
       {
         "chocolate": {
           "id": 5,
-          "name": "kita",
+          "name": "Ritter Sport Nuts",
           "price": 120,
           "chocolateType": "Normal",
           "factoryId": 4,
-          "chocolateVariety": "Dark",
+          "chocolateVariety": "Nuts",
           "grams": 120,
           "description": "nista",
           "picturePath": "coko7.jpg",
@@ -243,11 +243,11 @@
       {
         "chocolate": {
           "id": 4,
-          "name": "picka",
+          "name": "Ritter Sport Milk",
           "price": 100,
           "chocolateType": "Drink",
           "factoryId": 4,
-          "chocolateVariety": "Nuts",
+          "chocolateVariety": "Milk",
           "grams": 100,
           "description": "jeftino",
           "picturePath": "coko6.jpg",
@@ -261,11 +261,11 @@
       {
         "chocolate": {
           "id": 5,
-          "name": "kita",
+          "name": "Ritter Sport Nuts",
           "price": 120,
           "chocolateType": "Normal",
           "factoryId": 4,
-          "chocolateVariety": "Dark",
+          "chocolateVariety": "Nuts",
           "grams": 120,
           "description": "nista",
           "picturePath": "coko7.jpg",
@@ -278,11 +278,11 @@
       {
         "chocolate": {
           "id": 4,
-          "name": "picka",
+          "name": "Ritter Sport Milk",
           "price": 100,
           "chocolateType": "Drink",
           "factoryId": 4,
-          "chocolateVariety": "Nuts",
+          "chocolateVariety": "Milk",
           "grams": 100,
           "description": "jeftino",
           "picturePath": "coko6.jpg",
@@ -400,11 +400,11 @@
       {
         "chocolate": {
           "id": 4,
-          "name": "picka",
+          "name": "Ritter Sport Milk",
           "price": 100,
           "chocolateType": "Drink",
           "factoryId": 4,
-          "chocolateVariety": "Nuts",
+          "chocolateVariety": "Milk",
           "grams": 100,
           "description": "jeftino",
           "picturePath": "coko6.jpg",
@@ -435,11 +435,11 @@
       {
         "chocolate": {
           "id": 4,
-          "name": "picka",
+          "name": "Ritter Sport Milk",
           "price": 100,
           "chocolateType": "Drink",
           "factoryId": 4,
-          "chocolateVariety": "Nuts",
+          "chocolateVariety": "Milk",
           "grams": 100,
           "description": "jeftino",
           "picturePath": "coko6.jpg",
@@ -478,11 +478,11 @@
       {
         "chocolate": {
           "id": 5,
-          "name": "kita",
+          "name": "Ritter Sport Nuts",
           "price": 120,
           "chocolateType": "Normal",
           "factoryId": 4,
-          "chocolateVariety": "Dark",
+          "chocolateVariety": "Nuts",
           "grams": 120,
           "description": "nista",
           "picturePath": "coko7.jpg",
@@ -529,11 +529,11 @@
       {
         "chocolate": {
           "id": 5,
-          "name": "kita",
+          "name": "Ritter Sport Nuts",
           "price": 120,
           "chocolateType": "Normal",
           "factoryId": 4,
-          "chocolateVariety": "Dark",
+          "chocolateVariety": "Nuts",
           "grams": 120,
           "description": "nista",
           "picturePath": "coko7.jpg",
@@ -1014,11 +1014,11 @@
       {
         "chocolate": {
           "id": 4,
-          "name": "picka",
+          "name": "Ritter Sport Milk",
           "price": 100,
           "chocolateType": "Drink",
           "factoryId": 4,
-          "chocolateVariety": "Nuts",
+          "chocolateVariety": "Milk",
           "grams": 100,
           "description": "jeftino",
           "picturePath": "coko6.jpg",
