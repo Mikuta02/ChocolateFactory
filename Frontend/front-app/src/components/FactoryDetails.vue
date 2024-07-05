@@ -95,7 +95,7 @@
 
    
     <Comments v-if="isManagerOrAdmin" :factoryId="factory.id" />
-    <p v-else>You do not have permission to view comments.</p>
+    <p v-else>You do not have permission to view all comments.</p>
 
     <h2>Approved Comments</h2>
     <div v-if="approvedComments.length">

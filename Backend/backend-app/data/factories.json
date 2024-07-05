@@ -14,62 +14,6 @@
     "managerId": 7
   },
   {
-    "id": 5,
-    "name": "Cokolada",
-    "workingHours": "9-8",
-    "status": "open",
-    "location": {
-      "latitude": 412.4124,
-      "longitude": 12.34123,
-      "address": "Ulica 123, Grad 11000"
-    },
-    "logoPath": "fabrika1.jpg",
-    "rating": 3.82,
-    "managerId": 4
-  },
-  {
-    "id": 3,
-    "name": "Rafanito",
-    "workingHours": "10am-6pm",
-    "status": "otvoreno",
-    "location": {
-      "latitude": 72.19,
-      "longitude": 55.943,
-      "address": "Wien, Austria"
-    },
-    "logoPath": "fabrika6.jpg",
-    "rating": 4.3,
-    "managerId": 8
-  },
-  {
-    "id": 2,
-    "name": "Smederevac",
-    "workingHours": "7am-5pm",
-    "status": "zatvorena",
-    "location": {
-      "latitude": 23.543,
-      "longitude": 10.156,
-      "address": "Smederevo, Srbija"
-    },
-    "logoPath": "fabrika3.jpg",
-    "rating": 4.3,
-    "managerId": 9
-  },
-  {
-    "id": 4,
-    "name": "Vozic Krstic",
-    "workingHours": "8am-8pm",
-    "status": "otvoreno",
-    "location": {
-      "latitude": 89.678,
-      "longitude": 54.987,
-      "address": "Novi Sad 21000, Srbija"
-    },
-    "logoPath": "fabrika7.jpg",
-    "rating": 3.4,
-    "managerId": 10
-  },
-  {
     "id": 6,
     "name": "aa",
     "workingHours": "aaaa",
@@ -82,5 +26,61 @@
     "logoPath": "factory1.jpg",
     "rating": 2,
     "managerId": 11
+  },
+  {
+    "id": 3,
+    "name": "Rafanito",
+    "workingHours": "10am-6pm",
+    "status": "otvoreno",
+    "location": {
+      "latitude": 48.190287,
+      "longitude": 16.39448,
+      "address": "Anna-Hand-Weg 4, 1030 Vienna, Austria"
+    },
+    "logoPath": "fabrika6.jpg",
+    "rating": 4.3,
+    "managerId": 8
+  },
+  {
+    "id": 2,
+    "name": "Smederevac",
+    "workingHours": "7am-5pm",
+    "status": "zatvorena",
+    "location": {
+      "latitude": 44.661529,
+      "longitude": 20.929959,
+      "address": "Smederevo, Srbija"
+    },
+    "logoPath": "fabrika3.jpg",
+    "rating": 4.3,
+    "managerId": 9
+  },
+  {
+    "id": 5,
+    "name": "Ukrinski Cvijet",
+    "workingHours": "9-8",
+    "status": "open",
+    "location": {
+      "latitude": 44.859117,
+      "longitude": 17.859636,
+      "address": "74412 Osinja, Bosnia and Herzegovina"
+    },
+    "logoPath": "fabrika7.jpg",
+    "rating": 3.82,
+    "managerId": 4
+  },
+  {
+    "id": 4,
+    "name": "Vozic Krstic",
+    "workingHours": "8am-8pm",
+    "status": "otvoreno",
+    "location": {
+      "latitude": 45.250281,
+      "longitude": 19.836831,
+      "address": "Novi Sad 21000, Srbija"
+    },
+    "logoPath": "factory5.webp",
+    "rating": 3.4,
+    "managerId": 10
   }
 ]

@@ -77,10 +77,10 @@ class CommentService {
     const comment = this.comments.find(c => c.id === commentId);
     if (comment) {
         comment.status = status;
-        if(status === "approved"){
-          console.log("OVO JE ID FABRIKE" ,comment.factory.id);
-          FactoryService.updateRating(this.getAllCommentsByFactoryId(comment.factory.id), comment.factory.id);
-        }
+
+        console.log("OVO JE ID FABRIKE" ,comment.factory.id);
+        FactoryService.updateRating(this.getAllCommentsByFactoryId(comment.factory.id), comment.factory.id);
+
         this.saveComments();
         return comment;
     }

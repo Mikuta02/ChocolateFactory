@@ -18,8 +18,9 @@
       <input type="text" v-model="description" />
     </div>
     <div>
-      <label>Photo URL:</label>
-      <input type="text" v-model="picturePath" />
+      <label>Logo:</label>
+      <input type="file" @change="handleFileUpload" />
+      <span>{{ logoPath }}</span>
     </div>
     <div>
       <label>Chocolate Type:</label>
@@ -61,8 +62,15 @@ const picturePath = ref('');
 const status = ref("unavailable");
 const amount = ref(0);
 
+function handleFileUpload(event) {
+  const file = event.target.files[0];
+  if (file) {
+    logoPath.value = file.name;
+  }
+}
+
 function handleSubmit() {
-  const factoryId = route.query.factoryId; // Uzimanje factoryId iz query parametara
+  const factoryId = route.query.factoryId; 
 
   if (!factoryId) {
     console.error('Factory ID is missing');
@@ -73,7 +81,7 @@ function handleSubmit() {
     name: name.value,
     price: price.value,
     chocolateType: chocolateType.value,
-    factoryId: Number(factoryId), // Osiguravanje da je factoryId broj
+    factoryId: Number(factoryId), 
     chocolateVariety: chocolateVariety.value,
     grams: grams.value,
     description: description.value,
@@ -82,7 +90,7 @@ function handleSubmit() {
     amount: amount.value
   };
 
-  console.log('Payload:', newChocolate); // Log the payload for debugging
+  console.log('Payload:', newChocolate); 
 
   axios.post('http://localhost:3001/api/chocolates', newChocolate)
     .then(response => {
