@@ -30,8 +30,9 @@
       <span v-if="addressError" class="error">{{ addressError }}</span>
     </div>
     <div>
-      <label>Logo URL:</label>
-      <input type="text" v-model="logoPath" placeholder="e.g., http://example.com/logo.jpg" />
+      <label>Logo:</label>
+      <input type="file" @change="handleFileUpload" />
+      <span>{{ logoPath }}</span>
     </div>
     <div>
       <label>Rating:</label>
@@ -175,10 +176,17 @@ async function getAddressFromCoordinates(lat, lon) {
   }
 }
 
+function handleFileUpload(event) {
+  const file = event.target.files[0];
+  if (file) {
+    logoPath.value = file.name;
+  }
+}
+
 onMounted(() => {
   loadManagers();
 
-  // Initialize the OpenLayers map
+ 
   map = new Map({
     target: 'map',
     layers: [
@@ -192,7 +200,7 @@ onMounted(() => {
     })
   });
 
-  // Add a click event listener to the map
+ 
   map.on('click', async function (evt) {
     const coords = toLonLat(evt.coordinate);
     longitude.value = coords[0].toFixed(6);

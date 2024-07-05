@@ -17,21 +17,6 @@
   {
     "id": 3,
     "user": {
-      "id": 3,
-      "username": "",
-      "role": "Customer",
-      "cartId": 0,
-      "accumulatedPoints": 0,
-      "customerTypeId": 1,
-      "isBanned": false,
-      "cancelationNumber": 0
-    },
-    "chocolates": [],
-    "totalPrice": 0
-  },
-  {
-    "id": 3,
-    "user": {
       "id": 5,
       "username": "",
       "role": "Customer",
