@@ -18,24 +18,11 @@ This project is a web application developed as part of the coursework for 'Web P
 
 ## Project Structure
 
-/backend: Contains all the server-side code, including models, routes, and controllers.
-/frontend: Contains all the client-side code, including Vue components, views, and assets.
+**/backend:** Contains all the server-side code, including models, routes, and controllers.
+**/frontend:** Contains all the client-side code, including Vue components, views, and assets.
 
-## Results
-
-![Welcome Page](Frontend/images/slika1.png)
-*Screenshot of the welcome page.*
-
-![Factory List](Frontend/images/slika2.png)
-*Screenshot of the factory list.*
-
-![Factory Details](Frontend/images/slika3.png)
-*Screenshot of the factory details page.*
-
-![Shopping Cart](Frontend/images/slika4.png)
-*Screenshot of the shopping cart page.*
 
 ## Contributors
 
--Milan Jakovljevic
--Boris Gozdenovic 
+-**Milan Jakovljevic**
+-**Boris Gozdenovic** 
