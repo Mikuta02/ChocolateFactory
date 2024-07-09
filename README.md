@@ -18,11 +18,11 @@ This project is a web application developed as part of the coursework for 'Web P
 
 ## Project Structure
 
-**/backend:** Contains all the server-side code, including models, routes, and controllers.
-**/frontend:** Contains all the client-side code, including Vue components, views, and assets.
+- **/backend:** Contains all the server-side code, including models, routes, and controllers.
+- **/frontend:** Contains all the client-side code, including Vue components, views, and assets.
 
 
 ## Contributors
 
--**Milan Jakovljevic**
--**Boris Gozdenovic** 
+- **Milan Jakovljevic**
+- **Boris Gozdenovic** 
