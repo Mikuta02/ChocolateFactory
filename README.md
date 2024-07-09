@@ -36,5 +36,6 @@ This project is a web application developed as part of the coursework for 'Web P
 *Screenshot of the shopping cart page.*
 
 ## Contributors
+
 -Milan Jakovljevic
 -Boris Gozdenovic 
