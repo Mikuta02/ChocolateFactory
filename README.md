@@ -23,16 +23,16 @@ This project is a web application developed as part of the coursework for 'Web P
 
 ## Results
 
-![Welcome Page](images/slika1.png)
+![Welcome Page](Frontend/images/slika1.png)
 *Screenshot of the welcome page.*
 
-![Factory List](images/slika2.png)
+![Factory List](Frontend/images/slika2.png)
 *Screenshot of the factory list.*
 
-![Factory Details](images/slika3.png)
+![Factory Details](Frontend/images/slika3.png)
 *Screenshot of the factory details page.*
 
-![Shopping Cart](images/slika4.png)
+![Shopping Cart](Frontend/images/slika4.png)
 *Screenshot of the shopping cart page.*
 
 ## Contributors
