@@ -21,6 +21,10 @@ This project is a web application developed as part of the coursework for 'Web P
 - **/backend:** Contains all the server-side code, including models, routes, and controllers.
 - **/frontend:** Contains all the client-side code, including Vue components, views, and assets.
 
+![primer1](Backend/backend-app/images/slika1.png)
+![primer2](Backend/backend-app/images/slika2.png)
+![primer3](Backend/backend-app/images/slika3.png)
+![primer4](Backend/backend-app/images/slika4.png)
 
 ## Contributors
 
